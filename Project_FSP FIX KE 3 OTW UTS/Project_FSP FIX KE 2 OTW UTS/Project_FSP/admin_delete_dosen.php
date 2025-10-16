@@ -1,4 +1,5 @@
 <?php
+// test
 //hapus data dosen
 $mysqli = new mysqli("localhost", "root", "", "fullstack");
 $npk = $_GET['npk']; 
