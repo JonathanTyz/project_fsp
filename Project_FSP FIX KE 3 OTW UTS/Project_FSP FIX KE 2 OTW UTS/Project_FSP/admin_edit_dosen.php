@@ -1,11 +1,6 @@
 <?php
 $mysqli = new mysqli("localhost", "root", "", "fullstack");
 
-// Cek koneksi
-if ($mysqli->connect_error) {
-    die("Koneksi gagal: " . $mysqli->connect_error);
-}
-
 if (!isset($_GET['npk'])) {
     echo "<p>NPK tidak ditemukan di URL.</p>";
     echo "<p style='text-align:center;'><a href='admin_dosen.php'>Kembali</a></p>";
