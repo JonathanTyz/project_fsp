@@ -110,16 +110,16 @@ if (!$row) {
     <p id="pembukaanteks">Perbarui data dosen berikut</p>
 
     <form method="post" action="admin_edit_proses_dosen.php" enctype="multipart/form-data">
-        <p><label>Dosen yang diedit:</label> <b><?php echo htmlspecialchars($row['nama']); ?></b></p>
+        <p><label>Dosen yang diedit:</label> <b><?php echo ($row['nama']); ?></b></p>
 
         <p><label>Username:</label><br>
-        <input type="text" name="username" value="<?php echo htmlspecialchars($row['username']); ?>"></p>
+        <input type="text" name="username" value="<?php echo ($row['username']); ?>"></p>
 
         <p><label>NPK:</label><br>
-        <input type="text" name="npk" value="<?php echo htmlspecialchars($row['npk']); ?>"></p>
+        <input type="text" name="npk" value="<?php echo ($row['npk']); ?>"></p>
 
         <p><label>Nama:</label><br>
-        <input type="text" name="nama" value="<?php echo htmlspecialchars($row['nama']); ?>"></p>
+        <input type="text" name="nama" value="<?php echo ($row['nama']); ?>"></p>
 
         <p><label>Foto Dosen (opsional):</label><br>
         <input type="file" name="foto" accept="image/jpg,image/png"></p>
