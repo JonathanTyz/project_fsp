@@ -16,22 +16,25 @@ $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
-if($user && $password == $user['password']){
+if ($user && $password == $user['password']) {
+    // login berhasil
     $_SESSION['user'] = [
-            'username' => $user['username'],
-            'isadmin'  => $user['isadmin'],
-            'nrp_mahasiswa' => $user['nrp_mahasiswa'],
-            'npk_dosen' => $user['npk_dosen']
-        ];
+        'username' => $user['username'],
+        'isadmin'  => $user['isadmin'],
+        'nrp_mahasiswa' => $user['nrp_mahasiswa'],
+        'npk_dosen' => $user['npk_dosen']
+    ];
 
-        if ($user['isadmin'] == 1) {
-            header("Location: admin_home.php");
-        } elseif (!empty($user['nrp_mahasiswa'])) {
-            header("Location: mahasiswa_home.php");
-        } elseif (!empty($user['npk_dosen'])) {
-            header("Location: dosen_home.php");
-        } 
-        
-        exit;
+    if ($user['isadmin'] == 1) {
+        header("Location: admin_home.php");
+    } elseif (!empty($user['nrp_mahasiswa'])) {
+        header("Location: mahasiswa_home.php");
+    } elseif (!empty($user['npk_dosen'])) {
+        header("Location: dosen_home.php");
+    }
+    exit;
+} else {
+    echo "Login gagal: username atau password salah. <a href='login.php'>Kembali ke Login</a>";
+    exit;
 }
 ?>

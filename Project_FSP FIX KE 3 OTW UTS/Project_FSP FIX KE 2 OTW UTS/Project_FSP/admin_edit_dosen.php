@@ -1,8 +1,20 @@
 <?php
 $mysqli = new mysqli("localhost", "root", "", "fullstack");
+
+// Cek koneksi
+if ($mysqli->connect_error) {
+    die("Koneksi gagal: " . $mysqli->connect_error);
+}
+
+if (!isset($_GET['npk'])) {
+    echo "<p>NPK tidak ditemukan di URL.</p>";
+    echo "<p style='text-align:center;'><a href='admin_dosen.php'>Kembali</a></p>";
+    exit;
+}
+
 $id = $_GET['npk'];
 
-// dapatkan dosen yang akan diedit
+// Ambil data dosen berdasarkan NPK
 $sql = "SELECT d.npk, d.nama, d.foto_extension, a.username, a.password 
         FROM dosen d 
         LEFT JOIN akun a ON d.npk = a.npk_dosen 
@@ -13,6 +25,12 @@ $stmt->execute();
 $res = $stmt->get_result();
 $row = $res->fetch_assoc();
 $stmt->close();
+
+if (!$row) {
+    echo "<p>Data dosen dengan NPK <b>$id</b> tidak ditemukan.</p>";
+    echo "<p style='text-align:center;'><a href='admin_dosen.php'>Kembali</a></p>";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,8 +67,7 @@ $stmt->close();
         form p {
             margin: 10px 0;
         }
-        input[type="text"], input[type="password"], 
-        input[type="file"] {
+        input[type="text"], input[type="password"], input[type="file"] {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
@@ -93,26 +110,31 @@ $stmt->close();
     <p id="pembukaanteks">Perbarui data dosen berikut</p>
 
     <form method="post" action="admin_edit_proses_dosen.php" enctype="multipart/form-data">
-        <p><label>Dosen yang diedit:</label> <b><?php echo $row['nama']; ?></b></p>
+        <p><label>Dosen yang diedit:</label> <b><?php echo htmlspecialchars($row['nama']); ?></b></p>
 
         <p><label>Username:</label><br>
-        <input type="text" name="username" value="<?php echo $row['username']; ?>"></p>
+        <input type="text" name="username" value="<?php echo htmlspecialchars($row['username']); ?>"></p>
 
         <p><label>NPK:</label><br>
-        <input type="text" name="npk" value="<?php echo $row['npk']; ?>"></p>
+        <input type="text" name="npk" value="<?php echo htmlspecialchars($row['npk']); ?>"></p>
 
         <p><label>Nama:</label><br>
-        <input type="text" name="nama" value="<?php echo $row['nama']; ?>"></p>
+        <input type="text" name="nama" value="<?php echo htmlspecialchars($row['nama']); ?>"></p>
 
         <p><label>Foto Dosen (opsional):</label><br>
-        <input type="file" name="foto" accept="image/jpg, image/png"></p>
+        <input type="file" name="foto" accept="image/jpg,image/png"></p>
 
-        <?php if (!empty($row['foto_extension'])): ?>
         <div class="foto-lama">
             <p>Foto Lama:</p>
-            <img src="uploads/dosen/<?php echo $row['npk'] . '.' . $row['foto_extension']; ?>" alt="Foto Dosen">
+            <?php 
+            $fotoPath = "uploads/dosen/" . $row['npk'] . "." . $row['foto_extension'];
+            if (!empty($row['foto_extension']) && file_exists($fotoPath)) {
+                echo "<img src='$fotoPath' alt='Foto Dosen'>";
+            } else {
+                echo "<img src='uploads/dosen/default.jpg' alt='Foto Default'>";
+            }
+            ?>
         </div>
-        <?php endif; ?>
 
         <p style="text-align:center;">
             <button name="btnEdit" value="Edit" type="submit">Simpan</button>

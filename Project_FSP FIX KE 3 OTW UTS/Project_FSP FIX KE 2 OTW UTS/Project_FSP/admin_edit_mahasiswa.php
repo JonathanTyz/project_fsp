@@ -1,5 +1,11 @@
 <?php
 $mysqli = new mysqli("localhost", "root", "", "fullstack");
+if (!isset($_GET['nrp'])) {
+    echo "<p>NRP tidak ditemukan di URL.</p>";
+    echo "<p style='text-align:center;'><a href='admin_mahasiswa.php'>Kembali</a></p>";
+    exit;
+}
+
 $id = $_GET['nrp'];
 
 // dapatkan mahasiswa yang akan diedit
@@ -14,6 +20,12 @@ $stmt->execute();
 $res = $stmt->get_result();
 $row = $res->fetch_assoc();
 $stmt->close();
+
+if (!$row) {
+    echo "<p>Data mahasiswa dengan NRP <b>$id</b> tidak ditemukan.</p>";
+    echo "<p style='text-align:center;'><a href='admin_mahasiswa.php'>Kembali</a></p>";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
