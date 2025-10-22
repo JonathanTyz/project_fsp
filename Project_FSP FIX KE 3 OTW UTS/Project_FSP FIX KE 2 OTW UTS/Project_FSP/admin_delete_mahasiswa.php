@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
 //hapus data mahasiswa
 $mysqli = new mysqli("localhost", "root", "", "fullstack");
 $nrp = $_GET['nrp']; 

@@ -1,17 +1,15 @@
 <?php
 $mysqli = new mysqli("localhost", "root", "", "fullstack");
-
+session_start();
+if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
 $npk = $_POST['npk'];
 $nama = $_POST['nama'];
 $ext = strtolower(pathinfo($_FILES['foto']['name'][0], PATHINFO_EXTENSION));
 
-//ambil id terbaru
-$last_id = $mysqli->insert_id;
-
-//simpan ke folder 
-if (!empty($_FILES['foto']['name'][0])) {
-    move_uploaded_file($_FILES['foto']['tmp_name'][0], "image_dosen/" .$npk.".".$ext);
-}
 
 // atribut tabel akun: username, password, nrp_mahasiswa (jadikan kosong), npk_dosen, is_admin (jadikan 0)
 //username harus dicek agar tidak fk duplicate constriant
@@ -21,8 +19,7 @@ $password = $_POST['password'];
 $is_admin = 0;
 $nrp_mahasiswa = NULL;
 $npk_dosen = $npk;
-$index = $last_id; //ga perlu
-//lakukan pengecekan username karena dia foreign key 
+
 if ($stmt = $mysqli->prepare("SELECT username FROM akun WHERE username = ?")) {
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -44,6 +41,7 @@ if ($stmt = $mysqli->prepare("SELECT username FROM akun WHERE username = ?")) {
             else
             {
                 //insertkan data ke tabel dosen
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 $sql = "INSERT INTO dosen (npk, nama, foto_extension) VALUES (?, ?, ?)";
                 $stmt = $mysqli->prepare($sql);
                 $stmt->bind_param("sss", $npk, $nama, $ext);
@@ -51,12 +49,16 @@ if ($stmt = $mysqli->prepare("SELECT username FROM akun WHERE username = ?")) {
 
                 $sql2 = "INSERT INTO akun (username, password, nrp_mahasiswa, npk_dosen, isadmin) VALUES (?, ?, ?, ?, ?)";
                 $stmt = $mysqli->prepare($sql2);
-                $stmt->bind_param("ssssi", $username, $password, $nrp_mahasiswa, $npk_dosen, $is_admin);
+                $stmt->bind_param("ssssi", $username, $hashed_password, $nrp_mahasiswa, $npk_dosen, $is_admin);
                 $stmt->execute();
 
-                $jumlah_yang_dieksekusi = $stmt->affected_rows; // untuk melihat jumlah row yang terefek
+                $jumlah_yang_dieksekusi = $stmt->affected_rows; 
                 $stmt->close(); 
                 $mysqli->close();
+                if (!empty($_FILES['foto']['name'][0])) 
+                {
+                    move_uploaded_file($_FILES['foto']['tmp_name'][0], "image_dosen/" .$npk.".".$ext);
+                }
                 header("Location: admin_dosen.php");
                 exit();     
             }

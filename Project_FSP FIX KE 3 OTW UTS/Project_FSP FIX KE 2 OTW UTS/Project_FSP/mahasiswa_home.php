@@ -1,63 +1,47 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>MAHASISWA</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: white;
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            justify-content: center;
+        body{
+            font-family: 'Times New Roman', Times, serif;
             align-items: center;
+            margin: 0;
         }
-        .container {
-            width: 250px;
+        .isi{
+            background-color: white;
+            padding: 30px 40px;
             text-align: center;
+            width: 400px;
+            border: 10px solid #333;
         }
-        h2 {
-            margin-bottom: 20px;
-            color: black;
-        }
-        .menu-item {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        label {
-            font-size: 14px;
-            display: block;
-            margin-bottom: 5px;
-            color: black;
-        }
-        button {
-            width: 107%;
-            padding: 8px;
-            background: blue;
-            border: none;
+        button{
+            width: 200px;
+            background-color: #ffffffff;
             color: white;
-            cursor: pointer;
-        }
-        button a {
-            text-decoration: none;
-            color: white;
-            display: block;
+            padding: 10px;
+            margin: 10px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Welcome Mahasiswa</h2>
-
-        <div class="menu-item">
-            <label>Change Password</label>
-            <button><a href="change_password.php">Change Password</a></button>
-        </div>
-
-        <div class="menu-item">
-            <label>Exit to Login</label>
-            <button><a href="Login.php">EXIT</a></button>
-        </div>
+    <div class = 'isi'>
+        <h2><b>Welcome <?php echo $_SESSION['user']['username']; ?></b></h2>
+        <h4><b>Role: Mahasiswa</b></h4>
+        Change Password: <br><button><a href="change_password.php">Change Password</a>
+        </button><br>
+        Exit to Login: <br>
+        <button><a href="logout.php">EXIT</a></button>   
+        </button><br> 
     </div>
 </body>
 </html>

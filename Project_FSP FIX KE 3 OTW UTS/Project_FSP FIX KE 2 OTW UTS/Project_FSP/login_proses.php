@@ -1,40 +1,35 @@
 <?php
 session_start();
-
+require_once 'class/users.php'; 
 $mysqli = new mysqli("localhost", "root", "", "fullstack");
-if ($mysqli->connect_errno) {
-    die("Koneksi gagal: " . $mysqli->connect_error);
-}
+$user = new users();
 
 $username = $_POST['txtUsername'];
 $password = $_POST['txtPassword'];
 
-$sql = "SELECT * FROM akun WHERE username = ?";
-$stmt = $mysqli->prepare($sql);
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
+$row = $user->doLogin($username, $password);
 
-if ($user && $password == $user['password']) {
-    // login berhasil
-    $_SESSION['user'] = [
-        'username' => $user['username'],
-        'isadmin'  => $user['isadmin'],
-        'nrp_mahasiswa' => $user['nrp_mahasiswa'],
-        'npk_dosen' => $user['npk_dosen']
+if ($row)
+    {
+        $_SESSION['user'] = [
+            'username' => $row['username'],
+            'isadmin'  => $row['isadmin'],
+            'nrp_mahasiswa' => $row['nrp_mahasiswa'],
+            'npk_dosen' => $row['npk_dosen']
     ];
 
-    if ($user['isadmin'] == 1) {
-        header("Location: admin_home.php");
-    } elseif (!empty($user['nrp_mahasiswa'])) {
-        header("Location: mahasiswa_home.php");
-    } elseif (!empty($user['npk_dosen'])) {
-        header("Location: dosen_home.php");
+    if ($row['isadmin']) 
+        {
+            header("Location: admin_home.php");
+        } elseif (!empty($row['nrp_mahasiswa'])) {
+            header("Location: mahasiswa_home.php");
+        } elseif (!empty($row['npk_dosen'])) {
+            header("Location: dosen_home.php");
+        }
+    exit;
+} 
+else {
+        echo "Username atau password salah!";
+        echo "<br><a href='login.php'>Kembali ke halaman login</a>";
     }
-    exit;
-} else {
-    echo "Login gagal: username atau password salah. <a href='login.php'>Kembali ke Login</a>";
-    exit;
-}
 ?>

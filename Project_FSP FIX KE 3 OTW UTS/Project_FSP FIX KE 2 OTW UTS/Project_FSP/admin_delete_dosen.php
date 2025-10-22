@@ -1,5 +1,10 @@
 <?php
-// test
+session_start();
+if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
 //hapus data dosen
 $mysqli = new mysqli("localhost", "root", "", "fullstack");
 $npk = $_GET['npk']; 

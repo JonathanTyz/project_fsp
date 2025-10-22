@@ -1,59 +1,76 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Change Password</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: white;
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            justify-content: center;
+        body{
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f4f4;
             align-items: center;
+            height: 100vh;
+            justify-content: center;
         }
-        form {
-            width: 250px;
-            text-align: left;
-        }
-        h2 {
+        h2{
             text-align: center;
-            margin-bottom: 20px;
-            color: black;
+            margin-top: 30px;
+            color: #333;
+            font-size: 36px;
         }
-        label {
-            font-size: 14px;
-            display: block;
-            margin-bottom: 5px;
-            color: black;
+        h4{
+            margin-top: 10px;
+            color: #555;
+            font-size: 20px;
         }
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #aaa;
+        label{
+            font-size: 18px;
+            color: #333;
+            text-align: left;
+            margin-top: 15px;
+            color: #444;
+            font-weight: bold;
         }
-        button {
-            width: 107%;
-            padding: 8px;
-            background: blue;
-            border: none;
-            color: white;
-            cursor: pointer;
+        button{
+            font-family: 'Times New Roman', Times, serif;
+            padding: 12px;
+            width: 300px;
+            background-color: #e4f1ffff;
+            color: #333;
+            border-radius: 8px;
+            font-size: 24px;
+        }
+        input{
+            width: 300px;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+        }
+        .isiInput{
+            background-color: white;
+            border:10px solid  #333;
+            padding: 30px 40px;
+            text-align: center;
+            width: 350px;
         }
     </style>
 </head>
 <body>
-    <form method="POST" action="change_password_proses.php">
-        <h2>Change Password</h2>
-
-        <label>Old Password</label>
-        <input type="password" name="old_password" required>
-
-        <label>New Password</label>
-        <input type="password" name="password" required>
-
-        <button type="submit">Change Password</button>
-    </form>
+    <div class="isiInput">
+    <h2><b>Change Password</b></h2>
+        <form method="POST" action="change_password_proses.php" >
+            <p><label>Old Password:</label> <br>
+            <input name="old_password" required></p><br>
+            <p><label>Password:</label><br>
+            <input name="password" required></p><br>
+            <button type="submit">Change Password</button>
+        </form>
+    </div>
 </body>
 </html>
