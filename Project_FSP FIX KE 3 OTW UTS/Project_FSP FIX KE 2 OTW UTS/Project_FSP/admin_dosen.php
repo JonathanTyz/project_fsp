@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html>
     <?php //Admin Kelola Data Dosen 
-    session_start();
-    if (!isset($_SESSION['user'])) 
-    {
-        header("Location: login.php");
-        exit();
-    }
     require_once 'class/dosen.php';
     $mysqli = new mysqli("localhost", "root", "", "fullstack");
     if ($mysqli->connect_error) {
@@ -76,10 +70,6 @@
             font-size: 20px;
             font-weight: bold;
         }
-        .foto{
-            width: 120px;
-            height: 120px;
-        }
         
     </style>
 </head>
@@ -109,7 +99,7 @@
                 while($row = $res->fetch_assoc()) {
                     echo "<tr>";
                         // Tampilkan foto & data dosen
-                        echo "<td> <img class = 'foto' src = 'image_dosen/" . $row['npk'] . "." . $row['foto_extension'] . "' width='100'></td>";
+                        echo "<td> <img src = 'image_dosen/" . $row['npk'] . "." . $row['foto_extension'] . "' width='100'></td>";
                         echo "<td>" . $row['nama'] . "</td>";
                         echo "<td>" . $row['npk'] . "</td>";
                         echo "<td>";
