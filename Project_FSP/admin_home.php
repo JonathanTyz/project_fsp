@@ -1,4 +1,10 @@
-<?php //buat ini sebagai UI untuk admin memilih ke admin_dosen.php atau admin_mahasiswa.php
+<?php
+session_start();
+if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -9,8 +15,6 @@
     <style>
         body{
             font-family: 'Times New Roman', Times, serif;
-            justify-content: center;
-            align-items: center;
             margin: 0;
         }
         .isi{
@@ -31,9 +35,12 @@
     </style>
     <body>
         <div class = 'isi'>
-            <h2><b>Welcome Admin</b></h2>
+            <h2><b>Welcome Dosen <?php echo $_SESSION['user']['username']; ?></b></h2>
+            <h4><b>Role: Admin</b></h4>
             <p>Silakan pilih halaman yang ingin Anda lihat:</p>
             Kelola Data Dosen: <br><button><a href="admin_dosen.php">Lihat Dosen</a></button><br>
             Kelola Data Mahasiswa: <br><button><a href="admin_mahasiswa.php">Lihat Mahasiswa</a></button>
+            <br>
+            Keluar: <br><button><a href="logout.php">EXIT</a></button>
         </div>
     </body>

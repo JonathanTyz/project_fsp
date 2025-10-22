@@ -12,13 +12,13 @@ $row = $user->doLogin($username, $password);
 if ($row)
     {
         $_SESSION['user'] = [
-            'username' => $row['username'],
+            'username' => $username,
             'isadmin'  => $row['isadmin'],
             'nrp_mahasiswa' => $row['nrp_mahasiswa'],
             'npk_dosen' => $row['npk_dosen']
     ];
 
-    if ($row['isadmin']     ) 
+    if ($row['isadmin']) 
         {
             header("Location: admin_home.php");
         } elseif (!empty($row['nrp_mahasiswa'])) {

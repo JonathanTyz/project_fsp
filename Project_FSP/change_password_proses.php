@@ -1,7 +1,12 @@
 
     <?php
-    require_once 'class/users.php';
     session_start();
+    if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
+    require_once 'class/users.php';
     $mysqli = new mysqli("localhost", "root", "", "fullstack");
     if ($mysqli->connect_errno) {
         die("Koneksi gagal: " . $mysqli->connect_error);
@@ -13,7 +18,7 @@
     $username = $_SESSION['user']['username'];
 
     $user = new users();
-    //changepassword
+    
     $success = $user->changePassword($username, $password_old, $password_new);
 
     if ($success) 

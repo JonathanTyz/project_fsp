@@ -1,7 +1,15 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Change Passowrd</title>
+    <title>Change Password</title>
     <style>
         body{
             font-family: 'Times New Roman', Times, serif;
@@ -58,9 +66,9 @@
     <h2><b>Change Password</b></h2>
         <form method="POST" action="change_password_proses.php" >
             <p><label>Old Password:</label> <br>
-            <input name="old_password" required></p><br>
+            <input type="password" name="old_password" required></p><br>
             <p><label>Password:</label><br>
-            <input name="password" required></p><br>
+            <input type="password" name="password" required></p><br>
             <button type="submit">Change Password</button>
         </form>
     </div>

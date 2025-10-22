@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,7 +13,6 @@
     <style>
         body{
             font-family: 'Times New Roman', Times, serif;
-            justify-content: center;
             align-items: center;
             margin: 0;
         }
@@ -28,10 +35,13 @@
 </head>
 <body>
     <div class = 'isi'>
-        <h2><b>Welcome mahasiswa</b></h2>
-        Change Password: <br><button><a href="change_password.php">Change Password</a></button><br>
+        <h2><b>Welcome <?php echo $_SESSION['user']['username']; ?></b></h2>
+        <h4><b>Role: Mahasiswa</b></h4>
+        Change Password: <br><button><a href="change_password.php">Change Password</a>
+        </button><br>
         Exit to Login: <br>
-        <button><a href="Login.php">EXIT</a></button>   
+        <button><a href="logout.php">EXIT</a></button>   
+        </button><br> 
     </div>
 </body>
 </html>

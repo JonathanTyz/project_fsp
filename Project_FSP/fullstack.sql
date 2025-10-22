@@ -42,7 +42,7 @@ CREATE TABLE `akun` (
 
 LOCK TABLES `akun` WRITE;
 /*!40000 ALTER TABLE `akun` DISABLE KEYS */;
-INSERT INTO `akun` VALUES ('Admin','$2y$10$BCwiVNZrmBU.tzK2WBfR3OFWF5pW/0C20F/6.ryPA.dDXorhR08iK',NULL,NULL,1),('Andrea123','$2y$10$/rjrlayY6LVTcaiCejmfjO9QDc.e4mRRTL3YUBF63W6q4ZkBLJyt6',NULL,'5000',0),('Anton123','$2y$10$yHX4efaDhaRG4LjpeJny2O7qASorq3yOty4tAHjL.t3bQH8tVwSey',NULL,'9000',0),('Jason123','$2y$10$zLo3wGoTKXzy0vrJqmeYVORliGjj3jBsdAc9lhHlq2TU39d3Egkuu',NULL,'3000',0),('Jonathan123','$2y$10$ircJmNzXnjYEPMzm9KyL2ubG9Pya5vlaPD8bUkYEwLF/Sw7ji6B5u','160423095',NULL,0),('Jordan123','$2y$10$gpxMtG.bRDLwQwTwCqHp..d6xW9rZ6svbUXwqSRr2I0xb72Kv20aq',NULL,'1000',0),('Ken123','$2y$10$6Rs4x92OMCo63qi1ouiRMul6fEbd1ufqUMJx2ziZwtxyaNpZbGLsa','160423071',NULL,0),('Maya123','$2y$10$Vh40RvWSAIMlwi2sUy05S.2W8HqG7nPv802G0wL0ZAcNWfBaq4lse',NULL,'400',0),('Robby123','$2y$10$xVNay4Oq2spLKGghew9w6OkJBKMhDYBPRISRPMfc.MVN8q4GBdM8.','160423075',NULL,0),('Vidi123','$2y$10$vo81uKlqI3AwRf75Opo.D.9ChzR5dwhmFGf1lRfMeImApdGojQdjq','160424800',NULL,0);
+INSERT INTO `akun` VALUES ('Admin','$2y$10$BCwiVNZrmBU.tzK2WBfR3OFWF5pW/0C20F/6.ryPA.dDXorhR08iK',NULL,NULL,1),('Andrea123','$2y$10$/rjrlayY6LVTcaiCejmfjO9QDc.e4mRRTL3YUBF63W6q4ZkBLJyt6',NULL,'5000',0),('Anton123','$2y$10$yHX4efaDhaRG4LjpeJny2O7qASorq3yOty4tAHjL.t3bQH8tVwSey',NULL,'9000',0),('Jason123','$2y$10$zLo3wGoTKXzy0vrJqmeYVORliGjj3jBsdAc9lhHlq2TU39d3Egkuu',NULL,'3000',0),('Jonathan123','$2y$10$ircJmNzXnjYEPMzm9KyL2ubG9Pya5vlaPD8bUkYEwLF/Sw7ji6B5u','160423095',NULL,0),('Jordan123','$2y$10$gpxMtG.bRDLwQwTwCqHp..d6xW9rZ6svbUXwqSRr2I0xb72Kv20aq',NULL,'1000',0),('Ken123','$2y$10$6Rs4x92OMCo63qi1ouiRMul6fEbd1ufqUMJx2ziZwtxyaNpZbGLsa','160423071',NULL,0),('Robby123','$2y$10$xVNay4Oq2spLKGghew9w6OkJBKMhDYBPRISRPMfc.MVN8q4GBdM8.','160423075',NULL,0),('Vidi123','$2y$10$vo81uKlqI3AwRf75Opo.D.9ChzR5dwhmFGf1lRfMeImApdGojQdjq','160424800',NULL,0);
 /*!40000 ALTER TABLE `akun` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +97,7 @@ CREATE TABLE `dosen` (
 
 LOCK TABLES `dosen` WRITE;
 /*!40000 ALTER TABLE `dosen` DISABLE KEYS */;
-INSERT INTO `dosen` VALUES ('1000','Jordan','jpg'),('3000','Jason','jpg'),('400','Maya Pintar','jpg'),('5000','Andrea','jpg'),('9000','Anton','jpg');
+INSERT INTO `dosen` VALUES ('1000','Jordan','jpg'),('3000','Jason','jpg'),('5000','Andrea','jpg'),('9000','Anton','jpg');
 /*!40000 ALTER TABLE `dosen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,4 +256,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-22 22:48:57
+-- Dump completed on 2025-10-22 23:01:07

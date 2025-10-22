@@ -2,6 +2,12 @@
 <html>
     <?php //Admin Kelola Data Dosen 
     require_once 'class/mahasiswa.php';
+    session_start();
+    if (!isset($_SESSION['user'])) 
+        {
+            header("Location: login.php");
+            exit();
+        }
         $mysqli = new mysqli("localhost", "root", "", "fullstack");
     if ($mysqli->connect_error) {
         die("Failed to connect to MySQL: " . $mysqli->connect_error);
@@ -99,7 +105,7 @@
                 $res = $mahasiswa->getMahasiswa($cari_persen, $offset, $PER_PAGE);
                 while($row = $res->fetch_assoc()) {
                     echo "<tr>";//buat nampilin foto mahasiswa 
-                        echo "<td> <img class = 'poster' src = 'image_mahasiswa/" . $row['nrp'] . "." . $row['foto_extention'] . "' width='100'></td>";
+                        echo "<td> <img src = 'image_mahasiswa/" . $row['nrp'] . "." . $row['foto_extention'] . "' width='100'></td>";
                         echo "<td>" . $row['nrp'] . "</td>";
                         echo "<td>" . $row['nama'] . "</td>";
                         echo "<td>" . $row['gender'] . "</td>";

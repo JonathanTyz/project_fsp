@@ -1,7 +1,23 @@
 <?php
 $mysqli = new mysqli("localhost", "root", "", "fullstack");
+// Cek koneksi
+if ($mysqli->connect_error) {
+    die("Koneksi gagal: " . $mysqli->connect_error);
+}
+session_start();
+if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
+
+if (!isset($_GET['npk'])) {
+    echo "<p>NPK tidak ditemukan di URL.</p>";
+    echo "<p style='text-align:center;'><a href='admin_dosen.php'>Kembali</a></p>";
+    exit;
+}
 $id = $_GET['npk'];
-//dapatkan dosen yang akan diedit
+
 $sql = "SELECT d.npk, d.nama, d.foto_extension, a.username, a.password 
         FROM dosen d 
         LEFT JOIN akun a ON d.npk = a.npk_dosen 
@@ -12,6 +28,12 @@ $stmt->execute();
 $res = $stmt->get_result();
 $row = $res->fetch_assoc();
 $stmt->close();
+
+if (!$row) {
+    echo "<p>Data dosen dengan NPK <b>$id</b> tidak ditemukan.</p>";
+    echo "<p style='text-align:center;'><a href='admin_dosen.php'>Kembali</a></p>";
+    exit;
+}
 ?>
 
 <html>
@@ -58,9 +80,9 @@ $stmt->close();
             <p><label>NPK: </label><br><input type = "text" name = "npk" value = "<?php echo $row['npk']; ?>"></p>
             <p><label>Nama: </label><br><input type = "text" name = "nama" value = "<?php echo $row['nama']; ?>"></p>
             <div id = 'fotodosen'>
-                <input type = "file" name = "foto" accept = "image/jpg, image/png"    >
+                <input type = "file" name = "foto" accept = "image/jpeg, image/png">
             </div>
-            </p>
+            <br>
             <p><button name="btnEdit" value="Edit" type="submit">Simpan</button></p>
             <?php //buat agar ada npk untuk update where (npk_lama) serta penyimpanan atribut lama database 
             // apabila user tidak update semua

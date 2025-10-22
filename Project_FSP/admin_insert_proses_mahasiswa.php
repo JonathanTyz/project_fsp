@@ -1,6 +1,11 @@
 <?php
 $mysqli = new mysqli("localhost", "root", "", "fullstack");
-
+session_start();
+if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
 $username = $_POST['username'];
 $password = $_POST['password'];
 $nrp = $_POST['nrp'];
@@ -45,13 +50,13 @@ if ($stmt = $mysqli->prepare("SELECT username FROM akun WHERE username = ?")) {
                 $stmt->bind_param("ssssi", $username, $hashed_password, $nrp_mahasiswa, $npk_dosen, $is_admin);
                 $stmt->execute();
 
-                $jumlah_yang_dieksekusi = $stmt->affected_rows; // untuk melihat jumlah row yang terefek
+                $jumlah_yang_dieksekusi = $stmt->affected_rows; 
                 $stmt->close(); 
                 $mysqli->close();
-                //simpan ke folder 
+
                 if (!empty($_FILES['foto']['name'][0])) {
                     move_uploaded_file($_FILES['foto']['tmp_name'][0], "image_mahasiswa/" .$nrp.".".$ext);
-}
+                }
                 header("Location: admin_mahasiswa.php");
                 exit();       
             }
@@ -63,6 +68,7 @@ if ($stmt = $mysqli->prepare("SELECT username FROM akun WHERE username = ?")) {
         $mysqli->close();
         echo "Username sudah ada!";
         echo "<br><a href='admin_insert_mahasiswa.php'>Insert Ulang</a>";
+        echo "<br><a href='admin_mahasiswa.php'>Kembali ke halaman mahasiswa</a>";
         exit();
     }
 }

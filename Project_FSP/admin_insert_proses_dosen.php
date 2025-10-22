@@ -1,13 +1,14 @@
 <?php
 $mysqli = new mysqli("localhost", "root", "", "fullstack");
-
+session_start();
+if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
 $npk = $_POST['npk'];
 $nama = $_POST['nama'];
 $ext = strtolower(pathinfo($_FILES['foto']['name'][0], PATHINFO_EXTENSION));
-
-
-// atribut tabel akun: username, password, nrp_mahasiswa (jadikan kosong), npk_dosen, is_admin (jadikan 0)
-//username harus dicek agar tidak fk duplicate constriant
 
 $username = $_POST['username'];
 $password = $_POST['password'];
@@ -19,9 +20,8 @@ if ($stmt = $mysqli->prepare("SELECT username FROM akun WHERE username = ?")) {
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
-    if ($stmt->num_rows == 0) { //ga ada duplikat username 
+    if ($stmt->num_rows == 0) { // username aman langsung ke npk
 
-        //cek apakah ada duplikat npk 
         if ($stmt = $mysqli->prepare("SELECT npk FROM dosen WHERE npk = ?")) {
             $stmt->bind_param("s", $npk);
             $stmt->execute();
@@ -35,7 +35,6 @@ if ($stmt = $mysqli->prepare("SELECT username FROM akun WHERE username = ?")) {
             }
             else
             {
-                //insertkan data ke tabel dosen
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 $sql = "INSERT INTO dosen (npk, nama, foto_extension) VALUES (?, ?, ?)";
                 $stmt = $mysqli->prepare($sql);
@@ -64,6 +63,7 @@ if ($stmt = $mysqli->prepare("SELECT username FROM akun WHERE username = ?")) {
         $mysqli->close();
         echo "Username sudah ada!";
         echo "<br><a href='admin_insert_dosen.php'>Insert Ulang</a>";
+        echo "<br><a href='admin_dosen.php'>Kembali ke halaman dosen</a>";
         exit();
     }
 }

@@ -17,6 +17,10 @@
             {
                 if (password_verify($pwd, $row['password']))
                 return $row;
+                else
+                {
+                    return false;
+                }
             } 
             else
             {

@@ -1,6 +1,12 @@
 <?php
 // koneksikan ke dababase
 $mysqli = new mysqli("localhost", "root", "", "fullstack");
+session_start();
+if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
 
 if ($mysqli->connect_error) {
     die("Failed to connect to MySQL: " . $mysqli->connect_error);
@@ -54,7 +60,7 @@ if ($mysqli->connect_error) {
             <p>Foto Dosen:</p>
             <p><label>Pilih Foto</label> 
             <div id = 'fotodosen'>
-                <input type = "file" name = "foto[]" accept = "image/jpg, image/png">
+                <input type = "file" name = "foto[]" accept = "image/jpeg, image/png">
             </div>
             <p><button name="btnSimpan" value="simpan" type="submit">Simpan</button></p>
         </form>

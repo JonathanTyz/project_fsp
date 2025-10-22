@@ -1,5 +1,20 @@
     <?php
     $mysqli = new mysqli("localhost", "root", "", "fullstack");
+    session_start();
+    if (!isset($_SESSION['user'])) 
+    {
+        header("Location: login.php");
+        exit();
+    }
+
+    if (!isset($_GET['nrp'])) 
+    {
+        echo "<p>NRP tidak ditemukan di URL.</p>";
+        echo "<p style='text-align:center;'><a href='admin_mahasiswa.php'>Kembali</a></p>";
+        exit;
+    }
+    
+
     $id = $_GET['nrp'];
     //dapatkan mahasiswa yang akan diedit
     $sql = "SELECT m.nrp, m.nama, m.gender, m.tanggal_lahir, m.angkatan, m.foto_extention,
@@ -13,13 +28,19 @@
     $res = $stmt->get_result();
     $row = $res->fetch_assoc();
     $stmt->close();
+
+    if (!$row) {
+        echo "<p>Data mahasiswa dengan NRP <b>$id</b> tidak ditemukan.</p>";
+        echo "<p style='text-align:center;'><a href='admin_mahasiswa.php'>Kembali</a></p>";
+        exit;
+    }
     ?>
 
     <html>
         <head>
             <meta charset="UTF-8">
             <meta name = "viewport" content = "width=device-width, initial-scale=1">
-            <title>Edit Data Dosen</title>
+            <title>Edit Data Mahasiswa</title>
             <style>
                 h2{
                     text-align: center;
@@ -65,7 +86,7 @@
                 <p><label>Tanggal Lahir: </label> <br> <input type = "date" name = "tanggal_lahir"  value = "<?php echo $row['tanggal_lahir']; ?>"></p>
                 <p><label>Angkatan: </label> <br> <input type = "number" name = "angkatan" value = "<?php echo $row['angkatan']; ?>"></p>
                 <div id = 'fotomahasiswa'>
-                    <input type = "file" name = "foto" accept = "image/jpg, image/png">
+                    <input type = "file" name = "foto" accept = "image/jpeg, image/png">
                 </div>
                 <br>
                 <button name="btnEdit" value="Edit" type="submit">Simpan</button></p>

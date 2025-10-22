@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<?php
-    require_once 'class/dosen.php';
-?>
 <html>
     <?php //Admin Kelola Data Dosen 
-        $mysqli = new mysqli("localhost", "root", "", "fullstack");
+    require_once 'class/dosen.php';
+    $mysqli = new mysqli("localhost", "root", "", "fullstack");
     if ($mysqli->connect_error) {
         die("Failed to connect to MySQL: " . $mysqli->connect_error);
     }
@@ -29,7 +27,7 @@
             font-size: 20px;
         }
         table {
-           width: 80%;
+            width: 80%;
             margin: 20px auto;
             background: white;
             border: 10px #333;
@@ -101,7 +99,7 @@
                 while($row = $res->fetch_assoc()) {
                     echo "<tr>";
                         // Tampilkan foto & data dosen
-                        echo "<td> <img class = 'poster' src = 'image_dosen/" . $row['npk'] . "." . $row['foto_extension'] . "' width='100'></td>";
+                        echo "<td> <img src = 'image_dosen/" . $row['npk'] . "." . $row['foto_extension'] . "' width='100'></td>";
                         echo "<td>" . $row['nama'] . "</td>";
                         echo "<td>" . $row['npk'] . "</td>";
                         echo "<td>";
