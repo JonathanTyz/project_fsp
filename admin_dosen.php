@@ -33,7 +33,7 @@
             font-size: 20px;
         }
         table {
-           width: 80%;
+            width: 80%;
             margin: 20px auto;
             background: white;
             border: 10px #333;
@@ -76,6 +76,10 @@
             font-size: 20px;
             font-weight: bold;
         }
+        .foto{
+            width: 120px;
+            height: 120px;
+        }
         
     </style>
 </head>
@@ -105,7 +109,7 @@
                 while($row = $res->fetch_assoc()) {
                     echo "<tr>";
                         // Tampilkan foto & data dosen
-                        echo "<td> <img class = 'poster' src = 'image_dosen/" . $row['npk'] . "." . $row['foto_extension'] . "' width='100'></td>";
+                        echo "<td> <img class = 'foto' src = 'image_dosen/" . $row['npk'] . "." . $row['foto_extension'] . "' width='100'></td>";
                         echo "<td>" . $row['nama'] . "</td>";
                         echo "<td>" . $row['npk'] . "</td>";
                         echo "<td>";

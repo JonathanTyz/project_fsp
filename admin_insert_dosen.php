@@ -60,7 +60,7 @@ if ($mysqli->connect_error) {
             <p>Foto Dosen:</p>
             <p><label>Pilih Foto</label> 
             <div id = 'fotodosen'>
-                <input type = "file" name = "foto[]" accept = "image/jpg, image/png">
+                <input type = "file" name = "foto[]" accept = "image/jpeg, image/png">
             </div>
             <p><button name="btnSimpan" value="simpan" type="submit">Simpan</button></p>
         </form>

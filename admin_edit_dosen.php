@@ -80,7 +80,7 @@ if (!$row) {
             <p><label>NPK: </label><br><input type = "text" name = "npk" value = "<?php echo $row['npk']; ?>"></p>
             <p><label>Nama: </label><br><input type = "text" name = "nama" value = "<?php echo $row['nama']; ?>"></p>
             <div id = 'fotodosen'>
-                <input type = "file" name = "foto" accept = "image/jpg, image/png">
+                <input type = "file" name = "foto" accept = "image/jpeg, image/png">
             </div>
             <br>
             <p><button name="btnEdit" value="Edit" type="submit">Simpan</button></p>

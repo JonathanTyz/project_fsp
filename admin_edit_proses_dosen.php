@@ -78,11 +78,6 @@ else
         $stmt->bind_param("sss", $username, $npk, $npk_lama);
         $stmt->execute();
 
-        $sql = "UPDATE akun SET username = ? WHERE npk_dosen = ?";
-        $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param("ss", $username, $npk); 
-        $stmt->execute();
-
         $stmt->close();
         $mysqli->close();
         }

@@ -61,7 +61,7 @@
                 <p>Foto Mahasiswa:</p>
                 <p><label>Pilih Foto</label> 
                 <div id = 'fotomahasiswa'>
-                    <input type = "file" name = "foto[]" accept = "image/jpg, image/png">
+                    <input type = "file" name = "foto[]" accept = "image/jpeg, image/png">
                 </div>
                 <p><button name="btnSimpan" value="simpan" type="submit">Simpan</button></p>
             </form>

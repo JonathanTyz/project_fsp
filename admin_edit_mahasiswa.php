@@ -86,7 +86,7 @@
                 <p><label>Tanggal Lahir: </label> <br> <input type = "date" name = "tanggal_lahir"  value = "<?php echo $row['tanggal_lahir']; ?>"></p>
                 <p><label>Angkatan: </label> <br> <input type = "number" name = "angkatan" value = "<?php echo $row['angkatan']; ?>"></p>
                 <div id = 'fotomahasiswa'>
-                    <input type = "file" name = "foto" accept = "image/jpg, image/png">
+                    <input type = "file" name = "foto" accept = "image/jpeg, image/png">
                 </div>
                 <br>
                 <button name="btnEdit" value="Edit" type="submit">Simpan</button></p>

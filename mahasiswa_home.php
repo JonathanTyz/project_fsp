@@ -13,7 +13,6 @@ if (!isset($_SESSION['user']))
     <style>
         body{
             font-family: 'Times New Roman', Times, serif;
-            justify-content: center;
             align-items: center;
             margin: 0;
         }

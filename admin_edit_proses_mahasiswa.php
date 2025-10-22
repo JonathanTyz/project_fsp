@@ -81,16 +81,11 @@ else  {
         $stmt = $mysqli->prepare($sql);
         $stmt->bind_param("sss", $username, $nrp, $nrp_lama);
         $stmt->execute();
-
-        $sql = "UPDATE akun SET username = ? WHERE nrp_mahasiswa = ?";
-        $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param("ss", $username, $nrp);
-        $stmt->execute();
+        $stmt->close();
+        $mysqli->close();
     }
-
     }
         
-$mysqli->close();
 
 header("Location: admin_mahasiswa.php");
 ?>

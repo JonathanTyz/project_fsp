@@ -76,6 +76,10 @@
             font-size: 20px;
             font-weight: bold;
         }
+        .foto{
+            width: 120px;
+            height: 120px;
+        }
     </style>
 </head>
 <body>
@@ -105,7 +109,7 @@
                 $res = $mahasiswa->getMahasiswa($cari_persen, $offset, $PER_PAGE);
                 while($row = $res->fetch_assoc()) {
                     echo "<tr>";//buat nampilin foto mahasiswa 
-                        echo "<td> <img class = 'poster' src = 'image_mahasiswa/" . $row['nrp'] . "." . $row['foto_extention'] . "' width='100'></td>";
+                        echo "<td> <img class = 'foto' src = 'image_mahasiswa/" . $row['nrp'] . "." . $row['foto_extention'] . "' width='100'></td>";
                         echo "<td>" . $row['nrp'] . "</td>";
                         echo "<td>" . $row['nama'] . "</td>";
                         echo "<td>" . $row['gender'] . "</td>";
