@@ -65,11 +65,7 @@ class group extends classParent {
         $nama  = $data['name'];
         $desk  = $data['deskripsi'];
         $jenis = $data['jenis'];
-        $kode  = $data['kodePendaftaran'];
-
-        if (empty($kode)) {
-            $kode = strtoupper(substr(md5(uniqid()), 0, 8));
-        }
+        $kodePendaftaran = strtoupper(substr(bin2hex(random_bytes(4)), 0, 8));
 
         $sql = "INSERT INTO grup (username_pembuat, nama, deskripsi, tanggal_pembentukan, jenis, kode_pendaftaran)
                 VALUES (?, ?, ?, NOW(), ?, ?)";
@@ -79,7 +75,7 @@ class group extends classParent {
             return false;
         }
 
-        $stmt->bind_param("sssss", $username, $nama, $desk, $jenis, $kode);
+        $stmt->bind_param("sssss", $username, $nama, $desk, $jenis, $kodePendaftaran);
 
         if ($stmt->execute()) {
             return $stmt->insert_id;

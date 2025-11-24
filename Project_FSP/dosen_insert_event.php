@@ -5,8 +5,8 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-// Ambil id grup dari query string
-$idgrup = isset($_GET['idgrup']) ? (int)$_GET['idgrup'] : 0;
+$idgrup = $_POST['idgrup'];
+
 ?>
 <!DOCTYPE html>
 <html>

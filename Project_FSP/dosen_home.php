@@ -12,6 +12,7 @@ $PER_PAGE = 3;
 $offset = isset($_GET['start']) ? (int)$_GET['start'] : 0;
 $res = $group->getAllGroup($_SESSION['user']['username'], $offset, $PER_PAGE);  
 
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -84,8 +85,8 @@ $res = $group->getAllGroup($_SESSION['user']['username'], $offset, $PER_PAGE);
             echo "<td>{$row['jenis']}</td>";
             echo "<td>{$row['kode_pendaftaran']}</td>";
             
-            echo "<td><form action='dosen_detail_group.php' method='post'>
-                <input type='hidden' name='id' value='{$row['idgrup']}'>
+            echo "<td><form action ='dosen_detail_group.php' method='post'>
+                <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
                 <button type='submit'>Lihat Detail</button>
             </form></td>";
             echo "</tr>";

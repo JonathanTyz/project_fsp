@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$group_id = (int)$_POST['id'];
+$group_id = (int)$_POST['idgrup'];
 $group = new group();
 $group_detail = $group->getDetailGroup($group_id);
 
@@ -177,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                 <th>Keterangan</th>
                 <th>Jenis</th>
                 <th>Foto</th>
-                <th>Aksi</th>
+                <th colspan = '2'>Aksi</th>
             </tr>
 
             <?php foreach ($group_events as $events) { ?>
@@ -188,10 +188,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                     <td><?php echo $events['jenis']; ?></td>
                     <td>
                         <?php
-                            if (!empty($events['foto']) && file_exists("image_events/" . $events['foto'])) {
-                                echo '<img src="image_events/' . $events['foto'] . '" width="50">';
+                            if (!empty($events['poster_extension'])) {
+                                $filename = $events['idevent'] . "." . $events['poster_extension'];
+                                if (file_exists("image_events/" . $filename)) 
+                                {
+                                    echo '<img src="image_events/' . $filename . '" width="200">';
+                                } 
+                                else 
+                                {
+                                    echo "No photo";
+                                }
                             } else {
-                                echo 'No photo';
+                                echo "No photo";
                             }
                         ?>
                     </td>
@@ -202,11 +210,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                             <button class="button" name="btnHapus" value="hapus" type="submit">Hapus</button>
                         </form>
                     </td>
+                    <td>
+                        <form method="post" action="dosen_edit_event.php" style="margin:0;">
+                            <input type="hidden" name="idgrup" value="<?php echo $events['idgrup']; ?>">
+                            <input type="hidden" name="idevent" value="<?php echo $events['idevent']; ?>">
+                            <input type="hidden" name="judul" value="<?php echo htmlspecialchars($events['judul']); ?>">
+                            <input type="hidden" name="tanggal" value="<?php echo $events['tanggal']; ?>">
+                            <input type="hidden" name="jenis" value="<?php echo $events['jenis']; ?>">
+                            <input type="hidden" name="keterangan" value="<?php echo htmlspecialchars($events['keterangan']); ?>">
+                            <input type="hidden" name="poster_extension" value="<?php echo $events['poster_extension']; ?>">
+                            <button class="button" type="submit">Edit</button>
+                        </form>
+                    </td>
                 </tr>
             <?php } ?>
         </table>
         <br>
-        <a href = "dosen_insert_event.php" class = 'button' type="submit">Insert Event</a>
+        <form action = "dosen_insert_event.php" method = 'post' >
+            <input type="hidden" name="idgrup" value="<?php echo $group_id; ?>">
+            <button class = 'button' type="submit">Tambah Event</button>
+        </form>
     </div>
 
     <div class="daftarMember">

@@ -23,11 +23,10 @@ if (!empty($_FILES['poster']['name'])) {
     $poster_temp = $_FILES['poster']['tmp_name'];
     $poster_extension = strtolower(pathinfo($poster_name, PATHINFO_EXTENSION));
 
-    $poster_path = "image_events/" . time() . "." . $poster_extension;
+    $poster_path = "image_events/" . $idevent. "." . $poster_extension;
     move_uploaded_file($poster_temp, $poster_path);
 }
 
-// Siapkan data untuk insert
 $data = [
     'idgrup' => $idgrup,
     'judul' => $judul,
@@ -38,7 +37,6 @@ $data = [
     'poster_extension' => $poster_extension
 ];
 
-// Insert ke database
 $idevent = $event->insertEvent($data);
 
 if ($idevent !== false && $poster_extension !== null) {

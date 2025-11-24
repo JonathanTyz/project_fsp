@@ -14,7 +14,7 @@
     $success = $event->deleteEvents($group_id, $idevent);
 
     if ($success) {
-        header("Location: dosen_detail_group.php?");
+        header("Location: dosen_detail_group.php?idgrup=" . $group_id);
     } else {
         echo "Gagal Menghapus Event.";
         echo "<br><a href='dosen_detail_group.php?id=" . $group_id . "'>Kembali ke detail grup?</a>";

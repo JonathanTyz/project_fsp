@@ -61,7 +61,6 @@ if ($mysqli->connect_error) {
                     <option value="Publik">Publik</option>
                 </select>
             </p>
-            <p><label>Kode Pendaftaran: </label><br> <input type = "text" name = "kodePendaftaran"></p>
             <p><button name="btnSimpan" value="simpan" type="submit">Simpan</button></p>
         </form>
         <script>

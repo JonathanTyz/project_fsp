@@ -28,6 +28,27 @@ class Event extends classParent {
         return $stmt->get_result();
     }
 
+    public function updateEvent($data)
+    {
+        $sql = "UPDATE event 
+                SET judul = ?, tanggal = ?, jenis = ?, keterangan = ?, poster_extension = ?
+                WHERE idevent = ? AND idgrup = ?";
+
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param(
+            "sssssii",
+            $data['judul'],
+            $data['tanggal'],
+            $data['jenis'],
+            $data['keterangan'],
+            $data['poster_extension'],
+            $data['idevent'],
+            $data['idgrup']
+        );
+        $stmt->execute();
+    }
+
+
     public function insertEvent($data)
     {
         $idgrup = $data['idgrup'];

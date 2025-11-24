@@ -12,10 +12,9 @@ $username = $_SESSION['user']['username'];
 $name  = $_POST['name'];
 $desk  = $_POST['deskripsi'];
 $jenis = $_POST['jenis'];
-$kode  = $_POST['kodePendaftaran'];
 
 $group = new group();
-if ($group->insertGroup(array('name' => $name, 'deskripsi' => $desk, 'jenis' => $jenis, 'kodePendaftaran' => $kode))) 
+if ($group->insertGroup(array('name' => $name, 'deskripsi' => $desk, 'jenis' => $jenis))) 
     {
         header("Location: dosen_home.php");
         exit();
