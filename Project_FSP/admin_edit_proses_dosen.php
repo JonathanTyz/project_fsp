@@ -54,6 +54,7 @@ if (!empty($_FILES['foto']['name'])) {
     $foto_baru = "image_dosen/" . $npk . "." . $ext;
     move_uploaded_file($_FILES['foto']['tmp_name'], $foto_baru);
 }
+
 else 
 {
     $sql = "UPDATE dosen SET npk = ?, nama = ? WHERE npk = ?";

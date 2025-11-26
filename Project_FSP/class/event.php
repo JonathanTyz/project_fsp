@@ -19,6 +19,15 @@ class Event extends classParent {
         return $stmt->get_result();
     }
 
+    public function getPosterExtension($idevent) {
+        $stmt = $this->mysqli->prepare("SELECT poster_extension FROM event WHERE idevent=?");
+        $stmt->bind_param("i", $idevent);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result['poster_extension'];
+    }
+
+
     public function getDetailEvent($idevent)
     {
         $sql = "SELECT * FROM event WHERE idevent = ?";
@@ -77,7 +86,6 @@ class Event extends classParent {
         $sql = "DELETE FROM event WHERE idevent = ? AND idgrup = ?";
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param("ii", $idevent, $idgrup);
-
 
         if ($stmt->execute()) {
             return true;

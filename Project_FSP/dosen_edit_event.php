@@ -54,7 +54,7 @@ $poster_extension = $_POST['poster_extension'];
         <h2 class = 'pembukaanteks'>Edit Event</h2>
         <div class="isiInput">
             <h3>Lakukan Edit Event</h3>
-            <form action="dosen_edit_event_proses.php" method="post">
+            <form action="dosen_edit_event_proses.php" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="idevent" value="<?php echo $idevent ?>">
                 <input type="hidden" name="idgrup" value="<?php echo $idgrup ?>">
 
@@ -62,7 +62,7 @@ $poster_extension = $_POST['poster_extension'];
                 <input type="text" name="judul" value="<?php echo $judul ?>"><br><br>
 
                 <label>Tanggal:</label><br>
-                <input type="date" name="tanggal" value = "<?php echo $tanggal?>"><br>
+                <input type="date" name="tanggal" required value = "<?php echo $tanggal?>"><br>
 
                 <label>Jenis:</label><br>
                 
@@ -77,6 +77,8 @@ $poster_extension = $_POST['poster_extension'];
                 <label>Foto:</label><br>
                 <input type = "file" name = "foto" accept = "image/jpeg, image/png">
                 <button type="submit" name = 'btnSubmit'>Update</button>
+
+                <input type = "hidden" name = "poster_extension" value = "<?php echo $poster_extension?>">
             </form>
         </div>
     </body>

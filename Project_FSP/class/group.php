@@ -38,14 +38,30 @@ class group extends classParent {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function getGroupMembers($idgrup)
+    public function getGroupMembersMahasiswa($idgrup)
     {
         $sql = "SELECT mg.username, m.nama
             FROM member_grup mg
-            LEFT JOIN akun a ON mg.username = a.username
-            LEFT JOIN mahasiswa m ON a.nrp_mahasiswa = m.nrp
+            JOIN akun a ON mg.username = a.username
+            JOIN mahasiswa m ON a.nrp_mahasiswa = m.nrp
             WHERE mg.idgrup = ?
             ORDER BY m.nama ASC";
+
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("i", $idgrup);
+        $stmt->execute();
+
+        return $stmt->get_result(); 
+    }
+
+    public function getGroupMembersDosen($idgrup)
+    {
+        $sql = "SELECT mg.username, d.nama
+            FROM member_grup mg
+            JOIN akun a ON mg.username = a.username
+            JOIN dosen d ON a.npk_dosen = d.npk
+            WHERE mg.idgrup = ?
+            ORDER BY d.nama ASC";
 
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param("i", $idgrup);
@@ -150,7 +166,7 @@ public function insertMember($idgrup, $username)
     $stmt->bind_param("is", $idgrup, $username);
     if ($stmt->execute())
     {
-        return true; 
+        return $stmt->affected_rows > 0;
     } 
     else 
     {

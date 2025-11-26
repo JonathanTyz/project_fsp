@@ -14,7 +14,8 @@ $desk  = $_POST['deskripsi'];
 $jenis = $_POST['jenis'];
 
 $group = new group();
-if ($group->insertGroup(array('name' => $name, 'deskripsi' => $desk, 'jenis' => $jenis))) 
+$result = $group->insertGroup(array('name' => $name, 'deskripsi' => $desk, 'jenis' => $jenis));
+if ($result) 
     {
         header("Location: dosen_home.php");
         exit();

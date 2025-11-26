@@ -14,9 +14,10 @@
     $success = $group->insertMember($group_id, $username);
 
     if ($success) {
-        header("Location: dosen_detail_group.php?");
+        header("Location: dosen_detail_group.php?id=" . $group_id);
+        exit();
     } else {
-        echo "Gagal Menghapus Anggota Grup.";
+        echo "Gagal Insert Anggota Grup.";
         echo "<br><a href='dosen_detail_group.php?id=" . $group_id . "'>Kembali ke detail grup?</a>";
     }
     exit();

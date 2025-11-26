@@ -7,9 +7,6 @@ class Chat extends classParent {
         parent::__construct();
     }
 
-    /* =======================
-         GET CHAT BY THREAD
-    ========================== */
     public function getChatThread($idthread)
     {
         $sql = "SELECT * FROM chat 
@@ -21,9 +18,6 @@ class Chat extends classParent {
         return $stmt->get_result();
     }
 
-    /* =======================
-          INSERT CHAT MESSAGE
-    ========================== */
     public function insertChat($idthread, $username, $isi)
     {
         $sql = "INSERT INTO chat (idthread, username_pembuat, isi, tanggal_pembuatan)
@@ -35,9 +29,7 @@ class Chat extends classParent {
         return $stmt->execute();
     }
 
-    /* =======================
-          CREATE THREAD
-    ========================== */
+
     public function insertThread($idgrup, $username)
     {
         $sql = "INSERT INTO thread (username_pembuat, idgrup, tanggal_pembuatan, status)
