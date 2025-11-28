@@ -27,7 +27,6 @@ class Event extends classParent {
         return $result['poster_extension'];
     }
 
-
     public function getDetailEvent($idevent)
     {
         $sql = "SELECT * FROM event WHERE idevent = ?";
@@ -35,6 +34,15 @@ class Event extends classParent {
         $stmt->bind_param("i", $idevent);
         $stmt->execute();
         return $stmt->get_result();
+    }
+
+    public function updatePoster($idevent, $ext)
+    {
+        $stmt = $this->mysqli->prepare("
+            UPDATE event SET poster_extension = ? WHERE idevent = ?
+        ");
+        $stmt->bind_param("si", $ext, $idevent);
+        return $stmt->execute();
     }
 
     public function updateEvent($data)
@@ -57,28 +65,28 @@ class Event extends classParent {
         $stmt->execute();
     }
 
-
     public function insertEvent($data)
     {
-        $idgrup = $data['idgrup'];
-        $judul = $data['judul'];
-        $slug = $data['judul_slug'];
-        $tanggal = $data['tanggal'];
-        $keterangan = $data['keterangan'];
-        $jenis = $data['jenis'];
-        $poster = $data['poster_extension'];
-
-        $sql = "INSERT INTO event (idgrup, judul, `judul-slug`, tanggal, keterangan, jenis, poster_extension)
+        $sql = "INSERT INTO event 
+                (idgrup, judul, `judul-slug`, tanggal, keterangan, jenis, poster_extension)
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->mysqli->prepare($sql);
-        $stmt->bind_param("issssss", $idgrup, $judul, $slug, $tanggal, $keterangan, $jenis, $poster);
+        $stmt->bind_param(
+            "issssss",
+            $data['idgrup'],
+            $data['judul'],
+            $data['judul_slug'],
+            $data['tanggal'],
+            $data['keterangan'],
+            $data['jenis'],
+            $data['poster_extension']
+        );
 
         if ($stmt->execute()) {
             return $stmt->insert_id;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function deleteEvents($idgrup,$idevent)
@@ -87,10 +95,6 @@ class Event extends classParent {
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param("ii", $idevent, $idgrup);
 
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $stmt->execute();
     }
 }

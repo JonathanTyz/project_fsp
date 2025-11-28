@@ -197,6 +197,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 <td><p><?php echo $group_detail['kode_pendaftaran']; ?></p></td>
             </tr>
         </table>
+         <form action = "dosen_edit_group.php" method = 'post' >
+            <input type="hidden" name="idgrup" value="<?php echo $group_id; ?>">
+            <button class = 'button' type="submit">Edit Group</button>
+        </form>
     </div>
 
 

@@ -8,25 +8,18 @@ if (!isset($_SESSION['user'])) {
 }
 
 $event = new Event();
+
 $idgrup = $_POST['idgrup'];
 $judul = $_POST['judul'];
-$tanggal = $_POST['tanggal'];
+$tanggal = str_replace('T', ' ', $_POST['tanggal']);
 $keterangan = $_POST['keterangan'];
 $jenis = $_POST['jenis'];
+
 $judul_slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $judul));
 
-$poster_extension = null;
-$poster_path = null;
-
-if (!empty($_FILES['poster']['name'])) {
-    $poster_name = $_FILES['poster']['name'];
-    $poster_temp = $_FILES['poster']['tmp_name'];
-    $poster_extension = strtolower(pathinfo($poster_name, PATHINFO_EXTENSION));
-
-    $poster_path = "image_events/" . $idevent. "." . $poster_extension;
-    move_uploaded_file($poster_temp, $poster_path);
-}
-
+// ===============================
+// 1. INSERT EVENT TANPA POSTER
+// ===============================
 $data = [
     'idgrup' => $idgrup,
     'judul' => $judul,
@@ -34,14 +27,30 @@ $data = [
     'tanggal' => $tanggal,
     'keterangan' => $keterangan,
     'jenis' => $jenis,
-    'poster_extension' => $poster_extension
+    'poster_extension' => null
 ];
 
 $idevent = $event->insertEvent($data);
 
-if ($idevent !== false && $poster_extension !== null) {
-    $new_path = "image_events/" . $idevent . "." . $poster_extension;
-    rename($poster_path, $new_path);
+// ===============================
+// 2. UPLOAD POSTER (opsional)
+// ===============================
+if (!empty($_FILES['poster']['name'])) {
+
+    $poster_name = $_FILES['poster']['name'];
+    $poster_tmp = $_FILES['poster']['tmp_name'];
+    $poster_ext = strtolower(pathinfo($poster_name, PATHINFO_EXTENSION));
+
+    // buat folder kalau belum ada
+    if (!file_exists("image_events")) {
+        mkdir("image_events", 0777, true);
+    }
+
+    $path = "image_events/" . $idevent . "." . $poster_ext;
+
+    if (move_uploaded_file($poster_tmp, $path)) {
+        $event->updatePoster($idevent, $poster_ext);
+    }
 }
 
 header("Location: dosen_detail_group.php?id=" . $idgrup);
