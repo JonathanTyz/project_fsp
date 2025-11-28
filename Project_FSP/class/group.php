@@ -155,22 +155,31 @@ class group extends classParent {
 
 public function insertMember($idgrup, $username)
 {
+    $check = $this->mysqli->prepare("
+        SELECT 1 FROM member_grup WHERE idgrup = ? AND username = ?
+    ");
+    $check->bind_param("is", $idgrup, $username);
+    $check->execute();
+    $result = $check->get_result();
+
+    if ($result->num_rows > 0) {
+        return "ada";
+    }
+
     $sql = "INSERT INTO member_grup (idgrup, username) VALUES (?, ?)";
     $stmt = $this->mysqli->prepare($sql);
 
-    if ($stmt === false) 
-    {
-        return false; 
+    if (!$stmt) {
+        return "error";
     }
 
     $stmt->bind_param("is", $idgrup, $username);
-    if ($stmt->execute())
-    {
-        return $stmt->affected_rows > 0;
-    } 
-    else 
-    {
-        return false; 
+
+    if ($stmt->execute()) {
+        return "sukses";
+    } else {
+        return "error";
     }
 }
+
 }

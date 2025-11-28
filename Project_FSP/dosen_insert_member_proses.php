@@ -1,24 +1,30 @@
-    <?php
-    session_start();
-    if (!isset($_SESSION['user'])) {
-        header("Location: login.php");
-        exit();
-    }
+<?php
+require_once "class/group.php";
 
-    require_once 'class/group.php';
+$gr = new group();
 
-    $group_id = (int)$_POST['id'];
-    $username = $_POST['username'];
-    
-    $group = new group();
-    $success = $group->insertMember($group_id, $username);
+// Pastikan idgrup & username dikirim
+if (!isset($_POST['idgrup']) || !isset($_POST['username'])) {
+    die("ID group atau username tidak dikirim.");
+}
 
-    if ($success) {
-        header("Location: dosen_detail_group.php?id=" . $group_id);
-        exit();
-    } else {
-        echo "Gagal Insert Anggota Grup.";
-        echo "<br><a href='dosen_detail_group.php?id=" . $group_id . "'>Kembali ke detail grup?</a>";
-    }
-    exit();
-    ?>
+$idgrup   = intval($_POST['idgrup']);
+$username = $_POST['username'];
+
+$result = $gr->insertMember($idgrup, $username);
+
+if ($result === "ada") {
+    echo "User sudah ada di dalam group.";
+    echo "<a href='dosen_detail_group.php?id=$idgrup'>Kembali</a>";
+    exit;
+}
+else if ($result === "sukses") {
+    echo "Berhasil menambahkan anggota.";
+    echo "<a href='dosen_detail_group.php?id=$idgrup'>Kembali</a>";
+    exit;
+}
+else {
+    echo "Gagal Insert Anggota Grup.";
+    echo "<a href='dosen_detail_group.php?id=$idgrup'>Kembali</a>";
+    exit;
+}

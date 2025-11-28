@@ -321,7 +321,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     echo "<td>" . $pencarian['nama'] . "</td>";
                     ?>
                     <form method="post" action="dosen_insert_member_proses.php">
-                        <input type="hidden" name="id" value="<?php echo $group_id; ?>">
+                        <input type="hidden" name="idgrup" value="<?php echo $group_id; ?>">
                         <input type="hidden" name="username" value="<?php echo $pencarian['username']; ?>">
                         <td><button class="button" name="btnTambah" value="tambah" type="submit">Tambah</button></td>
                     </form>
@@ -392,7 +392,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     echo "<td>" . $pencarian['nama'] . "</td>";
                     ?>
                     <form method="post" action="dosen_insert_member_proses.php">
-                        <input type="hidden" name="id" value="<?php echo $group_id; ?>">
+                        <input type="hidden" name="idgrup" value="<?php echo $group_id; ?>">
                         <input type="hidden" name="username" value="<?php echo $pencarian['username']; ?>">
                         <td><button class="button" name="btnTambah" value="tambah" type="submit">Tambah</button></td>
                     </form>
