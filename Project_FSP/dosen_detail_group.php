@@ -13,9 +13,9 @@ if (isset($_POST['idgrup']))
 {
     $group_id = (int)$_POST['idgrup'];
 }
-elseif (isset($_GET['id'])) 
+elseif (isset($_GET['idgrup'])) 
 {
-    $group_id = (int)$_GET['id'];
+    $group_id = (int)$_GET['idgrup'];
 }
 
 $group = new group();
@@ -196,11 +196,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 <td><p>Kode Pendaftaran</p></td>
                 <td><p><?php echo $group_detail['kode_pendaftaran']; ?></p></td>
             </tr>
-        </table>
-         <form action = "dosen_edit_group.php" method = 'post' >
+            <tr>
+                <td><p>Hapus Group</p></td>
+                <?php echo "<td><p>
+                    <form action ='dosen_delete_group.php' method='post'>
+                        <input type='hidden' name='idgrup' value='{$group_id}'>
+                        <button class='button' name='btnHapus' value='hapus' type='submit'>Hapus Group</button>
+                    </form>
+                    </p></td>;"?>
+            </tr>
+            <tr>
+    <td><p>Edit Group</p></td>
+    <td>
+        <form action="dosen_edit_group.php" method="post">
+
             <input type="hidden" name="idgrup" value="<?php echo $group_id; ?>">
-            <button class = 'button' type="submit">Edit Group</button>
+            <input type="hidden" name="nama" value="<?php echo $group_detail['nama']; ?>">
+            <input type="hidden" name="deskripsi" value="<?php echo $group_detail['deskripsi']; ?>">
+            <input type="hidden" name="jenis" value="<?php echo $group_detail['jenis']; ?>">
+
+            <button class="button" type="submit">Edit Group</button>
         </form>
+    </td>
+</tr>
+
+        </table>
     </div>
 
 
@@ -321,7 +341,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     echo "<td>" . $pencarian['nama'] . "</td>";
                     ?>
                     <form method="post" action="dosen_insert_member_proses.php">
-                        <input type="hidden" name="idgrup" value="<?php echo $group_id; ?>">
+                        <input type="hidden" name="id" value="<?php echo $group_id; ?>">
                         <input type="hidden" name="username" value="<?php echo $pencarian['username']; ?>">
                         <td><button class="button" name="btnTambah" value="tambah" type="submit">Tambah</button></td>
                     </form>
@@ -392,7 +412,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     echo "<td>" . $pencarian['nama'] . "</td>";
                     ?>
                     <form method="post" action="dosen_insert_member_proses.php">
-                        <input type="hidden" name="idgrup" value="<?php echo $group_id; ?>">
+                        <input type="hidden" name="id" value="<?php echo $group_id; ?>">
                         <input type="hidden" name="username" value="<?php echo $pencarian['username']; ?>">
                         <td><button class="button" name="btnTambah" value="tambah" type="submit">Tambah</button></td>
                     </form>

@@ -99,6 +99,27 @@ class group extends classParent {
             return false;
         }
     }
+
+    public function getAllPublicGroups($username, $offset = null, $limit = null)
+    {
+        if ($offset !== null && $limit !== null) {
+            $sql = "SELECT g.*
+                    FROM grup g
+                    LEFT JOIN member_grup mg
+                        ON g.idgrup = mg.idgrup 
+                        AND mg.username = ?
+                    WHERE g.jenis = 'Publik'
+                    AND mg.idgrup is NULL
+                    ORDER BY g.idgrup DESC
+                    LIMIT ?, ?";
+
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("sii", $username, $offset, $limit);
+        }
+
+    $stmt->execute();
+    return $stmt->get_result();
+    }
     public function deleteGroupMembers($group_id, $username)
     {
         $sql = "DELETE FROM member_grup 
@@ -153,33 +174,97 @@ class group extends classParent {
         }
     }
 
-public function insertMember($idgrup, $username)
+public function editGroup($idgrup, $nama, $jenis, $deskripsi)
 {
-    $check = $this->mysqli->prepare("
-        SELECT 1 FROM member_grup WHERE idgrup = ? AND username = ?
-    ");
-    $check->bind_param("is", $idgrup, $username);
-    $check->execute();
-    $result = $check->get_result();
-
-    if ($result->num_rows > 0) {
-        return "ada";
-    }
-
-    $sql = "INSERT INTO member_grup (idgrup, username) VALUES (?, ?)";
+    $sql = "UPDATE grup 
+            SET nama = ?, jenis = ?, deskripsi = ?
+            WHERE idgrup = ?";
     $stmt = $this->mysqli->prepare($sql);
 
-    if (!$stmt) {
-        return "error";
+    if ($stmt === false) 
+    {
+        return false; 
     }
 
-    $stmt->bind_param("is", $idgrup, $username);
-
-    if ($stmt->execute()) {
-        return "sukses";
-    } else {
-        return "error";
+    $stmt->bind_param("sssi", $nama, $jenis, $deskripsi, $idgrup);
+    if ($stmt->execute()) 
+    {
+        return $stmt->affected_rows > 0; 
+    } 
+    else 
+    {   
+        return false; 
     }
 }
 
+public function insertMember($idgrup, $username)
+{
+    $sql = "INSERT INTO member_grup (idgrup, username) VALUES (?, ?)";
+    $stmt = $this->mysqli->prepare($sql);
+
+    if ($stmt === false) 
+    {
+        return false; 
+    }
+
+    $stmt->bind_param("is", $idgrup, $username);
+    if ($stmt->execute())
+    {
+        return $stmt->affected_rows > 0;
+    } 
+    else 
+    {
+        return false; 
+    }
+}
+
+public function getAllGroupByMember($username, $offset = null, $limit = null)
+{
+    if ($offset !== null && $limit !== null) {
+        $sql = "SELECT g.* 
+                FROM grup g
+                JOIN member_grup mg ON g.idgrup = mg.idgrup
+                WHERE mg.username = ?
+                ORDER BY g.idgrup DESC
+                LIMIT ?, ?";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("sii", $username, $offset, $limit);
+    } 
+    else {
+        $sql = "SELECT g.* 
+                FROM grup g
+                JOIN member_grup mg ON g.idgrup = mg.idgrup
+                WHERE mg.username = ?
+                ORDER BY g.idgrup DESC";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("s", $username);
+    }
+
+    $stmt->execute();
+    return $stmt->get_result();
+}
+
+public function getGroupByKode($kode)
+{
+    $sql = "SELECT * FROM grup WHERE kode_pendaftaran = ?";
+    $stmt = $this->mysqli->prepare($sql);
+    $stmt->bind_param("s", $kode);
+    $stmt->execute();
+    if ($stmt === false) {
+        return false;
+    }
+    else{
+        return $stmt->get_result();
+    }
+}
+
+public function isMember($idgrup, $username)
+{
+    $sql = "SELECT * FROM member_grup WHERE idgrup = ? AND username = ?";
+    $stmt = $this->mysqli->prepare($sql);
+    $stmt->bind_param("is", $idgrup, $username);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    return $res->num_rows > 0;
+}
 }
