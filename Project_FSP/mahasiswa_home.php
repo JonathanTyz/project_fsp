@@ -92,6 +92,14 @@ $result_public = $group->getAllPublicGroups($_SESSION['user']['username'], $offs
             echo "<td>{$row['tanggal_pembentukan']}</td>";
             echo "<td>{$row['jenis']}</td>";
 
+            // LIHAT DETAIL GROUP
+            echo "<td>
+                <form action='mahasiswa_view_group.php' method='post'>
+                    <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                    <button type='submit'>Detail</button>
+                </form>
+            </td>";
+
             // LIHAT MEMBER
             echo "<td>
                 <form action='mahasiswa_view_member.php' method='post'>
@@ -174,7 +182,6 @@ if ($current_page < $max_page) {
     <h2>Welcome <?php echo $_SESSION['user']['username']; ?></h2>
     <h4>Role: Mahasiswa</h4>
 
-    <!-- JOIN GROUP -->
     <form action="mahasiswa_join_group.php" method="post">
         <p>Masukkan Kode Pendaftaran:</p>
         <input type="text" name="kode" required>

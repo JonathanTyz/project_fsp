@@ -43,36 +43,40 @@ $group_threads = $chat->getThreadGroup($group_id);
 $result_mahasiswa = null;
 $result_dosen = null;
 
-$conn = new mysqli("localhost", "root", "", "FULLSTACK");
+$conn = new mysqli("localhost", "root", "", "fullstack");
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') 
-{
-    if (!empty($_POST['search_mahasiswa'])) 
-    {
-        $keyword = $conn->real_escape_string($_POST['search_mahasiswa']);
+// Ambil semua mahasiswa
+$stmt = $conn->prepare("
+    SELECT m.nrp, m.nama, a.username
+    FROM mahasiswa m
+    JOIN akun a ON a.nrp_mahasiswa = m.nrp
+    LEFT JOIN member_grup mg 
+        ON mg.username = a.username 
+        AND mg.idgrup = ?
+    WHERE mg.username IS NULL
+    AND a.username != ?
+");
+$stmt->bind_param("is", $group_id, $_SESSION['user']['username']);
+$stmt->execute();
+$all_mahasiswa = $stmt->get_result();
 
-        $sql = "SELECT m.nrp, m.nama, a.username
-                FROM mahasiswa m
-                JOIN akun a ON a.nrp_mahasiswa = m.nrp
-                WHERE m.nrp LIKE '%$keyword%' 
-                OR m.nama LIKE '%$keyword%'";
 
-        $result_mahasiswa = $conn->query($sql);
-    }
+// Ambil semua dosen
+$stmt2 = $conn->prepare("
+    SELECT d.npk, d.nama, a.username
+    FROM dosen d
+    JOIN akun a ON a.npk_dosen = d.npk
+    LEFT JOIN member_grup mg 
+        ON mg.username = a.username 
+        AND mg.idgrup = ?
+    WHERE mg.username IS NULL
+    AND a.username != ?
+");
+$stmt2->bind_param("is", $group_id, $_SESSION['user']['username']);
+$stmt2->execute();
+$all_dosen = $stmt2->get_result();
 
-    if (!empty($_POST['search_dosen'])) 
-    {
-        $keyword = $conn->real_escape_string($_POST['search_dosen']);
-
-        $sql = "SELECT d.npk, d.nama, a.username
-                FROM dosen d
-                JOIN akun a ON a.npk_dosen = d.npk
-                WHERE d.npk LIKE '%$keyword%' 
-                OR d.nama LIKE '%$keyword%'";
-
-        $result_dosen = $conn->query($sql);
-    }
-}
+$conn->close();
 
 
 ?>
@@ -313,19 +317,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     </div>
 
     <div class="tambahMember">
-        <h3>Tambah Member Mahasiswa</h3>
-
-        <form method="post">
-            <input type="hidden" name="idgrup" value="<?php echo $group_id; ?>">
-            <input type="text" name="search_mahasiswa" class="search-box" placeholder="Cari NRP atau Nama">
-            <button type="submit">Cari</button>
-        </form>
-
         <?php   
-        if ($result_mahasiswa !== null) { 
-            
-            echo "<h4>Hasil Pencarian Mahasiswa:</h4>";
+            if ($result_mahasiswa !== null) {
+                $hasil = $result_mahasiswa;
+            } else 
+            {
+                $hasil = $all_mahasiswa;
+            }
 
+            echo "<h4>Daftar Mahasiswa</h4>";
             echo "<table>";
             echo "<tr>";
             echo "<th>NRP</th>";
@@ -333,30 +333,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             echo "<th>Aksi</th>";
             echo "</tr>";
 
-            if ($result_mahasiswa->num_rows > 0) {
-
-                while ($pencarian = $result_mahasiswa ->fetch_assoc()) {
+            if ($hasil->num_rows > 0) {
+                while ($mahasiswa = $hasil->fetch_assoc()) {
                     echo "<tr>";
-                    echo "<td>" . $pencarian['nrp'] . "</td>";
-                    echo "<td>" . $pencarian['nama'] . "</td>";
-                    ?>
-                    <form method="post" action="dosen_insert_member_proses.php">
-                        <input type="hidden" name="id" value="<?php echo $group_id; ?>">
-                        <input type="hidden" name="username" value="<?php echo $pencarian['username']; ?>">
-                        <td><button class="button" name="btnTambah" value="tambah" type="submit">Tambah</button></td>
-                    </form>
-                    <?php echo "</tr>";
-
+                    echo "<td>" . $mahasiswa['nrp'] . "</td>";
+                    echo "<td>" . $mahasiswa['nama'] . "</td>";
+            ?>
+                <form method="post" action="dosen_insert_member_proses.php">
+                    <input type="hidden" name="id" value="<?php echo $group_id; ?>">
+                    <input type="hidden" name="username" value="<?php echo $mahasiswa['username']; ?>">
+                    <td><button class="button" name="btnTambah" value="tambah" type="submit">Tambah</button></td>
+                </form>
+            <?php
+                    echo "</tr>";
                 }
-            } else 
+            } 
+            else 
             {
-                echo "<tr>";
-                echo "<td colspan='3'>Tidak ada hasil</td>";
-                echo "</tr>";
+                echo "<tr><td colspan='3'>Tidak ada data</td></tr>";
             }
             echo "</table>";
-        } 
-        ?>
+            ?>
     </div>
     
     <div class="daftarMember">
@@ -383,50 +380,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     </div>
 
 
-    <div class = 'tambahMember'>
-        <h3>Tambah Member Dosen</h3>
-
-        <form method="post">
-            <input type="hidden" name="idgrup" value="<?php echo $group_id; ?>">
-            <input type="text" name="search_dosen" class="search-box" placeholder="Cari NPK atau Nama">
-            <button type="submit">Cari</button>
-        </form>
-
+    <div class="tambahMember">
         <?php   
-        if ($result_dosen !== null) { 
-            
-            echo "<h4>Hasil Pencarian Dosen:</h4>";
+            if ($result_dosen !== null) {
+                $hasil = $result_dosen;
+            } else 
+            {
+                $hasil = $all_dosen;
+            }
 
+            echo "<h4>Daftar Dosen</h4>";
             echo "<table>";
             echo "<tr>";
-            echo "<th>NPK</th>";
+            echo "<th>NRP</th>";
             echo "<th>Nama</th>";
             echo "<th>Aksi</th>";
             echo "</tr>";
 
-            if ($result_dosen->num_rows > 0) {
-
-                while ($pencarian = $result_dosen->fetch_assoc()) {
+            if ($hasil->num_rows > 0) {
+                while ($dosen = $hasil->fetch_assoc()) {
                     echo "<tr>";
-                    echo "<td>" . $pencarian['npk'] . "</td>";
-                    echo "<td>" . $pencarian['nama'] . "</td>";
-                    ?>
-                    <form method="post" action="dosen_insert_member_proses.php">
-                        <input type="hidden" name="id" value="<?php echo $group_id; ?>">
-                        <input type="hidden" name="username" value="<?php echo $pencarian['username']; ?>">
-                        <td><button class="button" name="btnTambah" value="tambah" type="submit">Tambah</button></td>
-                    </form>
-                    <?php echo "</tr>";
-
+                    echo "<td>" . $dosen['npk'] . "</td>";
+                    echo "<td>" . $dosen['nama'] . "</td>";
+            ?>
+                <form method="post" action="dosen_insert_member_proses.php">
+                    <input type="hidden" name="id" value="<?php echo $group_id; ?>">
+                    <input type="hidden" name="username" value="<?php echo $dosen['username']; ?>">
+                    <td><button class="button" name="btnTambah" value="tambah" type="submit">Tambah</button></td>
+                </form>
+            <?php
+                    echo "</tr>";
                 }
-            } else 
+            } 
+            else 
             {
-                echo "<tr>";
-                echo "<td colspan='3'>Tidak ada hasil</td>";
-                echo "</tr>";
+                echo "<tr><td colspan='3'>Tidak ada data</td></tr>";
             }
             echo "</table>";
-        } ?>
+            ?>
     </div>
 
 </body>
