@@ -57,8 +57,8 @@ $idgrup = $_POST['idgrup'];
 
             <p><label>Jenis Event:</label><br>
             <select name="jenis" required>
-                <option value="Publik">Privat</option>
-                <option value="Privat">Publik</option>
+                <option value="Publik">Publik</option>
+                <option value="Privat">Privat</option>
             </select></p>
 
             <p><label>Poster Event:</label><br>
