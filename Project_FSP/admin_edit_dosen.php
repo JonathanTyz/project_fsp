@@ -84,8 +84,7 @@ if (!$row) {
             </div>
             <br>
             <p><button name="btnEdit" value="Edit" type="submit">Simpan</button></p>
-            <?php //buat agar ada npk untuk update where (npk_lama) serta penyimpanan atribut lama database 
-            // apabila user tidak update semua
+            <?php
             ?>
             <input type="hidden" name="npk_lama" value="<?php echo $row['npk']; ?>">
             <input type="hidden" name = "username_lama" value = "<?php echo $row['username'];?>">

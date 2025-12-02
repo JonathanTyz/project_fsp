@@ -11,9 +11,9 @@
     $PER_PAGE = 3;
     $offset = isset($_GET['start']) ? (int)$_GET['start'] : 0;
     $res = $group->getAllGroup($_SESSION['user']['username'], $offset, $PER_PAGE);  
-
-
-    ?>
+    $result_grup = $group->getAllGroupByMember($_SESSION['user']['username'], $offset, $PER_PAGE);
+    $result_public = $group->getAllPublicGroups($_SESSION['user']['username'], $offset, $PER_PAGE);
+    ?>  
     <!DOCTYPE html>
     <html>
     <head>
@@ -123,10 +123,98 @@
     ?>
     </p>
 
+    <div>
+        <h2>Grup yang anda ikuti</h2>
+        <table>
+        <thead>
+        <tr>
+            <th>Nama Grup</th>
+            <th>Deskripsi</th>
+            <th>Pembuat</th>
+            <th>Tanggal Dibentuk</th>
+            <th>Jenis</th>
+            <th colspan = "3">Aksi</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <?php 
+        while ($row = $result_grup->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>{$row['nama']}</td>";
+            echo "<td>{$row['deskripsi']}</td>";
+            echo "<td>{$row['username_pembuat']}</td>";
+            echo "<td>{$row['tanggal_pembentukan']}</td>";
+            echo "<td>{$row['jenis']}</td>";
+            // LIHAT DETAIL GROUP
+            echo "<td>
+                <form action='dosen_view_group.php' method='post'>
+                    <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                    <button type='submit'>Detail</button>
+                </form>
+            </td>";
+
+            // LIHAT MEMBER
+            echo "<td>
+                <form action='dosen_view_member.php' method='post'>
+                    <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                    <button type='submit'>Member</button>
+                </form>
+            </td>";
+
+            // KELUAR DARI GROUP
+            echo "<td>
+                <form action='dosen_keluar_group.php' method='post'>
+                    <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                    <button type='submit'>Keluar</button>
+                </form>
+            </td>";
+
+            echo "</tr>";
+        }
+        ?>
+        </tbody>
+        </table>
+    
+    </div>
+
+    <h2>Daftar Group Publik</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama Grup</th>
+                    <th>Deskripsi</th>
+                    <th>Pembuat</th>
+                    <th>Tanggal Dibentuk</th>
+                    <th>Jenis</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <?php 
+                while ($row = $result_public->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>{$row['nama']}</td>";
+                    echo "<td>{$row['deskripsi']}</td>";
+                    echo "<td>{$row['username_pembuat']}</td>";
+                    echo "<td>{$row['tanggal_pembentukan']}</td>";
+                    echo "<td>{$row['jenis']}</td>";
+                    echo "</tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+
     <div class="isi">
         <h2>Welcome <?php echo $_SESSION['user']['username']; ?></h2>
         <h4>Role: Dosen</h4>
-
+        <form action="dosen_join_group.php" method="post">
+                <p>Masukkan Kode Pendaftaran:</p>
+                <input type="text" name="kode" required>
+                <button type="submit">Join Group</button>
+        </form>
+        <br>
         <button><a href="dosen_insert_group.php">Insert Group</a></button><br><br>
         <button><a href="change_password.php">Change Password</a></button><br><br>
         <button><a href="logout.php">EXIT</a></button><br>

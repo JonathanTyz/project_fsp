@@ -207,7 +207,7 @@ $conn->close();
                         <input type='hidden' name='idgrup' value='{$group_id}'>
                         <button class='button' name='btnHapus' value='hapus' type='submit'>Hapus Group</button>
                     </form>
-                    </p></td>;"?>
+                    </p></td>"?>
             </tr>
             <tr>
     <td><p>Edit Group</p></td>
@@ -306,11 +306,11 @@ $conn->close();
                 <tr>
                     <td><?php echo $member['username']; ?></td>
                     <td><?php echo $member['nama']; ?></td>
-                    <form method = "post" action = "dosen_delete_member.php">
+                    <td><form method = "post" action = "dosen_delete_member.php">
                         <input type="hidden" name="idgrup" value="<?php echo $group_id; ?>">
                         <input type="hidden" name="username" value="<?php echo $member['username']; ?>">
-                        <td><button class = "button" name="btnHapus" value="hapus" type="submit">Hapus</button></td>
-                    </form>
+                        <button class = "button" name="btnHapus" value="hapus" type="submit">Hapus</button>
+                    </form></td>
                 </tr>
             <?php } ?>
         </table>

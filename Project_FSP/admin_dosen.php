@@ -88,7 +88,7 @@
         </thead>
         <tbody>
             <?php
-            // Mendapatkan semau data dosen beserta fotonya dari database
+            // Mendapatkan semua data dosen beserta fotonya dari database
                 $PER_PAGE = 3;
                 $dosen = new dosen();
                 $cari = isset($_GET['cari']) ? $_GET['cari'] : '';

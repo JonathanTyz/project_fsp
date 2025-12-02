@@ -81,20 +81,29 @@ class group extends classParent {
         $nama  = $data['name'];
         $desk  = $data['deskripsi'];
         $jenis = $data['jenis'];
-        $kodePendaftaran = strtoupper(substr(bin2hex(random_bytes(4)), 0, 8));
-
+        $kodePendaftaran = "";
+        //insert tanpa kode
         $sql = "INSERT INTO grup (username_pembuat, nama, deskripsi, tanggal_pembentukan, jenis, kode_pendaftaran)
                 VALUES (?, ?, ?, NOW(), ?, ?)";
 
         $stmt = $this->mysqli->prepare($sql);
-        if (!$stmt) {
+        if (!$stmt) 
+        {
             return false;
         }
 
         $stmt->bind_param("sssss", $username, $nama, $desk, $jenis, $kodePendaftaran);
 
-        if ($stmt->execute()) {
-            return $stmt->insert_id;
+
+        if ($stmt->execute()) 
+        {
+            $idgrup = $stmt->insert_id;
+            $kodePendaftaran = "grup".$idgrup;
+            $sql = "UPDATE grup SET kode_pendaftaran = ? WHERE idgrup = ?";
+            $stmtUpdate = $this->mysqli->prepare($sql);
+            $stmtUpdate->bind_param("si", $kodePendaftaran, $idgrup);
+            $stmtUpdate->execute();
+            return $stmt -> insert_id;
         } else {
             return false;
         }
@@ -173,6 +182,18 @@ class group extends classParent {
             return false;
         }
     }
+
+public function getAllEvents($idgrup)
+{
+    $sql = "SELECT idevent, poster_extension FROM event WHERE idgrup = ?";
+    $stmt = $this->mysqli->prepare($sql);
+    if (!$stmt) return false;
+
+    $stmt->bind_param("i", $idgrup);
+    $stmt->execute();
+
+    return $stmt->get_result(); 
+}
 
 public function editGroup($idgrup, $nama, $jenis, $deskripsi)
 {
