@@ -7,7 +7,7 @@ class group extends classParent {
         parent::__construct();
     }
 
-    public function getAllGroup($username, $offset = null, $limit = null)
+    public function getAllMadeGroup($username, $offset = null, $limit = null)
     {
         if ($offset !== null && $limit !== null) {
             $sql = "SELECT * FROM grup 
@@ -40,7 +40,7 @@ class group extends classParent {
 
     public function getGroupMembersMahasiswa($idgrup)
     {
-        $sql = "SELECT mg.username, m.nama
+        $sql = "SELECT mg.username, m.nama, m.gender, m.nrp, m.angkatan, m.foto_extention, m.nrp
             FROM member_grup mg
             JOIN akun a ON mg.username = a.username
             JOIN mahasiswa m ON a.nrp_mahasiswa = m.nrp
@@ -54,9 +54,33 @@ class group extends classParent {
         return $stmt->get_result(); 
     }
 
+
+    public function getUsernameById($type, $id)
+    {
+    if ($type === 'dosen') {
+        $sql = "SELECT a.username 
+                FROM dosen d 
+                JOIN akun a ON a.npk_dosen = d.npk 
+                WHERE d.npk = ?";
+    } else { // mahasiswa
+        $sql = "SELECT a.username 
+                FROM mahasiswa m 
+                JOIN akun a ON a.nrp_mahasiswa = m.nrp 
+                WHERE m.nrp = ?";
+    }
+
+    $stmt = $this->mysqli->prepare($sql);
+    if (!$stmt) return false;
+
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    return $res->fetch_assoc()['username'] ?? false;
+    }
+
     public function getGroupMembersDosen($idgrup)
     {
-        $sql = "SELECT mg.username, d.nama
+        $sql = "SELECT mg.username, d.nama, d.foto_extension, d.npk
             FROM member_grup mg
             JOIN akun a ON mg.username = a.username
             JOIN dosen d ON a.npk_dosen = d.npk
@@ -109,26 +133,87 @@ class group extends classParent {
         }
     }
 
-    public function getAllPublicGroups($username, $offset = null, $limit = null)
+    public function getMahasiswaNotInGroup($idgrup, $username)
     {
-        if ($offset !== null && $limit !== null) {
-            $sql = "SELECT g.*
-                    FROM grup g
-                    LEFT JOIN member_grup mg
-                        ON g.idgrup = mg.idgrup 
-                        AND mg.username = ?
-                    WHERE g.jenis = 'Publik'
-                    AND mg.idgrup is NULL
-                    ORDER BY g.idgrup DESC
-                    LIMIT ?, ?";
+        $sql = "
+            SELECT m.nrp, m.nama, a.username, m.foto_extention
+            FROM mahasiswa m
+            JOIN akun a ON a.nrp_mahasiswa = m.nrp
+            LEFT JOIN member_grup mg 
+                ON mg.username = a.username 
+                AND mg.idgrup = ?
+            WHERE mg.username IS NULL
+            AND a.username != ?
+        ";
 
-            $stmt = $this->mysqli->prepare($sql);
-            $stmt->bind_param("sii", $username, $offset, $limit);
-        }
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("is", $idgrup, $username);
+        $stmt->execute();
+
+        return $stmt->get_result();
+    }
+
+    public function getDosenNotInGroup($idgrup, $username)
+    {
+        $sql = "
+            SELECT d.npk, d.nama, a.username, d.foto_extension
+            FROM dosen d
+            JOIN akun a ON a.npk_dosen = d.npk
+            LEFT JOIN member_grup mg 
+                ON mg.username = a.username 
+                AND mg.idgrup = ?
+            WHERE mg.username IS NULL
+            AND a.username != ?
+        ";
+
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("is", $idgrup, $username);
+        $stmt->execute();
+
+        return $stmt->get_result();
+    }
+
+
+
+   public function getAllPublicGroups($username, $offset = null, $limit = null)
+    {
+    if ($offset !== null && $limit !== null) {
+        $sql = "SELECT g.*
+                FROM grup g
+                LEFT JOIN member_grup mg
+                    ON g.idgrup = mg.idgrup 
+                    AND mg.username = ?
+                WHERE g.jenis = 'Publik'
+                AND mg.idgrup IS NULL
+                AND g.username_pembuat != ?
+                ORDER BY g.idgrup DESC
+                LIMIT ?, ?";
+
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("ssii", $username, $username, $offset, $limit);
+    }
+    else {
+        $sql = "SELECT g.*
+                FROM grup g
+                LEFT JOIN member_grup mg
+                    ON g.idgrup = mg.idgrup 
+                    AND mg.username = ?
+                WHERE g.jenis = 'Publik'
+                AND mg.idgrup IS NULL
+                AND g.username_pembuat != ?
+                ORDER BY g.idgrup DESC";
+
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("ss", $username, $username);
+    }
 
     $stmt->execute();
     return $stmt->get_result();
-    }
+}
+
+
+    
+
     public function deleteGroupMembers($group_id, $username)
     {
         $sql = "DELETE FROM member_grup 
@@ -194,6 +279,22 @@ public function getAllEvents($idgrup)
 
     return $stmt->get_result(); 
 }
+
+public function countGroupByMember($username)
+{
+    $sql = "SELECT COUNT(*) AS total
+            FROM grup g
+            JOIN member_grup mg ON g.idgrup = mg.idgrup
+            WHERE mg.username = ?";
+
+    $stmt = $this->mysqli->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+
+    $res = $stmt->get_result()->fetch_assoc();
+    return (int)$res['total'];
+}
+
 
 public function editGroup($idgrup, $nama, $jenis, $deskripsi)
 {

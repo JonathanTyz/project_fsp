@@ -7,53 +7,29 @@ class Chat extends classParent {
         parent::__construct();
     }
 
-    public function getChatThread($idthread)
-    {
-        $sql = "SELECT * FROM chat 
-                WHERE idthread = ?
-                ORDER BY tanggal_pembuatan ASC";
+    // Tambah chat ke thread
+    public function addChat($idthread, $username_pembuat, $isi) {
+        // cek status thread
+        $thread = $this->mysqli->prepare("SELECT status FROM thread WHERE idthread=?");
+        $thread->bind_param("i", $idthread);
+        $thread->execute();
+        $result = $thread->get_result()->fetch_assoc();
+        if ($result['status'] == 'Open') {
+            $sql = "INSERT INTO chat (idthread, username_pembuat, isi) VALUES (?, ?, ?)";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("iss", $idthread, $username_pembuat, $isi);
+            return $stmt->execute();
+        }
+        return false; // tidak bisa chat di thread Close
+    }
+
+    // Ambil semua chat thread
+    public function getChats($idthread) {
+        $sql = "SELECT * FROM chat WHERE idthread=? ORDER BY tanggal_pembuatan ASC";
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param("i", $idthread);
         $stmt->execute();
         return $stmt->get_result();
     }
-
-    public function insertChat($idthread, $username, $isi)
-    {
-        $sql = "INSERT INTO chat (idthread, username_pembuat, isi, tanggal_pembuatan)
-                VALUES (?, ?, ?, NOW())";
-
-        $stmt = $this->mysqli->prepare($sql);
-        $stmt->bind_param("iss", $idthread, $username, $isi);
-
-        return $stmt->execute();
-    }
-
-
-    public function insertThread($idgrup, $username)
-    {
-        $sql = "INSERT INTO thread (username_pembuat, idgrup, tanggal_pembuatan, status)
-                VALUES (?, ?, NOW(), 'active')";
-
-        $stmt = $this->mysqli->prepare($sql);
-        $stmt->bind_param("si", $username, $idgrup);
-
-        if ($stmt->execute()) {
-            return $stmt->insert_id;
-        } else {
-            return false;
-        }
-    }
-
-    public function getThreadGroup($idgrup)
-    {
-        $sql = "SELECT * FROM thread
-                WHERE idgrup = ?
-                ORDER BY tanggal_pembuatan DESC";
-
-        $stmt = $this->mysqli->prepare($sql);
-        $stmt->bind_param("i", $idgrup);
-        $stmt->execute();
-        return $stmt->get_result();
-    }
 }
+?>

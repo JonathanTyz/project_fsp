@@ -27,15 +27,15 @@
 
         if (!empty($_SESSION['user']['npk_dosen'])) 
         {
-            echo "<a href='dosen_home.php'>Kembali ke home page?</a>";
+            echo "<a href='dosen/dosen_home.php'>Kembali ke home page?</a>";
         }
         elseif (!empty($_SESSION['user']['nrp_mahasiswa'])) 
         {
-            echo "<a href='mahasiswa_home.php'>Kembali ke home page?    </a>";
+            echo "<a href='mahasiswa/mahasiswa_home.php'>Kembali ke home page?</a>";
         } 
         elseif (!empty($_SESSION['user']['isadmin'])) 
         {
-            echo "<a href='admin_home.php'>Kembali ke home page?</a>";
+            echo "<a href='admin/admin_home.php'>Kembali ke home page?</a>";
         }
     } 
     else 
@@ -44,15 +44,15 @@
         echo "<a href='change_password.php'>Kembali ke Change Password?</a><br>";
         if (!empty($_SESSION['user']['npk_dosen'])) 
         {
-            echo "<a href='dosen_home.php'>Kembali ke home page?</a>";
+            echo "<a href='dosen/dosen_home.php'>Kembali ke home page?</a>";
         }
         elseif (!empty($_SESSION['user']['nrp_mahasiswa'])) 
         {
-            echo "<a href='mahasiswa_home.php'>Kembali ke home page?    </a>";
+            echo "<a href='mahasiswa/mahasiswa_home.php'>Kembali ke home page?</a>";
         } 
         elseif (!empty($_SESSION['user']['isadmin'])) 
         {
-            echo "<a href='admin_home.php'>Kembali ke home page?</a>";
+            echo "<a href='admin/admin_home.php'>Kembali ke home page?</a>";
         }
     }
 

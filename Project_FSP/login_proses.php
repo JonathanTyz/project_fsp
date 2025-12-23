@@ -20,11 +20,11 @@ if ($row)
 
     if ($row['isadmin']) 
         {
-            header("Location: admin_home.php");
+            header("Location: admin/admin_home.php");
         } elseif (!empty($row['nrp_mahasiswa'])) {
-            header("Location: mahasiswa_home.php");
+            header("Location: mahasiswa/mahasiswa_home.php");
         } elseif (!empty($row['npk_dosen'])) {
-            header("Location: dosen_home.php");
+            header("Location: dosen/dosen_home.php");
         }
     exit;
 } 
@@ -33,3 +33,4 @@ else {
         echo "<br><a href='login.php'>Kembali ke halaman login</a>";
     }
 ?>
+    
