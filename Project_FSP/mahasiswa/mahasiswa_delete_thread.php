@@ -3,21 +3,34 @@ session_start();
 require_once '../class/thread.php';
 
 if (!isset($_SESSION['user'])) {
-    header("Location: login.php");
-    exit();
+    die("tidak dikenal");
 }
 
 $username = $_SESSION['user']['username'];
-$idgrup = $_POST['idgrup'];
-$idthread = $_POST['idthread'];
+$idgrup   = (int)$_POST['idgrup'];
+$idthread = (int)$_POST['idthread'];
+
 $thread = new Thread();
 
-$deleteThread = $thread->deleteThread($idthread, $username);
-if ($deleteThread) {
-    header("Location: mahasiswa_thread.php?idgrup=" . $idgrup);
+//ambil data thread
+$dataThread = $thread->getThread($idthread);
+
+if (!$dataThread) {
+    die("Thread tidak ditemukan");
+}
+
+//bukan pembuat thread
+if ($dataThread['username_pembuat'] !== $username) {
+    die("Anda tidak berhak menghapus thread ini");
+}
+
+//hapus / close thread
+$success = $thread->deleteThread($idthread, $username);
+
+if ($success) {
+    header("Location: mahasiswa_thread.php?idgrup=".$idgrup);
     exit();
 } else {
-    echo "Gagal Menghapus Thread.";
-    echo "<br><a href='mahasiswa_thread.php?idgrup=" . $idgrup . "'>Kembali ke daftar thread?</a>";
+    echo "Gagal menghapus thread.";
+    echo "<br><a href='mahasiswa_thread.php?idgrup=".$idgrup."'>Kembali</a>";
 }
-?>

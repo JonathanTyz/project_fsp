@@ -42,6 +42,14 @@ $threads = $threadObj->getThreads($idgrup);
              background-color: #2c3e50;
              color: white; 
             }
+        .button-disabled {
+            padding: 8px 15px;
+            background-color: #b0b0b0;
+            color: #666;
+            border: none;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
         .center { text-align: center; }
         .container-kembali{
             width: 90%;
@@ -80,7 +88,7 @@ $threads = $threadObj->getThreads($idgrup);
         <th colspan = '3'>Aksi</th>
     </tr>
 
-    <?php while ($row = $threads->fetch_assoc()) { ?>
+    <?php while ($row = $threads->fetch_assoc()) { $isOwner = ($row['username_pembuat'] == $username); ?>
         <tr>
             <td><?= $row['username_pembuat']; ?></td>
             <td><?= $row['tanggal_pembuatan']; ?></td>
@@ -93,21 +101,30 @@ $threads = $threadObj->getThreads($idgrup);
                     <button class="button" type="submit">View Chat</button>
                 </form>
             </td>
+
             <td>
-                <form action = "mahasiswa_delete_thread.php" method = "post" style="display:inline-block;">
+            <?php if ($isOwner) { ?>
+                <form action="mahasiswa_delete_thread.php" method="post" style="display:inline-block;">
                     <input type="hidden" name="idthread" value="<?= $row['idthread']; ?>">
-                    <input type = "hidden" name = "idgrup" value = "<?= $idgrup ?>">
+                    <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
                     <button class="button" type="submit">Delete</button>
                 </form>
+            <?php } else { ?>
+                <button class="button-disabled" disabled title="Hanya pembuat thread">Delete</button>
+            <?php } ?>
             </td>
 
             <td>
-                <form action = "mahasiswa_edit_thread.php" method = "post" style="display:inline-block;">
-                    <input type="hidden" name="idthread" value="<?= $row['idthread']; ?>">
-                    <input type = "hidden" name = "idgrup" value = "<?= $idgrup ?>">
-                    <input type = "hidden" name = "status" value = "<?= $row['status'] ?>">
-                    <button class="button" type="submit">Edit</button>
-                </form>
+            <?php if ($isOwner) { ?>
+            <form action="mahasiswa_edit_thread.php" method="post" style="display:inline-block;">
+                <input type="hidden" name="idthread" value="<?= $row['idthread']; ?>">
+                <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
+                <input type="hidden" name="status" value="<?= $row['status'] ?>">
+                <button class="button" type="submit">Edit</button>
+            </form>
+             <?php } else { ?>
+                <button class="button-disabled" disabled title="Hanya pembuat thread">Edit</button>
+            <?php } ?>
             </td>
         </tr>
     <?php } ?>

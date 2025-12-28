@@ -125,6 +125,7 @@ $detail_grup = $group->getDetailGroup($_SESSION['user']['username']);
                 <th>Tanggal Dibentuk</th>
                 <th>Jenis</th>
                 <th>Kelola Event</th>
+                <th>Thread</th>
                 <th colspan = '3'>Kelola Member</th>
                 <th>Hapus</th>
                 <th>Edit</th>
@@ -150,7 +151,14 @@ $detail_grup = $group->getDetailGroup($_SESSION['user']['username']);
                             <button type='submit'>Event</button>
                         </form>
                     </td>";
-
+                    // THREAD
+                    echo "<td>
+                        <form action='dosen_thread.php' method='get'>
+                            <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                            <button type='submit'>Thread</button>
+                        </form>
+                    </td>";
+                    
                     // LIHAT MEMBER
                     echo "<td>
                         <form action='dosen_view_member.php' method='post'>
