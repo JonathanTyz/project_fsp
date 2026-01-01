@@ -14,7 +14,7 @@ $jenis = $_POST['jenis'];
 $keterangan = $_POST['keterangan'];
 $poster_extension_lama = $_POST['poster_extension']; 
 
-$poster_extension = $poster_extension_lama; // default: tetap foto lama
+$poster_extension = $poster_extension_lama;
 
 if (!empty($_FILES['foto']['name'])) 
 {
@@ -30,7 +30,7 @@ if (!empty($_FILES['foto']['name']))
     $file_baru = "../image_events/". $idevent . "." . $ext_baru;
     move_uploaded_file($_FILES['foto']['tmp_name'], $file_baru);
 
-    $poster_extension = $ext_baru; // update extension baru
+    $poster_extension = $ext_baru; 
 }
 
 else

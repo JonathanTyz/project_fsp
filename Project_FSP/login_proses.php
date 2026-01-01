@@ -15,7 +15,8 @@ if ($row)
             'username' => $username,
             'isadmin'  => $row['isadmin'],
             'nrp_mahasiswa' => $row['nrp_mahasiswa'],
-            'npk_dosen' => $row['npk_dosen']
+            'npk_dosen' => $row['npk_dosen'],
+            'role'     => !empty($row['nrp_mahasiswa']) ? 'mahasiswa' : (!empty($row['npk_dosen']) ? 'dosen' : 'admin')
     ];
 
     if ($row['isadmin']) 

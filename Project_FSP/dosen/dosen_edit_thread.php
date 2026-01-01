@@ -2,24 +2,14 @@
 session_start();
 require_once '../class/thread.php';
 
-/* =====================
-   CEK LOGIN SAJA
-===================== */
 if (!isset($_SESSION['user'])) {
-    die("Akses ditolak");
+    header("Location: ../login.php");
+    exit();
 }
-
-/* =====================
-   AMBIL DATA
-===================== */
 $idgrup        = isset($_POST['idgrup']) ? (int)$_POST['idgrup'] : 0;
 $idthread      = isset($_POST['idthread']) ? (int)$_POST['idthread'] : 0;
 $statusSebelum = $_POST['status'] ?? '';
 
-/* =====================
-   PROSES EDIT THREAD
-   (KHUSUS DOSEN)
-===================== */
 if (isset($_POST['btnSubmit'])) {
     $status = $_POST['status'];
 

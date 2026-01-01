@@ -1,69 +1,197 @@
 <?php
 session_start();
 require_once '../class/thread.php';
-require_once '../class/chat.php';
 
 if (!isset($_SESSION['user'])) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
-$username = $_SESSION['user']['username'];
-
-$idthread = (int)($_POST['idthread'] ?? $_GET['idthread']);
-$idgrup   = (int)($_POST['idgrup'] ?? $_GET['idgrup']);
+$idthread = (int)$_POST['idthread'];
+$idgrup   = (int)$_POST['idgrup'];
 
 $threadObj = new Thread();
-$chatObj   = new Chat();
-
 $thread = $threadObj->getThread($idthread);
-if (!$thread) {
-    die("Thread tidak ditemukan");
-}
 
-$chats = $chatObj->getChats($idthread);
+if (!$thread) die("Thread tidak ditemukan");
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chat Thread</title>
+<title>Chat Thread</title>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#eef1f5;
+    padding:20px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:20px;
+}
+
+a{
+    text-decoration:none;
+    color:#3498db;
+}
+
+h3{
+    margin-bottom:5px;
+}
+
+.status{
+    margin-bottom:15px;
+}
+
+.chat-box{ 
+    height:400px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    background:#f9f9f9;
+    border:1px solid #ddd;
+    padding:10px;
+    margin-bottom:10px;
+}
+
+.chat{
+    max-width:75%;
+    padding:8px 12px;
+    margin-bottom:10px;
+    font-size:14px;
+}
+
+.chat-mine{
+    background:#dcf8c6;
+}
+
+.chat-other{
+    background:#ffffff; 
+}
+
+.name{
+    font-weight:bold;
+    font-size:13px;
+    margin-bottom:2px;
+    color:#2c3e50;
+}
+
+.time{
+    font-size:11px;
+    color:#888;
+    text-align:right;
+    margin-top:4px;
+}
+
+
+.chat b{
+    color:#2c3e50;
+}
+
+.chat p{
+    color:#888;
+    font-size:11px;
+}
+
+textarea{
+    width:100%;
+    height:70px;
+    padding:8px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    margin-bottom:8px;
+}
+
+button{
+    padding:8px 16px;
+    background:#3498db;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#2980b9;
+}
+
+.closed{
+    color:red;
+    font-weight:bold;
+}
+</style>
+
 </head>
+
 <body>
 
-<a href="mahasiswa_thread.php?idgrup=<?= $idgrup ?>">← Kembali</a>
+<div class="container">
 
-<h3>Thread oleh <?= $thread['username_pembuat']; ?></h3>
-<p>Status: <b><?= $thread['status']; ?></b></p>
+    <a href="mahasiswa_thread.php?idgrup=<?= $idgrup ?>">← Kembali</a>
 
-<?php if ($thread['status'] == 'Close') { ?>
-    <p style="color:red;font-weight:bold">
-        Thread sudah ditutup. Chat bersifat read-only.
-    </p>
+    <h3>Thread oleh <?= $thread['username_pembuat'] ?></h3>
+    <p class="status">Status: <b><?= $thread['status'] ?></b></p>
+
+    <?php
+    if ($thread['status'] === 'Close') {
+        echo '<p class="closed">Thread sudah ditutup</p>';
+    }
+    ?>
+
+    <div class="chat-box" id="chatBox"></div>
+
+    <?php if ($thread['status'] === 'Open') { ?>
+    <textarea id="pesan" placeholder="Tulis pesan..."></textarea>
+    <button id="btnKirim">Kirim</button>
 <?php } ?>
 
-<div>
-<?php if ($chats->num_rows == 0) { ?>
-    <p><i>Belum ada chat</i></p>
-<?php } ?>
-
-<?php while ($row = $chats->fetch_assoc()) { ?>
-    <p>
-        <b><?= htmlspecialchars($row['username_pembuat']); ?></b> :
-        <?= nl2br(htmlspecialchars($row['isi'])); ?><br>
-        <small><?= $row['tanggal_pembuatan']; ?></small>
-    </p>
-<?php } ?>
 </div>
+<script>
+const myUsername = "<?= $_SESSION['user']['username'] ?>";
 
-<?php if ($thread['status'] == 'Open') { ?>
-<form action="mahasiswa_send_chat.php" method="post">
-    <input type="hidden" name="idthread" value="<?= $idthread ?>">
-    <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
-    <textarea name="pesan" required></textarea><br>
-    <button type="submit">Kirim</button>
-</form>
-<?php } ?>
+function loadChat(){
+    $.get("mahasiswa_ajax_get_chat.php", { idthread: <?= $idthread ?> }, function(data){
+        $("#chatBox").html("");
+        data.forEach(function(c){
+            let bubbleClass = (c.username_pembuat === myUsername) ? "chat-mine" : "chat-other";
+
+            $("#chatBox").append(
+                "<div class='chat "+bubbleClass+"'>" +
+                    "<div class='name'>"+c.nama_penulis+"</div>" +
+                    "<div>"+c.isi+"</div>" +
+                    "<div class='time'>"+c.tanggal_pembuatan+"</div>" +
+                "</div>"
+            );
+        });
+
+        // scroll otomatis ke bawah
+        $("#chatBox").scrollTop($("#chatBox")[0].scrollHeight);
+    }, "json");
+}
+
+loadChat();
+setInterval(loadChat, 2000);
+
+$("#btnKirim").click(function(){
+    var pesan = $("#pesan").val();
+    if(pesan === "") return;
+
+    $.post("mahasiswa_send_chat.php", {
+        idthread: <?= $idthread ?>,
+        idgrup: <?= $idgrup ?>,
+        pesan: pesan
+    }, function(){
+        $("#pesan").val("");
+        loadChat();
+    });
+});
+</script>
 
 </body>
 </html>

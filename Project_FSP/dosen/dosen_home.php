@@ -52,22 +52,28 @@ if (!isset($_SESSION['user'])) {
         }
 
         .btn-kelola{
-            background-color: #2c3e50;
+            background-color: darkslategray;
             color: white;
         }
 
         .btn-diikuti{
-            background-color: #1f2f3d;
+            background-color: midnightblue; 
             color: white;
         }
 
         .btn-publik{
-            background-color: #34495e;
+            background-color: steelblue; 
             color: white;
         }
 
         .btn-logout{
-            background-color: #a94442;
+            background-color: darkred; 
+            color: white;
+            margin-top: 20px;
+        }
+
+        .btn-change-password{
+            background-color: darkcyan;
             color: white;
             margin-top: 20px;
         }
@@ -92,6 +98,10 @@ if (!isset($_SESSION['user'])) {
 
         <a href="dosen_group_publik.php">
             <button class="menu-button btn-publik">Daftar Group Publik</button>
+        </a>
+
+        <a href="../change_password.php">
+            <button class="menu-button btn-change-password">Change Password</button>
         </a>
 
         <a href="../logout.php">

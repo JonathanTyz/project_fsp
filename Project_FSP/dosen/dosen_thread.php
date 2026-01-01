@@ -71,7 +71,7 @@ $threads   = $threadObj->getThreads($idgrup);
 </head>
 <body>
 
-<a href="dosen_group_saya.php" class="kembali">← Kembali</a>
+<a href="dosen_kelola_group.php" class="kembali">← Kembali</a>
 
 <h2>Thread Grup</h2>
 
@@ -101,8 +101,8 @@ $threads   = $threadObj->getThreads($idgrup);
         <!-- VIEW CHAT -->
         <td>
             <form action="dosen_view_chat.php" method="post">
-                <input type="hidden" name="idthread" value="<?= $row['idthread'] ?>">
-                <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
+                <input type="hidden" name="idthread" value="<?= $row['idthread']; ?>">
+                <input type = "hidden" name = "idgrup" value = "<?= $idgrup ?>">
                 <button class="button" type="submit">View Chat</button>
             </form>
         </td>

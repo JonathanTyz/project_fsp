@@ -4,7 +4,7 @@ require_once '../class/thread.php';
 require_once '../class/chat.php';
 
 if (!isset($_SESSION['user'])) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 

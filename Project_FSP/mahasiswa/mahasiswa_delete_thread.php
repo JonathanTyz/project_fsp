@@ -3,7 +3,8 @@ session_start();
 require_once '../class/thread.php';
 
 if (!isset($_SESSION['user'])) {
-    die("tidak dikenal");
+    header("Location: ../login.php");
+    exit();
 }
 
 $username = $_SESSION['user']['username'];

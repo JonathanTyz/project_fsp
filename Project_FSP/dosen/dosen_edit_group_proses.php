@@ -15,7 +15,6 @@ $deskripsi  = $_POST['deskripsi'];
 $group = new group();
 $group->editGroup($idgrup, $nama, $jenis, $deskripsi);
 
-// kembali ke detail group 
 header("Location: dosen_kelola_group.php");
 exit();
 ?>

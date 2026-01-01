@@ -216,23 +216,35 @@ class group extends classParent {
 
     public function deleteGroupMembers($group_id, $username)
     {
-        $sql = "DELETE FROM member_grup 
-                WHERE idgrup = ? AND username = ?";
-        $stmt = $this->mysqli->prepare($sql);
+        $sql = "DELETE c FROM chat c 
+                         JOIN thread t ON c.idthread = t.idthread 
+                         WHERE t.idgrup = ? AND t.username_pembuat = ?";
+        $stmtChat = $this->mysqli->prepare($sql);
+        if ($stmtChat) {
+            $stmtChat->bind_param("is", $group_id, $username);
+            $stmtChat->execute();
+        }
 
-        if (!$stmt)
-        {
+        $sqlThread = "DELETE FROM thread WHERE idgrup = ? AND username_pembuat = ?";
+        $stmtThread = $this->mysqli->prepare($sqlThread);
+        if ($stmtThread) {
+            $stmtThread->bind_param("is", $group_id, $username);
+            $stmtThread->execute();
+        }
+
+        $sqlMember = "DELETE FROM member_grup 
+                    WHERE idgrup = ? AND username = ?";
+        $stmtMember = $this->mysqli->prepare($sqlMember);
+
+        if (!$stmtMember) {
             return false; 
         }
 
-        $stmt->bind_param("is", $group_id, $username);
+        $stmtMember->bind_param("is", $group_id, $username);
 
-        if ($stmt->execute()) 
-        {
+        if ($stmtMember->execute()) {
             return true;
-        } 
-        else 
-        {
+        } else {
             return false; 
         }
 }

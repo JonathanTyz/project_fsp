@@ -15,19 +15,24 @@ if (!isset($_SESSION['user'])) {
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
             background-color: #f4f6f8;
-        }
-
-        .container{
+            display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
         .isi{
             background-color: #ffffff;
-            width: 420px;
+            width: 90%;
+            max-width: 420px;
             padding: 35px 40px;
-            border-radius: 8px;
             text-align: center;
         }
 
@@ -50,8 +55,7 @@ if (!isset($_SESSION['user'])) {
             margin: 10px 0;
             font-size: 15px;
             font-weight: bold;
-            border: none;
-            cursor: pointer;
+            box-sizing: border-box;
         }
 
         .menu-button-daftar-group-join{
@@ -74,10 +78,25 @@ if (!isset($_SESSION['user'])) {
             color: #ffffff;
         }
 
+        @media (max-width: 600px){
+            .judul{
+                font-size: 22px;
+            }
+            .user{
+                font-size: 16px;
+            }
+            .menu-button{
+                font-size: 14px;
+                padding: 10px;
+            }
+            .isi{
+                padding: 25px 20px;
+            }
+        }
+
     </style>
 </head>
 <body>
-
 <div class="container">
     <div class="isi">
         <h2 class="judul">Welcome</h2>
@@ -109,6 +128,15 @@ if (!isset($_SESSION['user'])) {
         </a>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#toggleTheme').click(function(){
+            $('body').toggleClass('dark');
+        });
+    });
+</script>
 
 </body>
 </html>

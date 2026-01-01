@@ -116,6 +116,7 @@ $result_grup = $group->getAllGroupByMember($_SESSION['user']['username'], $offse
                 <th>Tanggal Dibentuk</th>
                 <th>Jenis</th>
                 <th>Lihat Event</th>
+                <th>Thread</th>
                 <th colspan = '3'>Lihat Member</th>
                 <th>Keluar</th>
             </tr>
@@ -123,7 +124,7 @@ $result_grup = $group->getAllGroupByMember($_SESSION['user']['username'], $offse
         <tbody>
             <?php
             if ($result_grup->num_rows == 0) {
-                echo "<tr><td colspan='10'>Anda belum mengikuti grup apapun.</td></tr>";
+                echo "<tr><td colspan='11'>Anda belum mengikuti grup apapun.</td></tr>";
             } else {
                 while ($row = $result_grup->fetch_assoc()) {
                     echo "<tr>";
@@ -138,6 +139,14 @@ $result_grup = $group->getAllGroupByMember($_SESSION['user']['username'], $offse
                         <form action='dosen_view_event.php' method='post'>
                             <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
                             <button type='submit'>Detail</button>
+                        </form>
+                    </td>";
+
+                    // LIHAT THREAD GROUP
+                    echo "<td>
+                        <form action='dosen_thread.php' method='post'>
+                            <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                            <button type='submit'>Thread</button>
                         </form>
                     </td>";
 

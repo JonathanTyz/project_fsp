@@ -151,6 +151,7 @@ $detail_grup = $group->getDetailGroup($_SESSION['user']['username']);
                             <button type='submit'>Event</button>
                         </form>
                     </td>";
+                    
                     // THREAD
                     echo "<td>
                         <form action='dosen_thread.php' method='get'>

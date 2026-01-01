@@ -7,9 +7,6 @@ class Thread extends classParent {
         parent::__construct();
     }
 
-    // =======================
-    // Buat thread baru
-    // =======================
     public function createThread($idgrup, $username_pembuat, $status) {
         $sql = "INSERT INTO thread 
                 (idgrup, username_pembuat, tanggal_pembuatan, status) 
@@ -23,9 +20,6 @@ class Thread extends classParent {
         return false;
     }
 
-    // =======================
-    // Ambil semua thread dalam grup
-    // =======================
     public function getThreads($idgrup) {
         $sql = "SELECT * 
                 FROM thread 
@@ -37,9 +31,6 @@ class Thread extends classParent {
         return $stmt->get_result();
     }
 
-    // =======================
-    // Ambil satu thread
-    // =======================
     public function getThread($idthread) {
         $sql = "SELECT * 
                 FROM thread 
@@ -50,9 +41,6 @@ class Thread extends classParent {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    // =======================
-    // Tutup thread (hanya pembuat)
-    // =======================
     public function closeThread($idthread, $username_pembuat) {
         $sql = "UPDATE thread 
                 SET status = 'Close' 
@@ -63,9 +51,6 @@ class Thread extends classParent {
         return $stmt->execute();
     }
 
-    // =======================
-    // Hapus thread (hanya pembuat)
-    // =======================
     public function deleteThread($idthread, $username_pembuat) {
         $sql = "DELETE FROM thread 
                 WHERE idthread = ? 
@@ -75,9 +60,6 @@ class Thread extends classParent {
         return $stmt->execute();
     }
 
-    // =======================
-    // Edit status thread (hanya pembuat)
-    // =======================
     public function editThread($idthread, $username_pembuat, $new_status) {
         $sql = "UPDATE thread 
                 SET status = ? 
@@ -88,9 +70,6 @@ class Thread extends classParent {
         return $stmt->execute();
     }
 
-    // =======================
-    // DOSEN: Edit thread (tanpa cek pembuat)
-    // =======================
     public function dosenEditThread($idthread, $new_status) {
         $sql = "UPDATE thread SET status=? WHERE idthread=?";
         $stmt = $this->mysqli->prepare($sql);
@@ -98,9 +77,6 @@ class Thread extends classParent {
         return $stmt->execute();
     }
 
-    // =======================
-    // DOSEN: Delete thread
-    // =======================
     public function dosenDeleteThread($idthread) {
         $sql = "DELETE FROM thread WHERE idthread=?";
         $stmt = $this->mysqli->prepare($sql);

@@ -149,7 +149,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
     </tr>
     <?php
     if ($result_dosen->num_rows == 0) {
-        echo "<tr><td colspan='2' class='empty'>Tidak ada dosen</td></tr>";
+        echo "<tr><td colspan='4' class='empty'>Tidak ada dosen</td></tr>";
     } else {
         while ($row = $result_dosen->fetch_assoc()) {
             echo "<tr>";
