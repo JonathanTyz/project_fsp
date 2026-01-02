@@ -23,36 +23,39 @@ else if ($_SESSION['user']['role'] == 'dosen')
 <html>
 <head>
     <title>Change Password</title>
-    <style>
-         body{
+     <style>
+
+        body{
             font-family: 'Times New Roman', Times, serif;
             background-color: #f4f4f4;
             margin: 0;
-            display: flex;
-            align-items: center;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
 
         .isiInput{
             background-color: white;
-            border: 10px solid #333;
-            padding: 30px 40px;
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
-            margin: auto;
+            border: 8px solid #333;
+            padding: 30px;
+            width: 100%;
+            max-width: 420px;
         }
 
         h2{
-            text-align: center;
-            margin-top: 30px;
+            margin: 10px 0;
             color: #333;
-            font-size: 36px;
+            font-size: 34px;
+            text-align: center;
         }
+
         h4{
-            margin-top: 10px;
+            margin-top: 5px;
             color: #555;
             font-size: 20px;
+            text-align: center;
         }
 
         label{
@@ -61,50 +64,73 @@ else if ($_SESSION['user']['role'] == 'dosen')
             font-weight: bold;
             margin-top: 15px;
             display: block;
-            text-align: left;
         }
 
-        input, button{
-            width: 100%;
-            max-width: 300px;
-            padding: 10px;
-            margin-top: 5px;
-            box-sizing: border-box;
+        input{
+            width: 90%;
+            padding: 12px;
+            margin-top: 6px;
+            font-size: 16px;
         }
 
         button{
-            background-color: #e4f1ffff;
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background-color: #e4f1ff;
             color: #333;
-            font-size: 24px;
-            margin-top: 10px;
+            font-size: 22px;
+            border: none;
+        }
+
+        button:hover{
+            background-color: #d2e7ff;
         }
 
         .container-kembali{
-            display: inline-block;
             margin-bottom: 10px;
         }
+
         .container-kembali a{
             color: #333;
             font-weight: bold;
             text-decoration: none;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px){
             .isiInput{
-                padding: 20px;
-                border-width: 5px;
+                padding: 25px;
             }
+
             h2{
                 font-size: 28px;
             }
-            h4{
-                font-size: 16px;
-            }
+
             label{
                 font-size: 16px;
             }
+
             button{
                 font-size: 20px;
+            }
+        }
+
+        @media (max-width: 420px){
+            body{
+                padding: 10px;
+            }
+
+            .isiInput{
+                border-width: 5px;
+                padding: 20px;
+            }
+
+            h2{
+                font-size: 24px;
+            }
+
+            button{
+                font-size: 18px;
             }
         }
     </style>

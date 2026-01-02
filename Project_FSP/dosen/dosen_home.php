@@ -6,25 +6,36 @@ if (!isset($_SESSION['user'])) {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dosen Home</title>
     <style>
+        /* ===== Body & Container ===== */
         body{
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
             background-color: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
         .container{
+            width: 100%;
+            display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         .isi{
             background-color: #ffffff;
-            width: 450px;
-            padding: 35px 40px;
+            width: 400px;
+            max-width: 100%;
+            padding: 35px 30px;
             text-align: center;
         }
 
@@ -45,10 +56,13 @@ if (!isset($_SESSION['user'])) {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: bold;
             border: none;
-            cursor: pointer;
+        }
+
+        .menu-button:hover{
+            opacity: 0.9;
         }
 
         .btn-kelola{
@@ -66,16 +80,33 @@ if (!isset($_SESSION['user'])) {
             color: white;
         }
 
-        .btn-logout{
-            background-color: darkred; 
-            color: white;
-            margin-top: 20px;
-        }
-
         .btn-change-password{
             background-color: darkcyan;
             color: white;
-            margin-top: 20px;
+        }
+
+        .btn-logout{
+            background-color: darkred; 
+            color: white;
+        }
+
+        @media (max-width: 480px){
+            .isi{
+                padding: 25px 20px;
+            }
+
+            .judul{
+                font-size: 22px;
+            }
+
+            .user{
+                font-size: 16px;
+            }
+
+            .menu-button{
+                font-size: 14px;
+                padding: 10px;
+            }
         }
 
     </style>

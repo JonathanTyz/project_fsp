@@ -23,6 +23,7 @@ $res = $group->getAllGroupByMember(
 <head>
     <title>Group Yang Diikuti</title>
     <style>
+
         body{
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
@@ -31,9 +32,9 @@ $res = $group->getAllGroupByMember(
 
         h2{
             text-align: center;
-            margin: 30px 0 10px;
+            margin: 25px 0 10px;
             color: #2c3e50;
-            font-size: 34px;
+            font-size: 32px;
         }
 
         .container-kembali{
@@ -55,7 +56,6 @@ $res = $group->getAllGroupByMember(
             margin: 15px auto;
             background: white;
             border: 5px solid #2c3e50;
-            border-collapse: collapse;
         }
 
         th, td{
@@ -69,11 +69,12 @@ $res = $group->getAllGroupByMember(
         }
 
         button{
-            padding: 6px 12px;
+            padding: 6px 10px;
             font-weight: bold;
             border: none;
             background-color: #2c3e50;
             color: white;
+            width: 100%;
         }
 
         .paging{
@@ -92,6 +93,41 @@ $res = $group->getAllGroupByMember(
             text-align: center;
             padding: 20px;
             color: #555;
+        }
+
+        @media (max-width: 768px){
+            table, thead, tbody, tr, th, td{
+                display: block;
+                width: 100%;
+            }
+
+            table{
+                border: none;
+            }
+
+            tr{
+                background: white;
+                border: 3px solid #2c3e50;
+                margin-bottom: 15px;
+                padding: 10px;
+            }
+
+            td{
+                border: none;
+                text-align: left;
+                padding: 6px 0;
+            }
+
+            td::before{
+                font-weight: bold;
+                color: #2c3e50;
+                display: block;
+                margin-bottom: 3px;
+            }
+
+            button{
+                margin-top: 5px;
+            }
         }
     </style>
 </head>

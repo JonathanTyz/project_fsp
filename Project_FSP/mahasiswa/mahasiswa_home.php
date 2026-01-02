@@ -37,7 +37,6 @@ if (!isset($_SESSION['user'])) {
         }
 
         .judul{
-            margin-top: 0;
             font-size: 28px;
             color: #2c3e50;
         }
@@ -55,7 +54,6 @@ if (!isset($_SESSION['user'])) {
             margin: 10px 0;
             font-size: 15px;
             font-weight: bold;
-            box-sizing: border-box;
         }
 
         .menu-button-daftar-group-join{

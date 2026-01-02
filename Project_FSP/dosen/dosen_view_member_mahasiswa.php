@@ -177,7 +177,7 @@ echo "<tr>
       </tr>";
 
 if ($mahasiswa_search->num_rows == 0) {
-    echo "<tr><td colspan='5' class='empty'>Tidak ada data dosen</td></tr>";
+    echo "<tr><td colspan='5' class='empty'>Tidak ada data mahasiswa</td></tr>";
 } else {
     while ($mahasiswa = $mahasiswa_search->fetch_assoc()) {
         echo "<tr>";

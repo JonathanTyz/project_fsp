@@ -25,43 +25,109 @@ $threads = $threadObj->getThreads($idgrup);
 <head>
     <title>Thread Grup</title>
     <style>
-        body { font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        body {
+            font-family: 'Times New Roman', serif;
+            background-color: #f4f6f8;
             margin: 0;
-            padding: 20px; }
-        h2 { text-align: center; }
-        table { width: 90%;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        table {
+            width: 90%;
             margin: 20px auto;
-            background: #fff; }
-        th, td { border: 1px solid #ccc;
-             padding: 10px;
-              text-align: center; }
-        th { background-color: #eee; }
-        .button { padding: 8px 15px;
-             margin: 5px;
-             background-color: #2c3e50;
-             color: white; 
-            }
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+
+        .button {
+            padding: 8px 15px;
+            margin: 4px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+
         .button-disabled {
             padding: 8px 15px;
             background-color: #b0b0b0;
             color: #666;
             border: none;
-            cursor: not-allowed;
-            opacity: 0.6;
         }
-        .center { text-align: center; }
-        .container-kembali{
+
+        .center {
+            text-align: center;
+        }
+
+        .container-kembali {
             width: 90%;
             margin: auto;
         }
-        .kembali{
+
+        .kembali {
             display: inline-block;
             padding: 8px 14px;
             background-color: #6c757d;
             color: white;
             font-weight: bold;
             text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+
+            table, thead, tbody, tr, th, td {
+                display: block;
+                width: 100%;
+            }
+
+            thead {
+                display: none;
+            }
+
+            table {
+                border: none;
+            }
+
+            tr {
+                background: white;
+                border: 3px solid #2c3e50;
+                margin-bottom: 15px;
+                padding: 10px;
+            }
+
+            td {
+                border: none;
+                text-align: left;
+                padding: 6px 0;
+            }
+
+            td::before {
+                font-weight: bold;
+                color: #2c3e50;
+                display: block;
+                margin-bottom: 3px;
+            }
+
+            .button,
+            .button-disabled {
+                width: 100%;
+                margin-top: 5px;
+            }
         }
     </style>
 </head>

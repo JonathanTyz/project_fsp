@@ -16,71 +16,128 @@
 <head>
     <title>Kelola Mahasiswa</title>
     <style>
-        h2{
+        body {
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            background-color: #f4f6f8;
+        }
+
+        h2 {
             text-align: center;
             margin-top: 30px;
             color: #333;
             font-size: 36px;
             font-weight: bold;
         }
-        img{
-            border: 2px solid #ddd;
-        }
-        p{
-            text-align: center;
-            margin-top: 25px;
-            color: #333;
-            font-size: 20px;
-        }
+
         table {
-           width: 80%;
+            width: 80%;
             margin: 20px auto;
             background: white;
-            border: 10px #333;
+
         }
+
         th, td {
-            border: 1px solid black; 
+            border: 1px solid black;
             padding: 8px;
             text-align: center;
         }
+
         th {
-            background-color: #f2f2f2; 
+            background-color: #f2f2f2;
         }
-        #linkInsert{
-            margin-left: 100px;
-            padding: 8px;
+
+        #linkInsert, #balikHome {
+            display: inline-block;
+            padding: 10px 20px;
             font-size: 20px;
             font-weight: bold;
+            text-decoration: none;
+            color: white;
+            background-color: #3498db;
+            margin: 10px auto;
         }
-        #balikHome{
-            margin-left: 100px;
-            padding: 8px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .tabelKontainer{
+
+        .tabelKontainer {
             width: 90%;
             margin: 20px auto;
             background: lightblue;
             padding: 20px;
-            border: 10px solid #333;
+            border: 10px solid #333;        
         }
-        .linkKontainer{
+
+        .linkKontainer {
             width: 40%;
             margin: 20px auto;
-            background: lightblue;
-            padding: 20px;
-            border: 10px solid #333;
+            text-align: center;
         }
-        .paging{
+
+        .paging {
             font-size: 20px;
             font-weight: bold;
+            text-align: center;
+            display: inline-block;
+        }
+
+        img {
+            border: 2px solid #ddd;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+                width: 90%;
+                margin: 0 auto;
+            }
+
+
+            tr {
+                background: #fff;
+                border: 2px solid #2c3e50;
+                margin-bottom: 15px;
+                padding: 15px;
+            }
+
+            td {
+                display: flex;
+                align-items: center;
+                border: none;
+                padding: 6px 10px;
+                margin: 0 auto;
+                text-align: left;
+                max-width: 400px;
+            }
+
+
+            img {
+                max-width: 80px;
+                height: auto;
+                border-radius: 8px;
+                margin-right: 10px;
+            }
+
+            #linkInsert, #balikHome {
+                width: 90%;
+                font-size: 18px;
+                padding: 12px 0;
+            }
+
+            .linkKontainer {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 { font-size: 24px; }
+            td { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
     <div class = 'tabelKontainer'>
     <h2><b>Kelola Mahasiswa</b></h2>
+     <div class="rwd"></div>
     <table>
         <thead>
             <thead>
@@ -124,6 +181,8 @@
         </tbody>
     </table>
     </div>
+    </div>
+    <div style = "text-align: center;">
     <p>
         <?php
         $res = $mahasiswa->getMahasiswa($cari_persen);
@@ -155,9 +214,12 @@
         }
         ?>
 
-    </p> <br>
+    </p></div>
+    <br>
     <div class = 'linkKontainer'>
         <a id = 'linkInsert' href = "admin_insert_mahasiswa.php">Tambah Mahasiswa</a>
+    </div>
+    <div class = 'linkKontainer'>
         <a id = 'balikHome' href = "admin_home.php">Kembali ke home</a>
     </div>
 </body>

@@ -19,84 +19,111 @@ $result_grup = $group->getAllGroupByMember($_SESSION['user']['username'], $offse
 <head>
     <title>Grup yang Saya Ikuti</title>
     <style>
-            body{
-                font-family: 'Times New Roman', Times, serif;
-                margin: 0;
-                background-color: #f4f6f8;
-            }
+             body{
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            background-color: #f4f6f8;
+        }
 
-            h2{
-                text-align: center;
-                margin: 30px 0 10px;
-                color: #2c3e50;
-                font-size: 34px;
-            }
+        h2{
+            text-align: center;
+            margin: 25px 0 10px;
+            color: #2c3e50;
+            font-size: 32px;
+        }
 
-            .container-kembali{
-                width: 90%;
-                margin: auto;
-            }
+        .container-kembali{
+            width: 90%;
+            margin: auto;
+        }
 
-            .kembali{
-                display: inline-block;
-                padding: 8px 14px;
-                background-color: #6c757d;
-                color: white;
-                font-weight: bold;
-                text-decoration: none;
+        .kembali{
+            display: inline-block;
+            padding: 8px 14px;
+            background-color: #6c757d;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        table{
+            width: 90%;
+            margin: 15px auto;
+            background: white;
+            border: 5px solid #2c3e50;
+        }
+
+        th, td{
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th{
+            background-color: #e9ecef;
+        }
+
+        button{
+            padding: 6px 10px;
+            font-weight: bold;
+            border: none;
+            background-color: #2c3e50;
+            color: white;
+            width: 100%;
+        }
+
+        .paging{
+            text-align: center;
+            margin: 25px;
+        }
+
+        .paging a{
+            margin: 0 6px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .kosong{
+            text-align: center;
+            padding: 20px;
+            color: #555;
+        }
+
+        @media (max-width: 768px){
+            table, thead, tbody, tr, th, td{
+                display: block;
+                width: 100%;
             }
 
             table{
-                width: 90%;
-                margin: 15px auto;
+                border: none;
+            }
+
+            tr{
                 background: white;
-                border: 5px solid #2c3e50;
-            }
-
-            th, td{
-                border: 1px solid #333;
+                border: 3px solid #2c3e50;
+                margin-bottom: 15px;
                 padding: 10px;
-                text-align: center;
             }
 
-            th{
-                background-color: #e9ecef;
+            td{
+                border: none;
+                text-align: left;
+                padding: 6px 0;
+            }
+
+            td::before{
+                font-weight: bold;
+                color: #2c3e50;
+                display: block;
+                margin-bottom: 3px;
             }
 
             button{
-                padding: 6px 12px;
-                font-weight: bold;
-                border: none;
-                background-color: #2c3e50;
-                color: white;
+                margin-top: 5px;
             }
-
-            .paging{
-                text-align: center;
-                margin: 25px;
-            }
-
-            .paging a{
-                margin: 0 6px;
-                font-weight: bold;
-                color: #2c3e50;
-                text-decoration: none;
-            }
-
-            .kosong{
-                text-align: center;
-                padding: 20px;
-                color: #555;
-            }
-
-            .insert-kode{
-                text-align: center;
-                padding: 20px;
-                color: #262626ff;
-                border: 5px solid #2c3e50;
-                width: 400px;
-                margin: 30px auto;
-            }
+        }
         </style>
 </head>
 <body>
@@ -152,21 +179,21 @@ $result_grup = $group->getAllGroupByMember($_SESSION['user']['username'], $offse
 
                     // LIHAT MEMBER
                     echo "<td>
-                        <form action='dosen_view_member.php' method='post'>
+                        <form action='dosen_view_group_allmember.php' method='post'>
                             <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
                             <button type='submit'>Semua Member</button>
                         </form>
                     </td>";
 
                     echo "<td>
-                        <form action='dosen_view_member_mahasiswa.php' method='post'>
+                        <form action='dosen_view_group_member_mahasiswa.php' method='post'>
                             <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
                             <button type='submit'>Member mahasiswa</button>
                         </form>
                     </td>";
 
                     echo "<td>
-                        <form action='dosen_view_member_dosen.php' method='post'>
+                        <form action='dosen_view_group_member_dosen.php' method='post'>
                             <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
                             <button type='submit'>Member Dosen</button>
                         </form>

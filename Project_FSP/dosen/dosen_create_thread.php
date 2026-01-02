@@ -31,29 +31,89 @@ if (isset($_POST['btnSubmit'])) {
     <title>Buat Thread Baru</title>
     <style>
         body {
-            font-family: Arial, sans-serif; 
-            background: #f4f4f4; 
+            font-family: 'Times New Roman', serif;
+            background-color: #f4f6f8;
+            margin: 0;
             padding: 20px;
         }
-        .container { 
-            background: #fff; 
-            padding: 30px; 
-            width: 400px; 
-            margin: 50px auto;
+
+        .container {
+            background: white;
+            padding: 30px;
+            width: 420px;
+            max-width: 95%;
+            margin: 60px auto;
         }
-        h2 { 
-            text-align: center; 
-            margin-bottom: 20px; 
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
         }
-        .button { 
-            padding: 10px 20px; 
-            background: #2c3e50; 
-            color: white; 
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #2c3e50;
+            color: white;
             border: none;
-            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
         }
-        .center { 
-            text-align: center; 
+
+        .button-secondary {
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .status-lama {
+            background: #e9ecef;
+            padding: 10px;
+            border-left: 5px solid #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 500px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                margin: 30px auto;
+                padding: 20px;
+                width: 100%;
+            }
+
+            p {
+                margin-bottom: 10px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
         }
     </style>
 </head>

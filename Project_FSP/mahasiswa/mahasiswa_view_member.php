@@ -45,7 +45,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
 
         .center {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .button {
@@ -60,6 +60,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             background: white;
             padding: 25px 30px;
             width: 450px;
+            max-width: 95%;
             margin: 30px auto;
         }
 
@@ -77,12 +78,55 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
 
         th {
             background-color: #e9ecef;
+            font-weight: bold;
         }
 
         .informasiGrup table {
             width: 100%;
+            margin: 0;
         }
 
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+
+            table, thead, tbody, tr, th, td {
+                display: block;
+                width: 95%;
+            }
+
+            thead {
+                display: none;
+            }
+
+            table {
+                border: none;
+            }
+
+            tr {
+                background: white;
+                border: 3px solid #2c3e50;
+                margin-bottom: 15px;
+                padding: 10px;
+            }
+
+            td {
+                border: none;
+                text-align: left;
+                padding: 6px 0;
+            }
+
+            td::before {
+                font-weight: bold;
+                color: #2c3e50;
+                display: block;
+                margin-bottom: 3px;
+            }
+
+        }
     </style>
 </head>
 <body>

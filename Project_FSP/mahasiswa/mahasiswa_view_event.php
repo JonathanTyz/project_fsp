@@ -38,7 +38,7 @@ $group_events = $event->getEventsGroup($group_id);
 <head>
     <title>Detail Group Mahasiswa</title>
     <style>
-        body {
+         body {
             font-family: 'Times New Roman', serif;
             margin: 0;
             background-color: #f4f6f8;
@@ -72,6 +72,7 @@ $group_events = $event->getEventsGroup($group_id);
             background: white;
             padding: 25px 30px;
             width: 450px;
+            max-width: 95%;
             margin: 30px auto;
         }
 
@@ -103,6 +104,50 @@ $group_events = $event->getEventsGroup($group_id);
             text-align: center;
         }
 
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+
+            table, thead, tbody, tr, th, td {
+                display: block;
+                width: 95%;
+            }
+
+            thead {
+                display: none;
+            }
+
+            table {
+                border: none;
+            }
+
+            tr {
+                background: white;
+                border: 3px solid #2c3e50;
+                margin-bottom: 15px;
+                padding: 10px;
+            }
+
+            td {
+                border: none;
+                text-align: left;
+                padding: 6px 0;
+            }
+
+            td::before {
+                font-weight: bold;
+                color: #2c3e50;
+                display: block;
+                margin-bottom: 3px;
+            }
+
+            .informasiGrup {
+                padding: 20px;
+            }
+        }
     </style>
 
 </head>
@@ -124,11 +169,11 @@ $group_events = $event->getEventsGroup($group_id);
         <tr>
             <th colspan="2">Informasi Group</th>
         </tr>
-        <tr><td>Nama</td><td><?= $group_detail['nama']; ?></td></tr>
-        <tr><td>Deskripsi</td><td><?= $group_detail['deskripsi']; ?></td></tr>
-        <tr><td>Pembuat</td><td><?= $group_detail['username_pembuat']; ?></td></tr>
-        <tr><td>Tanggal Dibentuk</td><td><?= $group_detail['tanggal_pembentukan']; ?></td></tr>
-        <tr><td>Jenis</td><td><?= $group_detail['jenis']; ?></td></tr>
+        <tr><td>Nama:</td><td><?= $group_detail['nama']; ?></td></tr>
+        <tr><td>Deskripsi:</td><td><?= $group_detail['deskripsi']; ?></td></tr>
+        <tr><td>Pembuat:</td><td><?= $group_detail['username_pembuat']; ?></td></tr>
+        <tr><td>Tanggal Dibentuk:</td><td><?= $group_detail['tanggal_pembentukan']; ?></td></tr>
+        <tr><td>Jenis:</td><td><?= $group_detail['jenis']; ?></td></tr>
     </table>
 </div>
 

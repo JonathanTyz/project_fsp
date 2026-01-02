@@ -26,6 +26,7 @@ if (!$thread) die("Thread tidak ditemukan");
 body{
     font-family: Arial, sans-serif;
     background:#eef1f5;
+    margin:0;
     padding:20px;
 }
 
@@ -34,11 +35,13 @@ body{
     margin:auto;
     background:white;
     padding:20px;
+    border-radius:6px;
 }
 
 a{
     text-decoration:none;
     color:#3498db;
+    font-weight:bold;
 }
 
 h3{
@@ -50,10 +53,11 @@ h3{
 }
 
 .chat-box{ 
-    height:400px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
+    min-height: 60vh;
+    max-height: 70vh;  
+    display:flex;
+    flex-direction:column;
+    overflow-y:auto;
     background:#f9f9f9;
     border:1px solid #ddd;
     padding:10px;
@@ -65,6 +69,7 @@ h3{
     padding:8px 12px;
     margin-bottom:10px;
     font-size:14px;
+    border-radius:8px;
 }
 
 .chat-mine{
@@ -89,32 +94,20 @@ h3{
     margin-top:4px;
 }
 
-
-.chat b{
-    color:#2c3e50;
-}
-
-.chat p{
-    color:#888;
-    font-size:11px;
-}
-
 textarea{
     width:100%;
     height:70px;
     padding:8px;
-    border-radius:6px;
     border:1px solid #ccc;
     margin-bottom:8px;
 }
 
 button{
-    padding:8px 16px;
+    padding:10px 16px;
     background:#3498db;
     color:white;
     border:none;
-    border-radius:6px;
-    cursor:pointer;
+    width:100%;
 }
 
 button:hover{
@@ -124,6 +117,44 @@ button:hover{
 .closed{
     color:red;
     font-weight:bold;
+    margin-bottom:10px;
+}
+
+
+@media (max-width: 768px){
+
+    body{
+        padding:10px;
+    }
+
+    .container{
+        padding:15px;
+        margin:20px auto;
+        width: 95%;
+        height: auto;
+    }
+
+    h3{
+        font-size:18px;
+    }
+
+    .chat-box{
+        height:55px; 
+    }
+
+    .chat{
+        max-width:100%;
+        font-size:13px;
+    }
+
+    textarea{
+        height:60px;
+        font-size:14px;
+    }
+
+    button{
+        font-size:14px;
+    }
 }
 </style>
 
