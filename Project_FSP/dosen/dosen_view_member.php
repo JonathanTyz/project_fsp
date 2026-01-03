@@ -30,22 +30,17 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             background-color: #f4f6f8;
         }
 
-        h2 {
+        h2, h3 {
             text-align: center;
-            margin-top: 30px;
-            font-size: 36px;
             color: #2c3e50;
         }
 
-        h3 {
-            text-align: center;
-            color: #2c3e50;
-            margin-top: 40px;
-        }
+        h2 { margin-top: 30px; font-size: 36px; }
+        h3 { margin-top: 40px; font-size: 28px; }
 
         .center {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .button {
@@ -54,19 +49,37 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             border: none;
             color: white;
             font-weight: bold;
+            border-radius: 6px;
+            margin: 5px;
         }
 
         .informasiGrup {
             background: white;
             padding: 25px 30px;
             width: 450px;
+            max-width: 95%;
             margin: 30px auto;
         }
 
+
+        .search-box {
+            width: 300px;
+            padding: 6px;
+            margin: 10px auto 20px;
+            display: block;
+            font-family: 'Times New Roman', serif;
+        }
+        .empty
+        {
+            text-align: center;
+            font-style: italic;
+        }
+        
         table {
             width: 90%;
             margin: 20px auto;
             background: white;
+            text-align: left;
         }
 
         th, td {
@@ -77,12 +90,72 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
 
         th {
             background-color: #e9ecef;
+            font-weight: bold;
         }
 
-        .informasiGrup table {
-            width: 100%;
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
         }
 
+        @media (max-width: 768px) {
+            table, thead, tbody, tr, th, td {
+                display: block;
+                width: 95%;
+            }
+
+            thead {
+                display: none; 
+            }
+
+            tr {
+                background: white;
+                border: 2px solid #2c3e50;
+                margin-bottom: 15px;
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            td {
+                border: none;
+                padding: 6px 0;
+                text-align: left;
+                display: flex;
+                align-items: center;
+            }
+
+            td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: #2c3e50;
+                flex-basis: 40%;
+            }
+
+            img {
+                max-width: 80px;
+                height: auto;
+                margin-bottom: 10px;
+            }
+
+            .button {
+                width: 90%;
+                margin: 10px auto;
+                display: block;
+                text-align: center;
+            }
+
+            .informasiGrup {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 { font-size: 24px; }
+            h3 { font-size: 20px; }
+            td { font-size: 14px; flex-direction: column; text-align: left; }
+            td::before { width: 100%; margin-bottom: 4px; }
+        }
     </style>
 </head>
 <body>
@@ -127,11 +200,11 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
     } else {
         while ($row = $result_mahasiswa->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>{$row['username']}</td>";
-            echo "<td>{$row['nama']}</td>";
-            echo "<td>{$row['nrp']}</td>";
-            echo "<td>{$row['gender']}</td>";
-            echo "<td>{$row['angkatan']}</td>";
+            echo "<td data-label='Username'>{$row['username']}</td>";
+            echo "<td data-label='Nama'>{$row['nama']}</td>";
+            echo "<td data-label='NRP'>{$row['nrp']}</td>";
+            echo "<td data-label='Gender'>{$row['gender']}</td>";
+            echo "<td data-label='Angkatan'>{$row['angkatan']}</td>";
             echo "<td> <img src = '../image_mahasiswa/" . $row['nrp'] . "." . $row['foto_extention'] . "' width='100'></td>";
             echo "</tr>";
         }
@@ -153,10 +226,10 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
     } else {
         while ($row = $result_dosen->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>{$row['username']}</td>";
-            echo "<td>{$row['nama']}</td>";
-            echo "<td>{$row['npk']}</td>";
-            echo "<td> <img src = '../image_dosen/" . $row['npk'] . "." . $row['foto_extension'] . "' width='100'></td>";
+            echo "<td data-label='Username'>{$row['username']}</td>";
+            echo "<td data-label='Nama'>{$row['nama']}</td>";
+            echo "<td data-label='NPK'>{$row['npk']}</td>";
+            echo "<td data-label='Foto'><img src = '../image_dosen/" . $row['npk'] . "." . $row['foto_extension'] . "' width='100'></td>";
             echo "</tr>";
         }
     }

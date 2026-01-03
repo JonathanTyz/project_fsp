@@ -88,7 +88,7 @@ $threads = $threadObj->getThreads($idgrup);
             text-decoration: none;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 500px) {
 
             table, thead, tbody, tr, th, td {
                 display: block;

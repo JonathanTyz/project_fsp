@@ -38,81 +38,144 @@
     <head>
         <title>Detail Event Group</title>
         <style>
-            body {
-                font-family: 'Times New Roman', serif;
+            body{
+                font-family: 'Times New Roman', Times, serif;
                 margin: 0;
                 background-color: #f4f6f8;
             }
 
-            h2 {
+            h2{
                 text-align: center;
                 margin-top: 30px;
                 font-size: 36px;
                 color: #2c3e50;
             }
 
-            h3 {
+            h3{
                 color: #2c3e50;
+                text-align: center;
+                margin-top: 30px;
             }
 
-            .center {
+            .center{
                 text-align: center;
                 margin-top: 15px;
             }
 
-            .button {
+            .button{
                 padding: 10px 18px;
                 background-color: #2c3e50;
                 border: none;
                 color: white;
                 font-weight: bold;
+                margin: 5px 0;
             }
 
-            .informasiGrup {
+            .informasiGrup{
                 background: white;
                 padding: 25px 30px;
                 width: 450px;
                 margin: 30px auto;
             }
 
-            table {
+            .informasiGrup table{
+                width: 100%;
+            }
+
+            .daftarEvent table{
                 width: 90%;
                 margin: 20px auto;
                 background: white;
             }
 
-            th, td {
+            th, td{
                 border: 1px solid #ccc;
                 padding: 10px;
                 text-align: center;
             }
 
-            th {
+            th{
                 background-color: #e9ecef;
                 font-weight: bold;
             }
 
-            .informasiGrup table {
-                width: 100%;
-                margin: 0;
+            .daftarEvent img{
+                max-width: 180px;
+                height: auto;
             }
 
-            .daftarEvent {
-                margin: 40px auto;
-                width: 95%;
-                text-align: center;
-            }
-            
             .insert-event{
-                align-items: center;
                 text-align: center;
-                margin-bottom: 20px;
-                margin-top: 20px;
-                padding: 10px 18px;
-
+                margin: 20px 0;
             }
 
-        </style>
+            @media (max-width: 1024px){
+                table, thead, tbody, tr, th, td{
+                    display: block;
+                    width: 95%;
+                    margin: 0 auto;
+                }
+
+                thead{
+                    display: none;
+                }
+
+                tr{
+                    background: white;
+                    border: 2px solid #2c3e50;
+                    margin-bottom: 15px;
+                    padding: 15px;
+                }
+
+                td{
+                    text-align: left;
+                    border: none;
+                    padding: 8px 10px;
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                }
+
+                td::before{
+                    content: attr(data-label);
+                    font-weight: bold;
+                    width: 45%;
+                    color: #2c3e50;
+                }
+
+                td button, td form{
+                    width: 100%;
+                    margin-top: 5px;
+                }
+
+                .informasiGrup, .daftarEvent table{
+                    width: 95%;
+                }
+
+                .daftarEvent img{
+                    max-width: 120px;
+                    margin-top: 5px;
+                }
+            }
+
+            @media (max-width: 480px){
+                h2{ font-size: 24px; }
+                h3{ font-size: 20px; }
+                td{
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+                td::before{
+                    width: 100%;
+                    margin-bottom: 4px;
+                }
+                .button{
+                    width: 100%;
+                    padding: 8px;
+                    font-size: 14px;
+                }
+            }
+            </style>
 
     </head>
     <body>
@@ -133,11 +196,11 @@
             <tr>
                 <th colspan="2">Informasi Group</th>
             </tr>
-            <tr><td>Nama</td><td><?= $group_detail['nama']; ?></td></tr>
-            <tr><td>Deskripsi</td><td><?= $group_detail['deskripsi']; ?></td></tr>
-            <tr><td>Pembuat</td><td><?= $group_detail['username_pembuat']; ?></td></tr>
-            <tr><td>Tanggal Dibentuk</td><td><?= $group_detail['tanggal_pembentukan']; ?></td></tr>
-            <tr><td>Jenis</td><td><?= $group_detail['jenis']; ?></td></tr>
+            <tr><td data-label="Nama:">Nama</td><td><?= $group_detail['nama']; ?></td></tr>
+            <tr><td data-label="Deskripsi:">Deskripsi</td><td><?= $group_detail['deskripsi']; ?></td></tr>
+            <tr><td data-label="Pembuat:">Pembuat</td><td><?= $group_detail['username_pembuat']; ?></td></tr>
+            <tr><td data-label="Tanggal Dibentuk:">Tanggal Dibentuk</td><td><?= $group_detail['tanggal_pembentukan']; ?></td></tr>
+            <tr><td data-label="Jenis:">Jenis</td><td><?= $group_detail['jenis']; ?></td></tr>
         </table>
     </div>
 
@@ -157,10 +220,10 @@
 
             <?php foreach ($group_events as $events) { ?>
                 <tr>
-                    <td><?= $events['judul']; ?></td>
-                    <td><?= $events['tanggal']; ?></td>
-                    <td><?= $events['keterangan']; ?></td>
-                    <td><?= $events['jenis']; ?></td>
+                    <td data-label="Judul"><?= $events['judul']; ?></td>
+                    <td data-label="Tanggal"><?= $events['tanggal']; ?></td>
+                    <td data-label="Keterangan"><?= $events['keterangan']; ?></td>
+                    <td data-label="Jenis"><?= $events['jenis']; ?></td>
                     <td>
                         <?php
                         if (!empty($events['poster_extension']) &&

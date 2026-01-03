@@ -24,7 +24,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
 <head>
     <title>Member Group</title>
     <style>
-        body {
+    body {
             font-family: 'Times New Roman', serif;
             margin: 0;
             background-color: #f4f6f8;
@@ -51,7 +51,6 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             font-weight: bold;
             border-radius: 6px;
             margin: 5px;
-            cursor: pointer;
         }
 
         .informasiGrup {
@@ -60,14 +59,13 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             width: 450px;
             max-width: 95%;
             margin: 30px auto;
-            border-radius: 10px;
         }
 
         table {
             width: 90%;
             margin: 20px auto;
             background: white;
-            border-collapse: collapse;
+            text-align: left;
         }
 
         th, td {
@@ -103,7 +101,6 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
                 margin-bottom: 15px;
                 padding: 15px;
                 border-radius: 10px;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.15);
             }
 
             td {
@@ -111,7 +108,6 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
                 padding: 6px 0;
                 text-align: left;
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
             }
 

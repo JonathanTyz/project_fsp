@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../class/thread.php';
+require_once '../class/group.php';
 
 if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
@@ -12,6 +13,9 @@ $idgrup   = (int)($_POST['idgrup'] ?? $_GET['idgrup']);
 
 $threadObj = new Thread();
 $threads   = $threadObj->getThreads($idgrup);
+
+$grup = new Group();
+$cekGrup = $grup->checkOwnGroup($username, $idgrup);
 ?>
 
 <!DOCTYPE html>
@@ -20,41 +24,59 @@ $threads   = $threadObj->getThreads($idgrup);
     <title>Thread Grup</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', serif;
             background-color: #f4f6f8;
+            margin: 0;
             padding: 20px;
         }
+
         h2 {
             text-align: center;
+            color: #2c3e50;
         }
+
         table {
             width: 90%;
             margin: 20px auto;
             background: white;
-            border-collapse: collapse;
         }
+
         th, td {
-            border: 1px solid #333;
+            border: 1px solid #ccc;
             padding: 10px;
             text-align: center;
         }
+
         th {
             background-color: #e9ecef;
+            font-weight: bold;
         }
+
         .button {
-            padding: 6px 12px;
+            padding: 8px 15px;
+            margin: 4px;
             background-color: #2c3e50;
             color: white;
             border: none;
             font-weight: bold;
         }
+
         .button-disabled {
-            padding: 6px 12px;
+            padding: 8px 15px;
             background-color: #b0b0b0;
             color: #666;
             border: none;
-            cursor: not-allowed;
         }
+
+        .center {
+            text-align: center;
+        }
+
+        .container-kembali {
+            width: 90%;
+            margin: auto;
+        }
+
         .kembali {
             display: inline-block;
             padding: 8px 14px;
@@ -63,15 +85,60 @@ $threads   = $threadObj->getThreads($idgrup);
             font-weight: bold;
             text-decoration: none;
         }
-        .center {
-            text-align: center;
-            margin-bottom: 15px;
+
+        @media (max-width: 500px) {
+
+            table, thead, tbody, tr, th, td {
+                display: block;
+                width: 100%;
+            }
+
+            thead {
+                display: none;
+            }
+
+            table {
+                border: none;
+            }
+
+            tr {
+                background: white;
+                border: 3px solid #2c3e50;
+                margin-bottom: 15px;
+                padding: 10px;
+            }
+
+            td {
+                border: none;
+                text-align: left;
+                padding: 6px 0;
+            }
+
+            td::before {
+                font-weight: bold;
+                color: #2c3e50;
+                display: block;
+                margin-bottom: 3px;
+            }
+
+            .button,
+            .button-disabled {
+                width: 100%;
+                margin-top: 5px;
+            }
         }
     </style>
 </head>
 <body>
 
-<a href="dosen_kelola_group.php" class="kembali">← Kembali</a>
+<?php if ($cekGrup) { ?>
+    <a href="dosen_kelola_group.php" class="kembali">← Kembali</a>
+<?php }
+else { 
+    ?>
+    <a href="dosen_group_diikuti.php" class="kembali">← Kembali</a>
+<?php } 
+?>
 
 <h2>Thread Grup</h2>
 
@@ -103,6 +170,7 @@ $threads   = $threadObj->getThreads($idgrup);
             <form action="dosen_view_chat.php" method="post">
                 <input type="hidden" name="idthread" value="<?= $row['idthread']; ?>">
                 <input type = "hidden" name = "idgrup" value = "<?= $idgrup ?>">
+                <input type = "hidden" name = "username" value = "<?= $username ?>">
                 <button class="button" type="submit">View Chat</button>
             </form>
         </td>

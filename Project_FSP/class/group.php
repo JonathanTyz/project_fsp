@@ -248,6 +248,19 @@ class group extends classParent {
             return false; 
         }
 }
+
+    public function checkOwnGroup($username, $idgrup)
+    {
+        //if not own group (username_pembuat is different or not found then return true)
+        $sql = "SELECT * FROM grup 
+                WHERE idgrup = ? AND username_pembuat = ?";
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("is", $idgrup, $username);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        return $res->num_rows > 0;
+    }
+
     public function deleteGroup($idgrup)
     {
         $sql = "DELETE FROM member_grup WHERE idgrup = ?";

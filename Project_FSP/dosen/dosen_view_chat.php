@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once '../class/thread.php';
-
+require_once '../class/group.php';
 if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
     exit();
@@ -12,6 +12,10 @@ $idgrup   = (int)$_POST['idgrup'];
 
 $threadObj = new Thread();
 $thread = $threadObj->getThread($idthread);
+
+$grup = new Group();
+$username = $_SESSION['user']['username'];
+$cekGrup = $grup->checkOwnGroup($username, $idgrup);
 
 if (!$thread) die("Thread tidak ditemukan");
 ?>
@@ -26,6 +30,7 @@ if (!$thread) die("Thread tidak ditemukan");
 body{
     font-family: Arial, sans-serif;
     background:#eef1f5;
+    margin:0;
     padding:20px;
 }
 
@@ -34,10 +39,13 @@ body{
     margin:auto;
     background:white;
     padding:20px;
+    border-radius:6px;
 }
 
 a{
+    text-decoration:none;
     color:#3498db;
+    font-weight:bold;
 }
 
 h3{
@@ -49,10 +57,11 @@ h3{
 }
 
 .chat-box{ 
-    height:400px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
+    min-height: 60vh;
+    max-height: 70vh;  
+    display:flex;
+    flex-direction:column;
+    overflow-y:auto;
     background:#f9f9f9;
     border:1px solid #ddd;
     padding:10px;
@@ -64,6 +73,7 @@ h3{
     padding:8px 12px;
     margin-bottom:10px;
     font-size:14px;
+    border-radius:8px;
 }
 
 .chat-mine{
@@ -88,16 +98,6 @@ h3{
     margin-top:4px;
 }
 
-
-.chat b{
-    color:#2c3e50;
-}
-
-.chat p{
-    color:#888;
-    font-size:11px;
-}
-
 textarea{
     width:100%;
     height:70px;
@@ -107,9 +107,11 @@ textarea{
 }
 
 button{
-    padding:8px 16px;
+    padding:10px 16px;
     background:#3498db;
     color:white;
+    border:none;
+    width:100%;
 }
 
 button:hover{
@@ -119,6 +121,44 @@ button:hover{
 .closed{
     color:red;
     font-weight:bold;
+    margin-bottom:10px;
+}
+
+
+@media (max-width: 500px){
+
+    body{
+        padding:10px;
+    }
+
+    .container{
+        padding:15px;
+        margin:20px auto;
+        width: 95%;
+        height: auto;
+    }
+
+    h3{
+        font-size:18px;
+    }
+
+    .chat-box{
+        height:55px; 
+    }
+
+    .chat{
+        max-width:100%;
+        font-size:13px;
+    }
+
+    textarea{
+        height:60px;
+        font-size:14px;
+    }
+
+    button{
+        font-size:14px;
+    }
 }
 </style>
 
@@ -126,9 +166,19 @@ button:hover{
 
 <body>
 
-<div class="container">
+<?php if ($cekGrup) { ?>
+    <a href="dosen_kelola_group.php" class="kembali">← Kembali</a>
+<?php }
+else { 
+    ?>
+    <a href="dosen_group_diikuti.php" class="kembali">← Kembali</a>
+<?php } 
+?>
 
-    <a href="dosen_thread.php?idgrup=<?= $idgrup ?>">← Kembali</a>
+<div class="container">
+    <form>
+        <a href="dosen_thread.php?idgrup=<?= $idgrup ?>" class="kembali">← Kembali ke Thread</a>
+    </form>
 
     <h3>Thread oleh <?= $thread['username_pembuat'] ?></h3>
     <p class="status">Status: <b><?= $thread['status'] ?></b></p>

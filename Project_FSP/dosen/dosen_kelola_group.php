@@ -20,92 +20,144 @@ $detail_grup = $group->getDetailGroup($_SESSION['user']['username']);
 <head>
     <title>Grup Saya</title>
     <style>
-            body{
-                font-family: 'Times New Roman', Times, serif;
-                margin: 0;
-                background-color: #f4f6f8;
-            }
+    body{
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    background-color: #f4f6f8;
+    }
 
-            h2{
-                text-align: center;
-                margin: 30px 0 10px;
-                color: #2c3e50;
-                font-size: 34px;
-            }
+    h2{
+        text-align: center;
+        margin: 30px 0 10px;
+        color: #2c3e50;
+        font-size: 34px;
+    }
 
-            .container-kembali{
-                width: 90%;
-                margin: auto;
-            }
+    .container-kembali{
+        width: 90%;
+        margin: auto;
+    }
 
-            .kembali{
-                display: inline-block;
-                padding: 8px 14px;
-                background-color: #6c757d;
-                color: white;
-                font-weight: bold;
-                text-decoration: none;
-            }
+    .kembali{
+        display: inline-block;
+        padding: 8px 14px;
+        background-color: #6c757d;
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        margin-bottom: 10px;
+    }
 
-            table{
-                width: 90%;
-                margin: 15px auto;
-                background: white;
-                border: 5px solid #2c3e50;
-            }
+    table{
+        width: 90%;
+        margin: 15px auto;
+        background: white;
+    }
 
-            th, td{
-                border: 1px solid #333;
-                padding: 10px;
-                text-align: center;
-            }
+    th, td{
+        border: 1px solid #333;
+        padding: 10px;
+        text-align: center;
+    }
 
-            th{
-                background-color: #e9ecef;
-            }
+    th{
+        background-color: #e9ecef;
+    }
 
-            button{
-                padding: 6px 12px;
-                font-weight: bold;
-                border: none;
-                background-color: #2c3e50;
-                color: white;
-            }
+    button{
+        padding: 6px 12px;
+        font-weight: bold;
+        border: none;
+        background-color: #2c3e50;
+        color: white;
+    }
 
-            .paging{
-                text-align: center;
-                margin: 25px;
-            }
+    .paging{
+        text-align: center;
+        margin: 25px;
+    }
 
-            .paging a{
-                margin: 0 6px;
-                font-weight: bold;
-                color: #2c3e50;
-                text-decoration: none;
-            }
+    .paging a{
+        margin: 0 6px;
+        font-weight: bold;
+        color: #2c3e50;
+        text-decoration: none;
+    }
 
-            .kosong{
-                text-align: center;
-                padding: 20px;
-                color: #555;
-            }
+    .kosong{
+        text-align: center;
+        padding: 20px;
+        color: #555;
+    }
 
-            .insert-kode{
-                text-align: center;
-                padding: 20px;
-                color: #262626ff;
-                border: 5px solid #2c3e50;
-                width: 400px;
-                margin: 30px auto;
-            }
+    .insert-kode{
+        text-align: center;
+        padding: 20px;
+        color: #262626ff;
+        border: 5px solid #2c3e50;
+        width: 400px;
+        margin: 30px auto;
+    }
 
-            .insert-group {
-                align-items: center;
-                text-align: center;
-                margin-bottom: 20px;
-                margin-top: 20px;
-                padding: 10px 18px; 
-            }
+    .insert-group {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        padding: 10px 18px; 
+    }
+
+    @media (max-width: 1024px){
+        table, thead, tbody, tr, th, td {
+            display: block;
+            width: 95%;
+            margin: 0 auto;
+        }
+
+        tr {
+            background: white;
+            border: 2px solid #2c3e50;
+            margin-bottom: 15px;
+            padding: 15px;
+        }
+
+        td {
+            text-align: left;
+            border: none;
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            width: 45%;
+            color: #2c3e50;
+        }
+
+        td button, td form, td a {
+            width: 100%;
+            margin-top: 5px;
+        }
+    }
+
+    @media (max-width: 480px){
+        h2{ font-size: 24px; }
+        button{
+            padding: 8px;
+            font-size: 14px;
+        }
+        td::before{
+            width: 100%;
+            margin-bottom: 4px;
+        }
+        td{
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+</style>
         </style>
 </head>
 <body>
@@ -127,8 +179,8 @@ $detail_grup = $group->getDetailGroup($_SESSION['user']['username']);
                 <th>Kelola Event</th>
                 <th>Thread</th>
                 <th colspan = '3'>Kelola Member</th>
-                <th>Hapus</th>
                 <th>Edit</th>
+                <th>Hapus</th>
             </tr>
         </thead>
         <tbody>
@@ -138,12 +190,11 @@ $detail_grup = $group->getDetailGroup($_SESSION['user']['username']);
             } else {
                 while ($row = $result_grup->fetch_assoc()) {
                     echo "<tr>";
-                    echo "<td>{$row['nama']}</td>";
-                    echo "<td>{$row['deskripsi']}</td>";
-                    echo "<td>{$row['username_pembuat']}</td>";
-                    echo "<td>{$row['tanggal_pembentukan']}</td>";
-                    echo "<td>{$row['jenis']}</td>";
-
+                    echo "<td data-label='Nama Grup'>{$row['nama']}</td>";
+                    echo "<td data-label='Deskripsi'>{$row['deskripsi']}</td>";
+                    echo "<td data-label='Pembuat'>{$row['username_pembuat']}</td>";
+                    echo "<td data-label='Tanggal Dibentuk'>{$row['tanggal_pembentukan']}</td>";
+                    echo "<td data-label='Jenis'>{$row['jenis']}</td>";
                     // LIHAT DETAIL GROUP
                     echo "<td>
                         <form action='dosen_kelola_event.php' method='post'>

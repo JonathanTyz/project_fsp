@@ -38,44 +38,30 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             color: #2c3e50;
         }
 
+        h2 { margin-top: 30px; font-size: 36px; }
+        h3 { margin-top: 40px; font-size: 28px; }
+
         .center {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .button {
-            padding: 8px 16px;
+            padding: 10px 18px;
             background-color: #2c3e50;
             border: none;
             color: white;
             font-weight: bold;
-        }
-
-        .button:disabled {
-            background-color: #aaa;
+            border-radius: 6px;
+            margin: 5px;
         }
 
         .informasiGrup {
             background: white;
-            padding: 20px;
+            padding: 25px 30px;
             width: 450px;
+            max-width: 95%;
             margin: 30px auto;
-        }
-
-        table {
-            width: 90%;
-            margin: 15px auto;
-            background: white;
-        }
-
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #e9ecef;
         }
 
         .search-box {
@@ -89,6 +75,88 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
         {
             text-align: center;
             font-style: italic;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            background: white;
+            text-align: left;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, tr, th, td {
+                display: block;
+                width: 95%;
+            }
+
+            thead {
+                display: none; 
+            }
+
+            tr {
+                background: white;
+                border: 2px solid #2c3e50;
+                margin-bottom: 15px;
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            td {
+                border: none;
+                padding: 6px 0;
+                text-align: left;
+                display: flex;
+                align-items: center;
+            }
+
+            td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: #2c3e50;
+                flex-basis: 40%;
+            }
+
+            img {
+                max-width: 80px;
+                height: auto;
+                margin-bottom: 10px;
+            }
+
+            .button {
+                width: 90%;
+                margin: 10px auto;
+                display: block;
+                text-align: center;
+            }
+
+            .informasiGrup {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 { font-size: 24px; }
+            h3 { font-size: 20px; }
+            td { font-size: 14px; flex-direction: column; text-align: left; }
+            td::before { width: 100%; margin-bottom: 4px; }
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -134,10 +202,10 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
     } else {
         while ($row = $result_dosen->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>{$row['username']}</td>";
-            echo "<td>{$row['nama']}</td>";
-            echo "<td>{$row['npk']}</td>";
-            echo "<td> <img src = '../image_dosen/" . $row['npk'] . "." . $row['foto_extension'] . "' width='100'></td>";
+            echo "<td data-label='Username'>{$row['username']}</td>";
+            echo "<td data-label='Nama'>{$row['nama']}</td>";
+            echo "<td data-label='NPK'>{$row['npk']}</td>";
+            echo "<td data-label='Foto'><img src='../image_dosen/{$row['npk']}.{$row['foto_extension']}'></td>";
             echo "<td>
                     <form action='dosen_delete_member_proses.php' method='post' style='margin:0;'>
                         <input type='hidden' name='idgrup' value='{$idgrup}'>
@@ -172,10 +240,10 @@ if ($dosen_search->num_rows == 0) {
 } else {
     while ($dosen = $dosen_search->fetch_assoc()) {
         echo "<tr>";
-        echo "<td>{$dosen['username']}</td>";
-        echo "<td>{$dosen['nama']}</td>";
-        echo "<td>{$dosen['npk']}</td>";
-        echo "<td><img src='../image_dosen/{$dosen['npk']}.{$dosen['foto_extension']}' width='100'></td>";
+        echo "<td data-label='Username'>{$dosen['username']}</td>";
+        echo "<td data-label='Nama'>{$dosen['nama']}</td>";
+        echo "<td data-label='NPK'>{$dosen['npk']}</td>";
+        echo "<td data-label='Foto'><img src='../image_dosen/{$dosen['npk']}.{$dosen['foto_extension']}' width='100'></td>";
 
         echo "<td>";
         echo "<form action='dosen_insert_member_proses.php' method='post' style='margin:0;'>
