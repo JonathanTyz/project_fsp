@@ -1,11 +1,13 @@
 <?php
 session_start();
 require_once '../class/thread.php';
+require_once '../css/theme_session.php';
 
 if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
     exit();
 }
+
 $idgrup        = isset($_POST['idgrup']) ? (int)$_POST['idgrup'] : 0;
 $idthread      = isset($_POST['idthread']) ? (int)$_POST['idthread'] : 0;
 $statusSebelum = $_POST['status'] ?? '';
@@ -24,128 +26,136 @@ if (isset($_POST['btnSubmit'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Edit Thread - Dosen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- THEME -->
+    <link rel="stylesheet" href="../css/theme.css">
+
     <style>
-        body {
+        body{
             font-family: 'Times New Roman', serif;
-            background-color: #f4f6f8;
             margin: 0;
             padding: 20px;
         }
 
-        .container {
-            background: white;
+        .container{
             padding: 30px;
             width: 420px;
             max-width: 95%;
             margin: 60px auto;
+            border: 4px solid;
         }
 
-        h2 {
+        h2{
             text-align: center;
-            color: #2c3e50;
             margin-bottom: 20px;
         }
 
-        p {
-            margin-bottom: 15px;
-        }
-
-        label {
+        label{
             font-weight: bold;
         }
 
-        select {
+        select{
             width: 100%;
-            padding: 8px;
-            margin-top: 5px;
+            padding: 10px;
+            margin-top: 8px;
         }
 
-        .button {
-            padding: 10px 20px;
-            background-color: #2c3e50;
-            color: white;
+        /* ===== STATUS LAMA ===== */
+        .status-lama{
+            padding: 10px;
+            margin-bottom: 20px;
+            border-left: 6px solid steelblue;
+            background-color: rgba(70,130,180,0.1);
+        }
+
+        /* ===== BUTTON GLOBAL ===== */
+        button{
+            padding: 10px;
+            font-weight: bold;
+            width: 100%;
             border: none;
-            font-weight: bold;
-            width: 100%;
-        }
-
-        .button-secondary {
-            padding: 10px 20px;
-            background-color: #6c757d;
+            cursor: pointer;
             color: white;
-            border: none;
-            font-weight: bold;
-            width: 100%;
             margin-top: 10px;
         }
 
-        .center {
+        button:hover{
+            opacity: 0.9;
+        }
+
+        /* ===== WARNA SESUAI HOME ===== */
+        .btn-simpan{
+            background-color: darkslategray; /* Kelola Group */
+        }
+
+        .btn-kembali{
+            background-color: steelblue; /* Group Publik */
+        }
+
+        .error{
+            color: red;
             text-align: center;
+            font-weight: bold;
         }
 
-        .status-lama {
-            background: #e9ecef;
-            padding: 10px;
-            border-left: 5px solid #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 500px) {
-
-            body {
+        @media (max-width: 500px){
+            body{
                 padding: 10px;
             }
 
-            .container {
+            .container{
                 margin: 30px auto;
                 padding: 20px;
             }
 
-            h2 {
+            h2{
                 font-size: 24px;
             }
         }
     </style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <div class="container">
     <h2>Edit Thread (Dosen)</h2>
 
-    <p>Status lama: <b><?= htmlspecialchars($statusSebelum) ?></b></p>
+    <div class="status-lama">
+        Status lama: <b><?= htmlspecialchars($statusSebelum) ?></b>
+    </div>
 
     <?php if (isset($error)) { ?>
-        <p style="color:red;text-align:center"><?= $error ?></p>
+        <p class="error"><?= $error ?></p>
     <?php } ?>
 
     <form method="post">
         <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
         <input type="hidden" name="idthread" value="<?= $idthread ?>">
-        <input type="hidden" name="status" value="<?= $statusSebelum ?>">
 
         <p>
-            <label>Status Baru:</label><br><br>
+            <label>Status Baru:</label>
             <select name="status" required>
-                <option value="Open" <?= $statusSebelum == 'Open' ? 'selected' : '' ?>>Open</option>
-                <option value="Close" <?= $statusSebelum == 'Close' ? 'selected' : '' ?>>Close</option>
+                <option value="Open" <?= $statusSebelum === 'Open' ? 'selected' : '' ?>>Open</option>
+                <option value="Close" <?= $statusSebelum === 'Close' ? 'selected' : '' ?>>Close</option>
             </select>
         </p>
 
-        <p class="center">
-            <button type="submit" name="btnSubmit" class="button">
-                Simpan
-            </button>
-        </p>
+        <button type="submit" name="btnSubmit" class="btn-simpan">
+            Simpan
+        </button>
     </form>
 
-    <form class="center" action="dosen_thread.php" method="get">
+    <form action="dosen_thread.php" method="get">
         <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
-        <button type="submit" class="button">Kembali</button>
+        <button type="submit" class="btn-kembali">
+            Kembali
+        </button>
     </form>
 </div>
 

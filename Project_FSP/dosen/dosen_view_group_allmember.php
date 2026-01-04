@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../class/group.php';
+require_once '../css/theme_session.php';
 
 if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
@@ -13,7 +14,7 @@ if (!isset($_POST['idgrup'])) {
 }
 
 $idgrup = (int)$_POST['idgrup'];
-$group = new group();
+$group = new Group();
 
 $detail = $group->getDetailGroup($idgrup);
 $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
@@ -23,6 +24,8 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
 <html>
 <head>
     <title>Member Group</title>
+    <link rel="stylesheet" href="../css/theme.css">
+
     <style>
         body {
             font-family: 'Times New Roman', serif;
@@ -43,14 +46,21 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             margin-top: 15px;
         }
 
+        /* tombol biru konsisten */
         .button {
             padding: 10px 18px;
-            background-color: #2c3e50;
             border: none;
-            color: white;
             font-weight: bold;
             border-radius: 6px;
             margin: 5px;
+            color: #fff;
+            background-color: #1E40AF;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .button:hover {
+            background-color: #1E3A8A;
         }
 
         .informasiGrup {
@@ -59,19 +69,21 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             width: 450px;
             max-width: 95%;
             margin: 30px auto;
+            border-radius: 8px;
+            border: 1px solid #ccc;
         }
 
         table {
             width: 90%;
             margin: 20px auto;
             background: white;
-            text-align: left;
+            text-align: center;
+            border-collapse: collapse;
         }
 
         th, td {
             border: 1px solid #ccc;
             padding: 10px;
-            text-align: center;
         }
 
         th {
@@ -80,93 +92,53 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
         }
 
         img {
-            max-width: 100%;
+            max-width: 100px;
             height: auto;
             border-radius: 6px;
         }
 
         @media (max-width: 768px) {
-            table, thead, tbody, tr, th, td {
-                display: block;
-                width: 95%;
-            }
-
-            thead {
-                display: none; 
-            }
-
-            tr {
-                background: white;
-                border: 2px solid #2c3e50;
-                margin-bottom: 15px;
-                padding: 15px;
-                border-radius: 10px;
-            }
-
-            td {
-                border: none;
-                padding: 6px 0;
-                text-align: left;
-                display: flex;
-                align-items: center;
-            }
-
-            td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                color: #2c3e50;
-                flex-basis: 40%;
-            }
-
-            img {
-                max-width: 80px;
-                height: auto;
-                margin-bottom: 10px;
-            }
-
-            .button {
-                width: 90%;
-                margin: 10px auto;
-                display: block;
-                text-align: center;
-            }
-
-            .informasiGrup {
-                padding: 20px;
-            }
+            table, thead, tbody, tr, th, td { display: block; width: 95%; }
+            thead { display: none; }
+            tr { background: white; border: 2px solid #2c3e50; margin-bottom: 15px; padding: 15px; border-radius: 10px; }
+            td { border: none; padding: 6px 0; text-align: left; display: flex; align-items: center; }
+            td::before { content: attr(data-label); font-weight: bold; color: #2c3e50; flex-basis: 40%; }
+            img { max-width: 80px; margin-bottom: 10px; }
+            .button { width: 90%; margin: 10px auto; display: block; text-align: center; }
+            .informasiGrup { padding: 20px; }
         }
 
         @media (max-width: 480px) {
             h2 { font-size: 24px; }
             h3 { font-size: 20px; }
-            td { font-size: 14px; flex-direction: column; text-align: left; }
+            td { font-size: 14px; flex-direction: column; }
             td::before { width: 100%; margin-bottom: 4px; }
         }
     </style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <h2>Member Group</h2>
 
 <div class="center">
-    <form action="dosen_home.php" method="post">
+    <form action="mahasiswa_home.php" method="post">
         <button class="button" type="submit">Kembali ke Home</button>
     </form>
-    <br>
-    <form action="dosen_group_diikuti.php" method="post">
+
+    <form action="mahasiswa_group_diikuti.php" method="post">
         <button class="button" type="submit">Kembali ke Daftar Group</button>
     </form>
 </div>
 
-
 <div class="informasiGrup">
     <table>
         <tr><th colspan="2">Informasi Group</th></tr>
-        <tr><td>Nama</td><td><?= $detail['nama']; ?></td></tr>
-        <tr><td>Deskripsi</td><td><?= $detail['deskripsi']; ?></td></tr>
-        <tr><td>Pembuat</td><td><?= $detail['username_pembuat']; ?></td></tr>
-        <tr><td>Tanggal Dibentuk</td><td><?= $detail['tanggal_pembentukan']; ?></td></tr>
-        <tr><td>Jenis</td><td><?= $detail['jenis']; ?></td></tr>
+        <tr><td>Nama</td><td><?= htmlspecialchars($detail['nama']) ?></td></tr>
+        <tr><td>Deskripsi</td><td><?= htmlspecialchars($detail['deskripsi']) ?></td></tr>
+        <tr><td>Pembuat</td><td><?= htmlspecialchars($detail['username_pembuat']) ?></td></tr>
+        <tr><td>Tanggal</td><td><?= htmlspecialchars($detail['tanggal_pembentukan']) ?></td></tr>
+        <tr><td>Jenis</td><td><?= htmlspecialchars($detail['jenis']) ?></td></tr>
     </table>
 </div>
 
@@ -180,22 +152,23 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
         <th>Angkatan</th>
         <th>Foto</th>
     </tr>
-    <?php
-    if ($result_mahasiswa->num_rows == 0) {
-        echo "<tr><td colspan='6' class='empty'>Tidak ada mahasiswa</td></tr>";
-    } else {
-        while ($row = $result_mahasiswa->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td data-label ='Username'>{$row['username']}</td>";
-            echo "<td data-label='Nama'>{$row['nama']}</td>";
-            echo "<td data-label='NRP'>{$row['nrp']}</td>";
-            echo "<td data-label='Gender'>{$row['gender']}</td>";
-            echo "<td data-label='Angkatan'>{$row['angkatan']}</td>";
-            echo "<td> <img src = '../image_mahasiswa/" . $row['nrp'] . "." . $row['foto_extention'] . "' width='100'></td>";
-            echo "</tr>";
-        }
-    }
-    ?>
+
+    <?php if ($result_mahasiswa->num_rows == 0): ?>
+        <tr><td colspan="6">Tidak ada mahasiswa</td></tr>
+    <?php else: ?>
+        <?php while ($row = $result_mahasiswa->fetch_assoc()): ?>
+            <tr>
+                <td data-label="Username"><?= htmlspecialchars($row['username']) ?></td>
+                <td data-label="Nama"><?= htmlspecialchars($row['nama']) ?></td>
+                <td data-label="NRP"><?= htmlspecialchars($row['nrp']) ?></td>
+                <td data-label="Gender"><?= htmlspecialchars($row['gender']) ?></td>
+                <td data-label="Angkatan"><?= htmlspecialchars($row['angkatan']) ?></td>
+                <td data-label="Foto">
+                    <img src="../image_mahasiswa/<?= $row['nrp'] ?>.<?= $row['foto_extention'] ?>" alt="Foto Mahasiswa">
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    <?php endif; ?>
 </table>
 
 <h3>Daftar Dosen</h3>
@@ -206,20 +179,21 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
         <th>NPK</th>
         <th>Foto</th>
     </tr>
-    <?php
-    if ($result_dosen->num_rows == 0) {
-        echo "<tr><td colspan='4' class='empty'>Tidak ada dosen</td></tr>";
-    } else {
-        while ($row = $result_dosen->fetch_assoc()) {
-             echo "<tr>";
-            echo "<td data-label='Username'>{$row['username']}</td>";
-            echo "<td data-label='Nama'>{$row['nama']}</td>";
-            echo "<td data-label='NPK'>{$row['npk']}</td>";
-            echo "<td data-label='Foto'><img src='../image_dosen/{$row['npk']}.{$row['foto_extension']}'></td>";
-            echo "</tr>";
-        }
-    }
-    ?>
+
+    <?php if ($result_dosen->num_rows == 0): ?>
+        <tr><td colspan="4">Tidak ada dosen</td></tr>
+    <?php else: ?>
+        <?php while ($row = $result_dosen->fetch_assoc()): ?>
+            <tr>
+                <td data-label="Username"><?= htmlspecialchars($row['username']) ?></td>
+                <td data-label="Nama"><?= htmlspecialchars($row['nama']) ?></td>
+                <td data-label="NPK"><?= htmlspecialchars($row['npk']) ?></td>
+                <td data-label="Foto">
+                    <img src="../image_dosen/<?= $row['npk'] ?>.<?= $row['foto_extension'] ?>" alt="Foto Dosen">
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    <?php endif; ?>
 </table>
 
 </body>

@@ -1,139 +1,155 @@
 <?php
 session_start();
+require_once '../css/theme_session.php';
+
 if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
     exit();
 }
 
-$idgrup = $_POST['idgrup'];
+if (!isset($_POST['idgrup'])) {
+    header("Location: dosen_kelola_group.php");
+    exit();
+}
 
+$idgrup = $_POST['idgrup'];
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Insert Event</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style> 
-        body {
-            font-family: 'Times New Roman', Times, serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f6f8;
-        }
+<meta charset="UTF-8">
+<title>Buat Event</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-        h2 {
-            text-align: center;
-            margin-top: 20px;
-            color: #333;
-            font-size: 32px;
-        }
+<!-- THEME -->
+<link rel="stylesheet" href="../css/theme.css">
 
-        #pembukaanteks {
-            font-size: 22px;
-            text-decoration: underline;
-            font-weight: bold;
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+<style>
+body{
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f9fafb;
+}
 
-        .isiInput {
-            background-color: lightcyan;
-            border: 5px solid #333;
-            padding: 25px 20px;
-            width: 600px;
-            max-width: 95%;
-            margin: 20px auto;
-            text-align: center;
-        }
+h2{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 32px;
+    color: #1E3A8A;
+}
 
-        label {
-            display: block;
-            text-align: left;
-            margin-top: 10px;
-            font-weight: bold;
-        }
+#pembukaanteks{
+    font-size: 22px;
+    text-decoration: underline;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1E40AF;
+}
 
-        input[type="text"], input[type="date"], textarea, select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #333;
-            font-size: 16px;
-        }
+.isiInput{
+    border: 2px solid #1E40AF;
+    border-radius: 10px;
+    padding: 25px 20px;
+    width: 600px;
+    max-width: 95%;
+    margin: 20px auto;
+    text-align: center;
+    background-color: #fff;
+}
 
-        textarea {
-            min-height: 80px;
-        }
+label{
+    display: block;
+    text-align: left;
+    margin-top: 10px;
+    font-weight: bold;
+}
 
-        .button, button {
-            padding: 12px 20px;
-            background-color: #2c3e50;
-            border: none;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-            margin-top: 10px;
-        }
+input[type="text"],
+input[type="date"],
+textarea,
+select{
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #1E40AF;
+    border-radius: 6px;
+    font-size: 16px;
+}
 
-        .button-secondary {
-            background-color: #6c757d;
-            margin-bottom: 15px;
-        }
+textarea{
+    min-height: 80px;
+}
 
-        @media (max-width: 550px) {
-            h2 {
-                font-size: 24px;
-            }
+button{
+    padding: 12px 20px;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: #1E40AF;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
 
-            #pembukaanteks {
-                font-size: 18px;
-            }
+button:hover{
+    background-color: #1E3A8A;
+}
 
-            input[type="text"], input[type="date"], textarea, select, button {
-                font-size: 14px;
-                padding: 8px;
-            }
-
-            .isiInput {
-                padding: 20px 15px;
-            }
-        }
-    </style>
+@media (max-width: 550px){
+    h2{ font-size: 24px; }
+    #pembukaanteks{ font-size: 18px; }
+    input, textarea, select, button{
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+</style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
+
+<div class="center">
     <form action="dosen_kelola_event.php" method="post">
-        <input type = "hidden" name = "idgrup" value = "<?php echo $idgrup; ?>">
-        <button class="button" type="submit">Kembali ke Daftar Event</button>
+        <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
+        <button type="submit">← Kembali ke Daftar Event</button>
     </form>
-    <div class='isiInput'>
-        <h2>Insert Data Event</h2>
-        <p id='pembukaanteks'>Masukkan data Event</p>
-        <form method="post" action="dosen_insert_event_proses.php" enctype="multipart/form-data">
+</div>
 
-            <input type="hidden" name="idgrup" value="<?php echo $idgrup; ?>">
+<div class="isiInput">
+    <h2>Buat Event Baru</h2>
+    <p id="pembukaanteks">Masukkan data Event</p>
 
-            <p><label>Judul Event:</label><br>
-            <input type="text" name="judul" required></p>
+    <form method="post" action="dosen_insert_event_proses.php" enctype="multipart/form-data">
+        <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
 
-            <p><label>Tanggal Event:</label><br>
-            <input type="date" name="tanggal" required></p>
+        <label>Judul Event</label>
+        <input type="text" name="judul" required>
 
-            <p><label>Keterangan:</label><br>
-            <textarea name="keterangan" required></textarea></p>
+        <label>Tanggal Event</label>
+        <input type="date" name="tanggal" required>
 
-            <p><label>Jenis Event:</label><br>
-            <select name="jenis" required>
-                <option value="Publik">Publik</option>
-                <option value="Privat">Privat</option>
-            </select></p>
+        <label>Keterangan</label>
+        <textarea name="keterangan" required></textarea>
 
-            <p><label>Poster Event:</label><br>
-            <input type="file" name="poster" accept="image/jpeg,image/png"></p>
-            <p><button name="btnSimpan" value="simpan" type="submit">Simpan</button></p>
-        </form>
-    </div>
+        <label>Jenis Event</label>
+        <select name="jenis" required>
+            <option value="">Pilih Jenis</option>
+            <option value="Publik">Publik</option>
+            <option value="Privat">Privat</option>
+        </select>
+
+        <label>Poster Event</label>
+        <input type="file" name="poster" accept="image/jpeg,image/png">
+
+        <button name="btnSimpan" value="simpan" type="submit">
+            Simpan
+        </button>
+    </form>
+</div>
+
 </body>
 </html>

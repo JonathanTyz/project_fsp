@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../class/group.php';
+require_once '../css/theme_session.php';
 
 if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
@@ -42,14 +43,20 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             margin-top: 15px;
         }
 
+        /* Tombol konsisten dengan warna biru home */
         .button {
             padding: 10px 18px;
-            background-color: #2c3e50;
+            background-color: #1E40AF; /* biru */
             border: none;
             color: white;
             font-weight: bold;
             border-radius: 6px;
             margin: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .button:hover {
+            background-color: #1E3A8A; /* lebih gelap saat hover */
         }
 
         .informasiGrup {
@@ -58,6 +65,8 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             width: 450px;
             max-width: 95%;
             margin: 30px auto;
+            border-radius: 8px;
+            border: 1px solid #ccc;
         }
 
         table {
@@ -65,6 +74,7 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             margin: 20px auto;
             background: white;
             text-align: left;
+            border-collapse: collapse;
         }
 
         th, td {
@@ -90,9 +100,7 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
                 width: 95%;
             }
 
-            thead {
-                display: none; 
-            }
+            thead { display: none; }
 
             tr {
                 background: white;
@@ -148,24 +156,23 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
 <h2>Member Group</h2>
 
 <div class="center">
-    <form action="dosen_home.php" method="post">
+    <form action="mahasiswa_home.php" method="post">
         <button class="button" type="submit">Kembali ke Home</button>
     </form>
     <br>
-    <form action="dosen_group_diikuti.php" method="post">
+    <form action="mahasiswa_group_diikuti.php" method="post">
         <button class="button" type="submit">Kembali ke Daftar Group</button>
     </form>
 </div>
 
-
 <div class="informasiGrup">
     <table>
         <tr><th colspan="2">Informasi Group</th></tr>
-        <tr><td>Nama</td><td><?= $detail['nama']; ?></td></tr>
-        <tr><td>Deskripsi</td><td><?= $detail['deskripsi']; ?></td></tr>
-        <tr><td>Pembuat</td><td><?= $detail['username_pembuat']; ?></td></tr>
-        <tr><td>Tanggal Dibentuk</td><td><?= $detail['tanggal_pembentukan']; ?></td></tr>
-        <tr><td>Jenis</td><td><?= $detail['jenis']; ?></td></tr>
+        <tr><td>Nama</td><td><?= htmlspecialchars($detail['nama']); ?></td></tr>
+        <tr><td>Deskripsi</td><td><?= htmlspecialchars($detail['deskripsi']); ?></td></tr>
+        <tr><td>Pembuat</td><td><?= htmlspecialchars($detail['username_pembuat']); ?></td></tr>
+        <tr><td>Tanggal Dibentuk</td><td><?= htmlspecialchars($detail['tanggal_pembentukan']); ?></td></tr>
+        <tr><td>Jenis</td><td><?= htmlspecialchars($detail['jenis']); ?></td></tr>
     </table>
 </div>
 
@@ -185,12 +192,12 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
     } else {
         while ($row = $result_mahasiswa->fetch_assoc()) {
             echo "<tr>";
-            echo "<td data-label ='Username'>{$row['username']}</td>";
-            echo "<td data-label='Nama'>{$row['nama']}</td>";
-            echo "<td data-label='NRP'>{$row['nrp']}</td>";
-            echo "<td data-label='Gender'>{$row['gender']}</td>";
-            echo "<td data-label='Angkatan'>{$row['angkatan']}</td>";
-            echo "<td> <img src = '../image_mahasiswa/" . $row['nrp'] . "." . $row['foto_extention'] . "' width='100'></td>";
+            echo "<td data-label='Username'>" . htmlspecialchars($row['username']) . "</td>";
+            echo "<td data-label='Nama'>" . htmlspecialchars($row['nama']) . "</td>";
+            echo "<td data-label='NRP'>" . htmlspecialchars($row['nrp']) . "</td>";
+            echo "<td data-label='Gender'>" . htmlspecialchars($row['gender']) . "</td>";
+            echo "<td data-label='Angkatan'>" . htmlspecialchars($row['angkatan']) . "</td>";
+            echo "<td data-label='Foto'><img src='../image_mahasiswa/" . $row['nrp'] . "." . $row['foto_extention'] . "' alt='Foto'></td>";
             echo "</tr>";
         }
     }

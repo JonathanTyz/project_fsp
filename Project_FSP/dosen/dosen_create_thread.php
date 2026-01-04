@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../class/thread.php';
+require_once '../css/theme_session.php';
 
 if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
@@ -11,7 +12,7 @@ $username = $_SESSION['user']['username'];
 $idgrup   = isset($_POST['idgrup']) ? (int)$_POST['idgrup'] : 0;
 
 if (isset($_POST['btnSubmit'])) {
-    $status = $_POST['status']; 
+    $status = $_POST['status'];
 
     $thread = new Thread();
     $result = $thread->createThread($idgrup, $username, $status);
@@ -24,35 +25,34 @@ if (isset($_POST['btnSubmit'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Buat Thread Baru</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- THEME -->
+    <link rel="stylesheet" href="../css/theme.css">
+
     <style>
         body {
             font-family: 'Times New Roman', serif;
-            background-color: #f4f6f8;
             margin: 0;
             padding: 20px;
         }
 
         .container {
-            background: white;
             padding: 30px;
             width: 420px;
             max-width: 95%;
             margin: 60px auto;
+            border: 4px solid;
         }
 
         h2 {
             text-align: center;
-            color: #2c3e50;
             margin-bottom: 20px;
-        }
-
-        p {
-            margin-bottom: 15px;
         }
 
         label {
@@ -62,41 +62,47 @@ if (isset($_POST['btnSubmit'])) {
         select {
             width: 100%;
             padding: 8px;
-            margin-top: 5px;
+            margin-top: 8px;
+            margin-bottom: 15px;
         }
 
+        /* =====================
+           BUTTON STYLE (FINAL)
+        ====================== */
+
+        /* Tombol UTAMA */
         .button {
-            padding: 10px 20px;
-            background-color: #2c3e50;
-            color: white;
-            border: none;
+            padding: 12px 20px;
             font-weight: bold;
-            width: 100%;
-        }
-
-        .button-secondary {
-            padding: 10px 20px;
-            background-color: #6c757d;
-            color: white;
             border: none;
-            font-weight: bold;
             width: 100%;
             margin-top: 10px;
+            background-color: darkslategray;
+            color: white;
+            cursor: pointer;
         }
 
-        .center {
-            text-align: center;
+        .button:hover {
+            opacity: 0.9;
         }
 
-        .status-lama {
-            background: #e9ecef;
-            padding: 10px;
-            border-left: 5px solid #2c3e50;
-            margin-bottom: 20px;
+        /* Tombol KEMBALI */
+        .button-secondary {
+            padding: 10px 20px;
+            font-weight: bold;
+            border: none;
+            width: 100%;
+            margin-top: 10px;
+            background-color: steelblue;
+            color: white;
+            cursor: pointer;
+        }
+
+        .button-secondary:hover {
+            opacity: 0.9;
         }
 
         @media (max-width: 500px) {
-
             body {
                 padding: 10px;
             }
@@ -107,17 +113,14 @@ if (isset($_POST['btnSubmit'])) {
                 width: 100%;
             }
 
-            p {
-                margin-bottom: 10px;
-            }
-
             h2 {
                 font-size: 24px;
             }
         }
     </style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <div class="container">
     <h2>Buat Thread Baru</h2>
@@ -126,27 +129,25 @@ if (isset($_POST['btnSubmit'])) {
         <p style="color:red;text-align:center"><?= $error ?></p>
     <?php } ?>
 
-    <form method="post" action="">
-        <input type="hidden" name="idgrup" value="<?= $idgrup; ?>">
+    <form method="post">
+        <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
 
-        <p>
-            <label>Pilih Status Thread:</label><br><br>
-            <select name="status" required>
-                <option value="Open" selected>Open</option>
-                <option value="Close">Close</option>
-            </select>
-        </p>
+        <label>Status Thread:</label>
+        <select name="status" required>
+            <option value="Open">Open</option>
+            <option value="Close">Close</option>
+        </select>
 
-        <p class="center">
-            <button type="submit" name="btnSubmit" class="button">
-                Buat Thread
-            </button>
-        </p>
+        <button type="submit" name="btnSubmit" class="button">
+            Buat Thread
+        </button>
     </form>
 
-    <form class="center" action="dosen_thread.php" method="post">
-        <input type="hidden" name="idgrup" value="<?= $idgrup; ?>">
-        <button type="submit" class="button">Kembali</button>
+    <form action="dosen_thread.php" method="post">
+        <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
+        <button type="submit" class="button-secondary">
+            Kembali
+        </button>
     </form>
 </div>
 

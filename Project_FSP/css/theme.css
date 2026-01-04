@@ -1,0 +1,41 @@
+/* ======================
+   LIGHT THEME
+====================== */
+body.light {
+    background-color: #f4f6f8;
+    color: #000;
+}
+
+body.light h2,
+body.light h3 {
+    color: #2c3e50;
+}
+
+body.light table {
+    background-color: #fff;
+}
+
+body.light th {
+    background-color: #e9ecef;
+}
+
+/* ======================
+   DARK THEME
+====================== */
+body.dark {
+    background-color: #1e1e1e;
+    color: #eee;
+}
+
+body.dark h2,
+body.dark h3 {
+    color: #fff;
+}
+
+body.dark table {
+    background-color: #2a2a2a;
+}
+
+body.dark th {
+    background-color: #333;
+}

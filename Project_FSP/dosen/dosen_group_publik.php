@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../class/group.php';
+require_once '../css/theme_session.php';
 
 if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
@@ -10,7 +11,7 @@ if (!isset($_SESSION['user'])) {
 $group = new group();
 
 $PER_PAGE = 3;
-$offset = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+$offset = isset($_GET['start']) ? max(0, (int)$_GET['start']) : 0;
 
 $res = $group->getAllPublicGroups(
     $_SESSION['user']['username'],
@@ -19,20 +20,24 @@ $res = $group->getAllPublicGroups(
 );
 ?>
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Grup Publik Tersedia</title>
-        <style>
-            body{
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Grup Publik Tersedia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- THEME -->
+    <link rel="stylesheet" href="../css/theme.css">
+
+    <style>
+        body{
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
-            background-color: #f4f6f8;
         }
 
         h2{
             text-align: center;
             margin: 30px 0 10px;
-            color: #2c3e50;
             font-size: 34px;
         }
 
@@ -41,38 +46,43 @@ $res = $group->getAllPublicGroups(
             margin: auto;
         }
 
+        /* ===== TOMBOL KEMBALI (MIRIP HOME - btn-publik) ===== */
         .kembali{
             display: inline-block;
             padding: 8px 14px;
-            background-color: #6c757d;
-            color: white;
             font-weight: bold;
             text-decoration: none;
+            background-color: steelblue;
+            color: white;
+        }
+
+        .kembali:hover{
+            opacity: 0.9;
         }
 
         table{
             width: 90%;
             margin: 15px auto;
-            background: white;
-            border: 4px solid #2c3e50;
+            border: 4px solid;
+            border-collapse: collapse;
         }
 
         th, td{
-            border: 1px solid #333;
+            border: 1px solid;
             padding: 10px;
             text-align: center;
         }
 
         th{
-            background-color: #e9ecef;
+            font-weight: bold;
         }
 
         .kosong{
             text-align: center;
             padding: 20px;
-            color: #555;
         }
 
+        /* ===== PAGINATION (MIRIP HOME) ===== */
         .paging{
             text-align: center;
             margin: 25px;
@@ -81,19 +91,30 @@ $res = $group->getAllPublicGroups(
         .paging a{
             margin: 0 6px;
             font-weight: bold;
-            color: #2c3e50;
             text-decoration: none;
+            background-color: midnightblue;
+            color: white;
+            padding: 6px 10px;
         }
 
+        .paging a:hover{
+            opacity: 0.9;
+        }
+
+        .paging b{
+            background-color: darkcyan;
+            color: white;
+            padding: 6px 10px;
+        }
+
+        /* ===== JOIN GROUP BOX ===== */
         .insert-kode{
             text-align: center;
             padding: 20px;
-            color: #262626;
-            border: 4px solid #2c3e50;
+            border: 4px solid;
             width: 90%;
             max-width: 420px;
             margin: 30px auto;
-            background: white;
         }
 
         .insert-kode p{
@@ -105,20 +126,24 @@ $res = $group->getAllPublicGroups(
             width: 90%;
             padding: 10px;
             margin-bottom: 12px;
-            margin-right: 10px;
         }
 
+        /* ===== TOMBOL JOIN (MIRIP btn-kelola) ===== */
         .insert-kode button{
             width: 100%;
             padding: 10px;
             font-weight: bold;
             border: none;
-            background-color: #2c3e50;
+            background-color: darkslategray;
             color: white;
+            cursor: pointer;
+        }
+
+        .insert-kode button:hover{
+            opacity: 0.9;
         }
 
         @media (max-width: 450px){
-
             h2{
                 font-size: 26px;
             }
@@ -127,16 +152,14 @@ $res = $group->getAllPublicGroups(
                 display: block;
             }
 
-
             table{
                 border: none;
             }
 
             tr{
                 margin-bottom: 15px;
-                border: 3px solid #2c3e50;
+                border: 3px solid;
                 padding: 10px;
-                background: white;
             }
 
             td{
@@ -149,93 +172,94 @@ $res = $group->getAllPublicGroups(
                 font-weight: bold;
                 display: block;
                 margin-bottom: 3px;
-                color: #2c3e50;
             }
 
-            .paging a{
+            .paging a, .paging b{
                 display: inline-block;
                 margin: 6px 4px;
             }
         }
-        </style>
-    </head>
-    <body>
+    </style>
+</head>
 
-    <h2>Grup Publik Tersedia</h2>
+<body class="<?= $themeClass ?>">
 
-    <div class="container-kembali">
-        <a href="dosen_home.php" class="kembali">← Kembali</a>
-    </div>
+<h2>Grup Publik Tersedia</h2>
 
-    <table>
-        <thead>
+<div class="container-kembali">
+    <a href="dosen_home.php" class="kembali">← Kembali</a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nama Grup</th>
+            <th>Deskripsi</th>
+            <th>Pembuat</th>
+            <th>Tanggal Dibentuk</th>
+            <th>Jenis</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if ($res->num_rows == 0) {
+            echo "
             <tr>
-                <th>Nama Grup</th>
-                <th>Deskripsi</th>
-                <th>Pembuat</th>
-                <th>Tanggal Dibentuk</th>
-                <th>Jenis</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            if ($res->num_rows == 0) {
-                echo "<tr>
-                        <td colspan='6' class='kosong'>
-                            Tidak ada grup publik yang tersedia
-                        </td>
-                    </tr>";
-            } else {
-                while ($row = $res->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>{$row['nama']}</td>";
-                    echo "<td>{$row['deskripsi']}</td>";
-                    echo "<td>{$row['username_pembuat']}</td>";
-                    echo "<td>{$row['tanggal_pembentukan']}</td>";
-                    echo "<td>{$row['jenis']}</td>";
-
-                    echo "</tr>";
-                }
-            }
-            ?>
-        </tbody>
-    </table>
-
-
-    <div class="paging">
-    <?php
-    $result_all = $group->getAllPublicGroups($_SESSION['user']['username']);
-    $total_data = $result_all->num_rows;
-
-    $max_page = ceil($total_data / $PER_PAGE);
-    $current_page = floor($offset / $PER_PAGE) + 1;
-
-    if ($current_page > 1) {
-        $prev = $offset - $PER_PAGE;
-        echo "<a href='?start=$prev'>Sebelumnya</a>";
-    }
-
-    for ($page = 1; $page <= $max_page; $page++) {
-        $offs = ($page - 1) * $PER_PAGE;
-        if ($page == $current_page) {
-            echo "<b>$page</b>";
+                <td colspan='5' class='kosong'>
+                    Tidak ada grup publik yang tersedia
+                </td>
+            </tr>";
         } else {
-            echo "<a href='?start=$offs'>$page</a>";
+            while ($row = $res->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>".htmlspecialchars($row['nama'])."</td>";
+                echo "<td>".htmlspecialchars($row['deskripsi'])."</td>";
+                echo "<td>".htmlspecialchars($row['username_pembuat'])."</td>";
+                echo "<td>".htmlspecialchars($row['tanggal_pembentukan'])."</td>";
+                echo "<td>".htmlspecialchars($row['jenis'])."</td>";
+                echo "</tr>";
+            }
         }
-    }
+        ?>
+    </tbody>
+</table>
 
-    if ($current_page < $max_page) {
-        $next = $offset + $PER_PAGE;
-        echo "<a href='?start=$next'>Selanjutnya</a>";
+<div class="paging">
+<?php
+$result_all = $group->getAllPublicGroups($_SESSION['user']['username']);
+$total_data = $result_all->num_rows;
+
+$max_page = ceil($total_data / $PER_PAGE);
+$current_page = floor($offset / $PER_PAGE) + 1;
+
+if ($current_page > 1) {
+    $prev = $offset - $PER_PAGE;
+    echo "<a href='?start=$prev'>Sebelumnya</a>";
+}
+
+for ($page = 1; $page <= $max_page; $page++) {
+    $offs = ($page - 1) * $PER_PAGE;
+    if ($page == $current_page) {
+        echo "<b>$page</b>";
+    } else {
+        echo "<a href='?start=$offs'>$page</a>";
     }
-    ?>
-    </div>
-    <div class = "insert-kode">
-        <form action="dosen_join_group_proses.php" method="post">
-            <p>Masukkan Kode grup publik untuk Pendaftaran:</p>
-            <input type="text" name="kode" required> <br><br>
-            <button type="submit">Join Group</button>
-        </form>
-    </div>
-    </body>
+}
+
+if ($current_page < $max_page) {
+    $next = $offset + $PER_PAGE;
+    echo "<a href='?start=$next'>Selanjutnya</a>";
+}
+?>
+</div>
+
+<div class="insert-kode">
+    <form action="dosen_join_group_proses.php" method="post">
+        <p>Masukkan Kode grup publik untuk Pendaftaran:</p>
+        <input type="text" name="kode" required>
+        <button type="submit">Join Group</button>
+    </form>
+</div>
+
+</body>
 </html>

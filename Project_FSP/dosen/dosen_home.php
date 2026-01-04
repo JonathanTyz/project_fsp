@@ -4,6 +4,12 @@ if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
     exit();
 }
+
+/* ambil theme dari session */
+$themeClass = '';
+if (isset($_SESSION['theme']) && $_SESSION['theme'] === 'dark') {
+    $themeClass = 'dark';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,16 +17,20 @@ if (!isset($_SESSION['user'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dosen Home</title>
+
+    <!-- PANGGIL THEME -->
+    <link rel="stylesheet" href="../css/theme.css">
+
     <style>
-        /* ===== Body & Container ===== */
         body{
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
-            background-color: #f4f6f8;
+            background-color: var(--bg-body);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            transition: background-color 0.3s ease;
         }
 
         .container{
@@ -32,23 +42,24 @@ if (!isset($_SESSION['user'])) {
         }
 
         .isi{
-            background-color: #ffffff;
+            background-color: var(--bg-card);
             width: 400px;
             max-width: 100%;
             padding: 35px 30px;
             text-align: center;
+            transition: background-color 0.3s ease;
         }
 
         .judul{
             margin-top: 0;
             font-size: 28px;
-            color: #2c3e50;
+            color: var(--text-title);
         }
 
         .user{
             margin: 5px 0 20px;
             font-weight: normal;
-            color: #333;
+            color: var(--text-normal);
         }
 
         .menu-button{
@@ -59,59 +70,24 @@ if (!isset($_SESSION['user'])) {
             font-size: 16px;
             font-weight: bold;
             border: none;
+            cursor: pointer;
         }
 
         .menu-button:hover{
             opacity: 0.9;
         }
 
-        .btn-kelola{
-            background-color: darkslategray;
-            color: white;
-        }
-
-        .btn-diikuti{
-            background-color: midnightblue; 
-            color: white;
-        }
-
-        .btn-publik{
-            background-color: steelblue; 
-            color: white;
-        }
-
-        .btn-change-password{
-            background-color: darkcyan;
-            color: white;
-        }
-
-        .btn-logout{
-            background-color: darkred; 
-            color: white;
-        }
-
-        @media (max-width: 480px){
-            .isi{
-                padding: 25px 20px;
-            }
-
-            .judul{
-                font-size: 22px;
-            }
-
-            .user{
-                font-size: 16px;
-            }
-
-            .menu-button{
-                font-size: 14px;
-                padding: 10px;
-            }
-        }
-
+        .btn-kelola{ background-color: darkslategray; color: white; }
+        .btn-diikuti{ background-color: midnightblue; color: white; }
+        .btn-publik{ background-color: steelblue; color: white; }
+        .btn-change-password{ background-color: darkcyan; color: white; }
+        .btn-theme{ background-color: gray; color: white; }
+        .btn-logout{ background-color: darkred; color: white; }
     </style>
 </head>
-<body>
+
+<!-- TERAPKAN THEME -->
+<body class="<?= $themeClass ?>">
 
 <div class="container">
     <div class="isi">
@@ -133,6 +109,12 @@ if (!isset($_SESSION['user'])) {
 
         <a href="../change_password.php">
             <button class="menu-button btn-change-password">Change Password</button>
+        </a>
+
+        <a href="../css/toggle_theme.php">
+            <button class="menu-button btn-theme">
+                Change Theme
+            </button>
         </a>
 
         <a href="../logout.php">

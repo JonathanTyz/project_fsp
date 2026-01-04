@@ -2,6 +2,7 @@
 session_start();
 require_once '../class/thread.php';
 require_once '../class/group.php';
+require_once '../css/theme_session.php';
 
 if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
@@ -17,128 +18,133 @@ $threads   = $threadObj->getThreads($idgrup);
 $grup = new Group();
 $cekGrup = $grup->checkOwnGroup($username, $idgrup);
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Thread Grup</title>
-    <style>
-        body {
-            font-family: 'Times New Roman', serif;
-            background-color: #f4f6f8;
-            margin: 0;
-            padding: 20px;
-        }
+<meta charset="UTF-8">
+<title>Thread Grup</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-        }
+<link rel="stylesheet" href="../css/theme.css">
 
-        table {
-            width: 90%;
-            margin: 20px auto;
-            background: white;
-        }
+<style>
+body {
+    font-family: 'Times New Roman', serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f6f8;
+}
 
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-        }
+h2 {
+    text-align: center;
+    color: #2c3e50;
+}
 
-        th {
-            background-color: #e9ecef;
-            font-weight: bold;
-        }
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
 
-        .button {
-            padding: 8px 15px;
-            margin: 4px;
-            background-color: #2c3e50;
-            color: white;
-            border: none;
-            font-weight: bold;
-        }
+th, td {
+    border: 1px solid #d1d5db;
+    padding: 10px;
+    text-align: center;
+}
 
-        .button-disabled {
-            padding: 8px 15px;
-            background-color: #b0b0b0;
-            color: #666;
-            border: none;
-        }
+th {
+    background-color: #e5e7eb;
+    font-weight: bold;
+}
 
-        .center {
-            text-align: center;
-        }
+.button {
+    padding: 8px 15px;
+    margin: 4px;
+    border: none;
+    font-weight: bold;
+    border-radius: 6px;
+    background-color: #1E40AF;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
 
-        .container-kembali {
-            width: 90%;
-            margin: auto;
-        }
+.button:hover {
+    background-color: #1E3A8A;
+}
 
-        .kembali {
-            display: inline-block;
-            padding: 8px 14px;
-            background-color: #6c757d;
-            color: white;
-            font-weight: bold;
-            text-decoration: none;
-        }
+.button-disabled {
+    padding: 8px 15px;
+    border: none;
+    font-weight: bold;
+    border-radius: 6px;
+    background-color: #9CA3AF;
+    color: #f3f4f6;
+    cursor: not-allowed;
+}
 
-        @media (max-width: 500px) {
+.center {
+    text-align: center;
+}
 
-            table, thead, tbody, tr, th, td {
-                display: block;
-                width: 100%;
-            }
+.kembali {
+    display: inline-block;
+    padding: 8px 14px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-bottom: 10px;
+    color: #1E40AF;
+}
 
-            thead {
-                display: none;
-            }
+.kembali:hover {
+    text-decoration: underline;
+}
 
-            table {
-                border: none;
-            }
+@media (max-width: 500px) {
+    table, thead, tbody, tr, th, td {
+        display: block;
+        width: 100%;
+    }
 
-            tr {
-                background: white;
-                border: 3px solid #2c3e50;
-                margin-bottom: 15px;
-                padding: 10px;
-            }
+    thead { display: none; }
 
-            td {
-                border: none;
-                text-align: left;
-                padding: 6px 0;
-            }
+    tr {
+        border: 2px solid #d1d5db;
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        background: #ffffff;
+    }
 
-            td::before {
-                font-weight: bold;
-                color: #2c3e50;
-                display: block;
-                margin-bottom: 3px;
-            }
+    td {
+        border: none;
+        text-align: left;
+        padding: 6px 0;
+    }
 
-            .button,
-            .button-disabled {
-                width: 100%;
-                margin-top: 5px;
-            }
-        }
-    </style>
+    td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 40%;
+    }
+
+    .button, .button-disabled {
+        width: 100%;
+        margin-top: 5px;
+    }
+}
+</style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <?php if ($cekGrup) { ?>
     <a href="dosen_kelola_group.php" class="kembali">← Kembali</a>
-<?php }
-else { 
-    ?>
+<?php } else { ?>
     <a href="dosen_group_diikuti.php" class="kembali">← Kembali</a>
-<?php } 
-?>
+<?php } ?>
 
 <h2>Thread Grup</h2>
 
@@ -157,53 +163,52 @@ else {
         <th colspan="3">Aksi</th>
     </tr>
 
-<?php while ($row = $threads->fetch_assoc()) {
+<?php while ($row = $threads->fetch_assoc()):
     $isOwner = ($row['username_pembuat'] === $username);
 ?>
     <tr>
-        <td><?= htmlspecialchars($row['username_pembuat']) ?></td>
-        <td><?= $row['tanggal_pembuatan'] ?></td>
-        <td><?= $row['status'] ?></td>
+        <td data-label="Pembuat"><?= htmlspecialchars($row['username_pembuat']) ?></td>
+        <td data-label="Tanggal"><?= $row['tanggal_pembuatan'] ?></td>
+        <td data-label="Status"><?= $row['status'] ?></td>
 
         <!-- VIEW CHAT -->
-        <td>
+        <td data-label="View Chat">
             <form action="dosen_view_chat.php" method="post">
-                <input type="hidden" name="idthread" value="<?= $row['idthread']; ?>">
-                <input type = "hidden" name = "idgrup" value = "<?= $idgrup ?>">
-                <input type = "hidden" name = "username" value = "<?= $username ?>">
+                <input type="hidden" name="idthread" value="<?= $row['idthread'] ?>">
+                <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
+                <input type="hidden" name="username" value="<?= $username ?>">
                 <button class="button" type="submit">View Chat</button>
             </form>
         </td>
 
         <!-- DELETE -->
-        <td>
-        <?php if ($isOwner) { ?>
+        <td data-label="Delete">
+        <?php if ($isOwner): ?>
             <form action="dosen_delete_thread.php" method="post">
                 <input type="hidden" name="idthread" value="<?= $row['idthread'] ?>">
                 <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
                 <button class="button" type="submit">Delete</button>
             </form>
-        <?php } else { ?>
+        <?php else: ?>
             <button class="button-disabled" disabled>Delete</button>
-        <?php } ?>
+        <?php endif; ?>
         </td>
 
         <!-- EDIT -->
-        <td>
-        <?php if ($isOwner) { ?>
+        <td data-label="Edit">
+        <?php if ($isOwner): ?>
             <form action="dosen_edit_thread.php" method="post">
                 <input type="hidden" name="idthread" value="<?= $row['idthread'] ?>">
                 <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
                 <input type="hidden" name="status" value="<?= $row['status'] ?>">
                 <button class="button" type="submit">Edit</button>
             </form>
-        <?php } else { ?>
+        <?php else: ?>
             <button class="button-disabled" disabled>Edit</button>
-        <?php } ?>
+        <?php endif; ?>
         </td>
     </tr>
-<?php } ?>
-
+<?php endwhile; ?>
 </table>
 
 </body>
