@@ -31,25 +31,39 @@ $mahasiswa_search = $group->getMahasiswaNotInGroup($idgrup, $_SESSION['user']['u
 <link rel="stylesheet" href="../css/theme.css">
 
 <style>
-body { font-family: 'Times New Roman', serif; margin: 0; }
-h2,h3 { text-align: center; }
-h2 { margin-top: 30px; font-size: 36px; }
-h3 { margin-top: 40px; font-size: 28px; }
+body{
+    font-family: 'Times New Roman', serif;
+    margin: 0;
+}
 
-.center { text-align: center; margin-top: 15px; }
+h2{
+    text-align: center;
+    margin-top: 30px;
+    font-size: 36px;
+}
 
-/* BUTTON mengikuti theme */
-.button {
+h3{
+    text-align: center;
+    margin-top: 40px;
+    font-size: 28px;
+}
+
+.center{
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* BUTTON SAMA DENGAN MAHASISWA */
+.button{
     padding: 10px 18px;
     font-weight: bold;
     border: none;
-    border-radius: 6px;
-    margin: 5px;
+    margin: 6px;
     cursor: pointer;
 }
 
-/* Info group */
-.informasiGrup {
+/* INFORMASI GROUP */
+.informasiGrup{
     padding: 25px 30px;
     width: 450px;
     max-width: 95%;
@@ -57,41 +71,79 @@ h3 { margin-top: 40px; font-size: 28px; }
     border: 4px solid;
 }
 
-/* Tabel */
-table {
+/* TABLE */
+table{
     width: 90%;
     margin: 20px auto;
     border-collapse: collapse;
-    text-align: center;
     border: 4px solid;
 }
-th, td {
+
+th, td{
     border: 1px solid;
     padding: 10px;
+    text-align: center;
 }
-img { max-width: 100px; border-radius: 6px; }
 
-.search-box {
+.empty{
+    text-align: center;
+    font-style: italic;
+}
+
+img{
+    max-width: 100px;
+    height: auto;
+    border-radius: 6px;
+}
+
+/* SEARCH */
+.search-box{
     width: 300px;
-    padding: 6px;
+    padding: 8px;
     margin: 10px auto 20px;
     display: block;
 }
 
-.empty { text-align: center; font-style: italic; }
+/* RESPONSIVE */
+@media (max-width: 768px){
+    table, thead, tbody, tr, th, td{
+        display: block;
+        width: 95%;
+    }
 
-@media (max-width: 768px) {
-    table, thead, tbody, tr, th, td { display: block; width: 95%; }
-    thead { display: none; }
-    tr { border: 3px solid; margin-bottom: 15px; padding: 15px; }
-    td { border: none; padding: 6px 0; display: flex; }
-    td::before { content: attr(data-label); font-weight: bold; flex-basis: 40%; }
-    .button { width: 90%; display: block; margin: 10px auto; }
+    thead{ display: none; }
+
+    table{ border: none; }
+
+    tr{
+        border: 3px solid;
+        margin-bottom: 15px;
+        padding: 15px;
+    }
+
+    td{
+        border: none;
+        display: flex;
+        padding: 6px 0;
+    }
+
+    td::before{
+        content: attr(data-label);
+        font-weight: bold;
+        flex-basis: 40%;
+    }
+
+    .button{
+        width: 90%;
+        display: block;
+        margin: 10px auto;
+    }
 }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
+
 <body class="<?= $themeClass ?>">
 
 <h2>Member Mahasiswa Group</h2>
@@ -108,24 +160,24 @@ img { max-width: 100px; border-radius: 6px; }
 <div class="informasiGrup">
 <table>
 <tr><th colspan="2">Informasi Group</th></tr>
-<tr><td>Nama</td><td><?= htmlspecialchars($detail['nama']); ?></td></tr>
-<tr><td>Deskripsi</td><td><?= htmlspecialchars($detail['deskripsi']); ?></td></tr>
-<tr><td>Pembuat</td><td><?= htmlspecialchars($detail['username_pembuat']); ?></td></tr>
-<tr><td>Tanggal</td><td><?= $detail['tanggal_pembentukan']; ?></td></tr>
-<tr><td>Jenis</td><td><?= $detail['jenis']; ?></td></tr>
+<tr><td>Nama</td><td><?= htmlspecialchars($detail['nama']) ?></td></tr>
+<tr><td>Deskripsi</td><td><?= htmlspecialchars($detail['deskripsi']) ?></td></tr>
+<tr><td>Pembuat</td><td><?= htmlspecialchars($detail['username_pembuat']) ?></td></tr>
+<tr><td>Tanggal</td><td><?= $detail['tanggal_pembentukan'] ?></td></tr>
+<tr><td>Jenis</td><td><?= $detail['jenis'] ?></td></tr>
 </table>
 </div>
 
 <h3>Daftar Member Mahasiswa</h3>
 <table>
 <tr>
-<th>Username</th>
-<th>Nama</th>
-<th>NRP</th>
-<th>Gender</th>
-<th>Angkatan</th>
-<th>Foto</th>
-<th>Aksi</th>
+    <th>Username</th>
+    <th>Nama</th>
+    <th>NRP</th>
+    <th>Gender</th>
+    <th>Angkatan</th>
+    <th>Foto</th>
+    <th>Aksi</th>
 </tr>
 
 <?php
@@ -133,14 +185,17 @@ if ($result_mahasiswa->num_rows == 0) {
     echo "<tr><td colspan='7' class='empty'>Tidak ada mahasiswa</td></tr>";
 } else {
     while ($row = $result_mahasiswa->fetch_assoc()) {
-        echo "<tr>
+        echo "
+        <tr>
             <td data-label='Username'>{$row['username']}</td>
             <td data-label='Nama'>{$row['nama']}</td>
             <td data-label='NRP'>{$row['nrp']}</td>
             <td data-label='Gender'>{$row['gender']}</td>
             <td data-label='Angkatan'>{$row['angkatan']}</td>
-            <td><img src='../image_mahasiswa/{$row['nrp']}.{$row['foto_extention']}'></td>
-            <td>
+            <td data-label='Foto'>
+                <img src='../image_mahasiswa/{$row['nrp']}.{$row['foto_extention']}'>
+            </td>
+            <td data-label='Aksi'>
                 <form action='dosen_delete_member_proses.php' method='post'>
                     <input type='hidden' name='idgrup' value='{$idgrup}'>
                     <input type='hidden' name='username' value='{$row['username']}'>
@@ -159,11 +214,11 @@ if ($result_mahasiswa->num_rows == 0) {
 
 <table id="tabelMahasiswa">
 <tr>
-<th>Username</th>
-<th>Nama</th>
-<th>NRP</th>
-<th>Foto</th>
-<th>Aksi</th>
+    <th>Username</th>
+    <th>Nama</th>
+    <th>NRP</th>
+    <th>Foto</th>
+    <th>Aksi</th>
 </tr>
 
 <?php
@@ -171,12 +226,15 @@ if ($mahasiswa_search->num_rows == 0) {
     echo "<tr><td colspan='5' class='empty'>Tidak ada data mahasiswa</td></tr>";
 } else {
     while ($m = $mahasiswa_search->fetch_assoc()) {
-        echo "<tr>
+        echo "
+        <tr>
             <td data-label='Username'>{$m['username']}</td>
             <td data-label='Nama'>{$m['nama']}</td>
             <td data-label='NRP'>{$m['nrp']}</td>
-            <td><img src='../image_mahasiswa/{$m['nrp']}.{$m['foto_extention']}'></td>
-            <td>
+            <td data-label='Foto'>
+                <img src='../image_mahasiswa/{$m['nrp']}.{$m['foto_extention']}'>
+            </td>
+            <td data-label='Aksi'>
                 <form action='dosen_insert_member_proses.php' method='post'>
                     <input type='hidden' name='idgrup' value='{$idgrup}'>
                     <input type='hidden' name='username' value='{$m['username']}'>

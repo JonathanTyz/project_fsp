@@ -7,6 +7,9 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+/* theme */
+$themeClass = $_SESSION['theme'] ?? 'light';
+
 if (!isset($_POST['idgrup'])) {
     header("Location: mahasiswa_home.php");
     exit();
@@ -22,6 +25,7 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
 <html>
 <head>
     <title>Member Group</title>
+
     <style>
         body {
             font-family: 'Times New Roman', serif;
@@ -29,18 +33,13 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             background-color: #f4f6f8;
         }
 
-        h2 {
+        h2, h3 {
             text-align: center;
-            margin-top: 30px;
-            font-size: 36px;
             color: #2c3e50;
         }
 
-        h3 {
-            text-align: center;
-            color: #2c3e50;
-            margin-top: 40px;
-        }
+        h2 { margin-top: 30px; font-size: 36px; }
+        h3 { margin-top: 40px; font-size: 28px; }
 
         .center {
             text-align: center;
@@ -53,6 +52,9 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             border: none;
             color: white;
             font-weight: bold;
+            border-radius: 6px;
+            margin: 5px;
+            cursor: pointer;
         }
 
         .informasiGrup {
@@ -61,12 +63,14 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             width: 450px;
             max-width: 95%;
             margin: 30px auto;
+            border-radius: 10px;
         }
 
         table {
             width: 90%;
             margin: 20px auto;
             background: white;
+            border-collapse: collapse;
         }
 
         th, td {
@@ -80,18 +84,58 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             font-weight: bold;
         }
 
-        .informasiGrup table {
-            width: 100%;
-            margin: 0;
-        }
-
         img {
             max-width: 100%;
             height: auto;
+            border-radius: 6px;
+        }
+
+        .empty {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* =====================
+           DARK MODE
+        ===================== */
+        body.dark {
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+
+        body.dark h2,
+        body.dark h3 {
+            color: #ffffff;
+        }
+
+        body.dark .informasiGrup,
+        body.dark table {
+            background-color: #1e1e1e;
+        }
+
+        body.dark th {
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+
+        body.dark td {
+            border-color: #444;
+            color: #eeeeee;
+        }
+
+        body.dark .button {
+            background-color: #3a3a3a;
+        }
+
+        body.dark .button:hover {
+            background-color: #555;
+        }
+
+        body.dark .empty {
+            color: #bbbbbb;
         }
 
         @media (max-width: 768px) {
-
             table, thead, tbody, tr, th, td {
                 display: block;
                 width: 95%;
@@ -101,34 +145,61 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
                 display: none;
             }
 
-            table {
-                border: none;
-            }
-
             tr {
                 background: white;
-                border: 3px solid #2c3e50;
+                border: 2px solid #2c3e50;
                 margin-bottom: 15px;
-                padding: 10px;
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            body.dark tr {
+                background-color: #1e1e1e;
+                border-color: #555;
             }
 
             td {
                 border: none;
-                text-align: left;
                 padding: 6px 0;
+                text-align: left;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
 
             td::before {
+                content: attr(data-label);
                 font-weight: bold;
                 color: #2c3e50;
-                display: block;
-                margin-bottom: 3px;
+                flex-basis: 40%;
             }
 
+            body.dark td::before {
+                color: #cccccc;
+            }
+
+            img {
+                max-width: 80px;
+                margin-bottom: 10px;
+            }
+
+            .button {
+                width: 90%;
+                margin: 10px auto;
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 { font-size: 24px; }
+            h3 { font-size: 20px; }
+            td { font-size: 14px; flex-direction: column; align-items: flex-start; }
+            td::before { width: 100%; margin-bottom: 4px; }
         }
     </style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <h2>Member Group</h2>
 
@@ -136,12 +207,10 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
     <form action="mahasiswa_home.php" method="post">
         <button class="button" type="submit">Kembali ke Home</button>
     </form>
-    <br>
     <form action="mahasiswa_daftar_group_join.php" method="post">
         <button class="button" type="submit">Kembali ke Daftar Group</button>
     </form>
 </div>
-
 
 <div class="informasiGrup">
     <table>
@@ -155,31 +224,38 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
 </div>
 
 <h3>Daftar Mahasiswa</h3>
+
 <table>
-    <tr>
-        <th>Username</th>
-        <th>Nama</th>
-        <th>NRP</th>
-        <th>Gender</th>
-        <th>Angkatan</th>
-        <th>Foto</th>
-    </tr>
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Nama</th>
+            <th>NRP</th>
+            <th>Gender</th>
+            <th>Angkatan</th>
+            <th>Foto</th>
+        </tr>
+    </thead>
+    <tbody>
     <?php
     if ($result_mahasiswa->num_rows == 0) {
         echo "<tr><td colspan='6' class='empty'>Tidak ada mahasiswa</td></tr>";
     } else {
         while ($row = $result_mahasiswa->fetch_assoc()) {
             echo "<tr>";
-            echo "<td>{$row['username']}</td>";
-            echo "<td>{$row['nama']}</td>";
-            echo "<td>{$row['nrp']}</td>";
-            echo "<td>{$row['gender']}</td>";
-            echo "<td>{$row['angkatan']}</td>";
-            echo "<td> <img src = '../image_mahasiswa/" . $row['nrp'] . "." . $row['foto_extention'] . "' width='100'></td>";
+            echo "<td data-label='Username'>{$row['username']}</td>";
+            echo "<td data-label='Nama'>{$row['nama']}</td>";
+            echo "<td data-label='NRP'>{$row['nrp']}</td>";
+            echo "<td data-label='Gender'>{$row['gender']}</td>";
+            echo "<td data-label='Angkatan'>{$row['angkatan']}</td>";
+            echo "<td data-label='Foto'>
+                    <img src='../image_mahasiswa/{$row['nrp']}.{$row['foto_extention']}' width='90'>
+                  </td>";
             echo "</tr>";
         }
     }
     ?>
+    </tbody>
 </table>
 
 </body>

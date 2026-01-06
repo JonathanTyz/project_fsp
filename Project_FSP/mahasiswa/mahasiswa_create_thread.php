@@ -7,6 +7,9 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+/* ambil theme dari session */
+$themeClass = $_SESSION['theme'] ?? 'light';
+
 $username = $_SESSION['user']['username'];
 $idgrup = isset($_POST['idgrup']) ? (int)$_POST['idgrup'] : 0;
 
@@ -14,7 +17,6 @@ if (isset($_POST['btnSubmit'])) {
     $status = $_POST['status']; 
 
     $thread = new Thread();
-
     $result = $thread->createThread($idgrup, $username, $status);
 
     if ($result) {
@@ -25,11 +27,14 @@ if (isset($_POST['btnSubmit'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Buat Thread Baru</title>
+
+    <!-- THEME -->
+    <link rel="stylesheet" href="../css/theme.css">
+
     <style>
         body {
             font-family: 'Times New Roman', serif;
@@ -73,6 +78,7 @@ if (isset($_POST['btnSubmit'])) {
             border: none;
             font-weight: bold;
             width: 100%;
+            cursor: pointer;
         }
 
         .button-secondary {
@@ -83,21 +89,56 @@ if (isset($_POST['btnSubmit'])) {
             font-weight: bold;
             width: 100%;
             margin-top: 10px;
+            cursor: pointer;
         }
 
         .center {
             text-align: center;
         }
 
-        .status-lama {
-            background: #e9ecef;
-            padding: 10px;
-            border-left: 5px solid #2c3e50;
-            margin-bottom: 20px;
+        /* =====================
+           DARK MODE
+        ===================== */
+        body.dark {
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+
+        body.dark .container {
+            background-color: #1e1e1e;
+        }
+
+        body.dark h2 {
+            color: #ffffff;
+        }
+
+        body.dark label {
+            color: #eeeeee;
+        }
+
+        body.dark select {
+            background-color: #2a2a2a;
+            color: #ffffff;
+            border: 1px solid #555;
+        }
+
+        body.dark .button {
+            background-color: #3a3a3a;
+        }
+
+        body.dark .button:hover {
+            background-color: #555;
+        }
+
+        body.dark .button-secondary {
+            background-color: #555;
+        }
+
+        body.dark .button-secondary:hover {
+            background-color: #777;
         }
 
         @media (max-width: 500px) {
-
             body {
                 padding: 10px;
             }
@@ -108,17 +149,14 @@ if (isset($_POST['btnSubmit'])) {
                 width: 100%;
             }
 
-            p {
-                margin-bottom: 10px;
-            }
-
             h2 {
                 font-size: 24px;
             }
         }
     </style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <div class="container">
     <h2>Buat Thread Baru</h2>
@@ -127,22 +165,25 @@ if (isset($_POST['btnSubmit'])) {
         <input type="hidden" name="idgrup" value="<?= $idgrup; ?>">
 
         <p>
-            <label>Pilih Status Thread:</label><br>
-            <br>
+            <label>Pilih Status Thread:</label><br><br>
             <select name="status" required>
                 <option value="Open" selected>Open</option>
                 <option value="Close">Close</option>
             </select>
         </p>
+
         <p class="center">
-            <input type = "hidden" name = "idgrup" value = "<?php echo $idgrup;?>">
-            <button type="submit" name="btnSubmit" class="button">Buat Thread</button>
+            <button type="submit" name="btnSubmit" class="button">
+                Buat Thread
+            </button>
         </p>
     </form>
 
     <form class="center" action="mahasiswa_thread.php" method="post">
         <input type="hidden" name="idgrup" value="<?= $idgrup; ?>">
-        <button type="submit" class="button">Kembali</button>
+        <button type="submit" class="button-secondary">
+            Kembali
+        </button>
     </form>
 </div>
 

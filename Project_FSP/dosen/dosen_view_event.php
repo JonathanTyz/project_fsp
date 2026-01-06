@@ -9,7 +9,10 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$group_id = isset($_POST['idgrup']) ? (int)$_POST['idgrup'] : (isset($_GET['idgrup']) ? (int)$_GET['idgrup'] : null);
+$group_id = isset($_POST['idgrup'])
+    ? (int)$_POST['idgrup']
+    : (isset($_GET['idgrup']) ? (int)$_GET['idgrup'] : null);
+
 if (!$group_id) {
     header("Location: dosen_group_diikuti.php");
     exit();
@@ -31,132 +34,154 @@ $group_events = $event->getEventsGroup($group_id);
 <meta charset="UTF-8">
 <title>Detail Group & Event</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <link rel="stylesheet" href="../css/theme.css">
 
 <style>
 body {
-    font-family: 'Times New Roman', serif;
+    font-family: "Segoe UI", Tahoma, sans-serif;
     margin: 0;
-    background-color: #f4f6f8;
+    background-color: #f3f4f6;
+}
+
+h2, h3 {
+    text-align: center;
+    color: #1f2937;
 }
 
 h2 {
-    text-align:center;
-    margin-top:30px;
-    font-size:32px;
-    color: #2c3e50;
+    margin-top: 30px;
+    font-size: 34px;
 }
 
 h3 {
-    text-align:center;
-    margin-bottom:15px;
-    color: #2c3e50;
+    margin-top: 40px;
+    font-size: 26px;
 }
 
-.center{
-    text-align:center;
-    margin-top:15px;
+/* ===== BUTTON ===== */
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px 0;
+    flex-wrap: wrap;
 }
 
 .button {
-    padding: 10px 18px;
-    font-weight: bold;
+    padding: 12px 22px;
     border: none;
-    border-radius: 6px;
-    margin: 5px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
     color: #fff;
-    background-color: #1E40AF;
+    background-color: #2563eb;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: 0.2s;
 }
 
 .button:hover {
-    background-color: #1E3A8A;
+    background-color: #1e40af;
+    transform: translateY(-1px);
 }
 
-.informasiGrup {
-    background: white;
-    padding: 25px 30px;
-    width: 450px;
+/* ===== CARD ===== */
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 25px;
+    width: 500px;
     max-width: 95%;
     margin: 30px auto;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-.informasiGrup table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.daftarEvent {
-    margin: 40px auto;
+/* ===== TABLE ===== */
+.table-wrap {
     width: 95%;
-    max-width: 1000px;
+    max-width: 1100px;
+    margin: 30px auto;
 }
 
 table {
     width: 100%;
+    background: #ffffff;
+    border-radius: 10px;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
 }
 
 th, td {
-    border: 1px solid #ccc;
-    padding: 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid #e5e7eb;
     text-align: center;
 }
 
 th {
-    background-color: #e9ecef;
-    font-weight: bold;
+    background-color: #f1f5f9;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+tr:last-child td {
+    border-bottom: none;
 }
 
 tr:hover {
-    background-color: #f1f5f9;
+    background-color: #f9fafb;
 }
 
+/* ===== IMAGE ===== */
 img {
     max-width: 180px;
-    height: auto;
-    border-radius: 6px;
+    border-radius: 8px;
 }
 
-@media (max-width:768px){
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
     table, thead, tbody, tr, th, td {
-        display:block;
-        width:100%;
+        display: block;
+        width: 100%;
     }
 
-    thead { display:none; }
+    thead { display: none; }
 
     tr {
-        border:2px solid #2c3e50;
-        margin-bottom:15px;
-        padding:10px;
-        border-radius: 8px;
-        background: #fff;
+        margin-bottom: 18px;
+        background: #ffffff;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
     td {
-        border:none;
-        text-align:left;
-        padding:6px 0;
-        display:flex;
+        display: flex;
         flex-direction: column;
+        align-items: flex-start;
+        padding: 8px 0;
+        border: none;
+        text-align: left;
     }
 
     td::before {
-        font-weight:bold;
         content: attr(data-label);
+        font-weight: 600;
+        color: #374151;
         margin-bottom: 4px;
-        color: #2c3e50;
     }
 
     img {
         max-width: 100%;
-        margin-bottom: 10px;
+        margin-top: 8px;
+    }
+
+    .btn-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button {
+        width: 90%;
     }
 }
 </style>
@@ -166,61 +191,80 @@ img {
 
 <h2>Detail Group</h2>
 
-<div class="center">
+<div class="btn-group">
     <form action="dosen_home.php" method="post">
-        <button class="button" type="submit">Kembali ke Home</button>
+        <button class="button" type="submit">Home</button>
     </form>
     <form action="dosen_group_diikuti.php" method="post">
-        <button class="button" type="submit">Kembali ke Daftar Group</button>
+        <button class="button" type="submit">Daftar Group</button>
     </form>
 </div>
 
-<div class="informasiGrup">
+<div class="card">
     <table>
-        <tr><th colspan="2">Informasi Group</th></tr>
-        <tr><td>Nama</td><td><?= htmlspecialchars($group_detail['nama']) ?></td></tr>
-        <tr><td>Deskripsi</td><td><?= htmlspecialchars($group_detail['deskripsi']) ?></td></tr>
-        <tr><td>Pembuat</td><td><?= htmlspecialchars($group_detail['username_pembuat']) ?></td></tr>
-        <tr><td>Tanggal Dibentuk</td><td><?= $group_detail['tanggal_pembentukan'] ?></td></tr>
-        <tr><td>Jenis</td><td><?= $group_detail['jenis'] ?></td></tr>
+        <tr>
+            <th colspan="2">Informasi Group</th>
+        </tr>
+        <tr>
+            <td>Nama</td>
+            <td><?= htmlspecialchars($group_detail['nama']) ?></td>
+        </tr>
+        <tr>
+            <td>Deskripsi</td>
+            <td><?= htmlspecialchars($group_detail['deskripsi']) ?></td>
+        </tr>
+        <tr>
+            <td>Pembuat</td>
+            <td><?= htmlspecialchars($group_detail['username_pembuat']) ?></td>
+        </tr>
+        <tr>
+            <td>Tanggal Dibentuk</td>
+            <td><?= htmlspecialchars($group_detail['tanggal_pembentukan']) ?></td>
+        </tr>
+        <tr>
+            <td>Jenis</td>
+            <td><?= htmlspecialchars($group_detail['jenis']) ?></td>
+        </tr>
     </table>
 </div>
 
-<div class="daftarEvent">
-    <h3>Daftar Event</h3>
+<h3>Daftar Event</h3>
 
-    <table>
+<div class="table-wrap">
+<table>
+    <tr>
+        <th>Judul</th>
+        <th>Tanggal</th>
+        <th>Keterangan</th>
+        <th>Jenis</th>
+        <th>Poster</th>
+    </tr>
+
+    <?php if (empty($group_events)) : ?>
         <tr>
-            <th>Judul</th>
-            <th>Tanggal</th>
-            <th>Keterangan</th>
-            <th>Jenis</th>
-            <th>Poster</th>
+            <td colspan="5">Belum ada event</td>
         </tr>
-
-        <?php if (empty($group_events)) : ?>
-            <tr><td colspan="5">Belum ada event</td></tr>
-        <?php else: ?>
-            <?php foreach ($group_events as $events) : ?>
-                <tr>
-                    <td data-label="Judul"><?= htmlspecialchars($events['judul']) ?></td>
-                    <td data-label="Tanggal"><?= $events['tanggal'] ?></td>
-                    <td data-label="Keterangan"><?= htmlspecialchars($events['keterangan']) ?></td>
-                    <td data-label="Jenis"><?= htmlspecialchars($events['jenis']) ?></td>
-                    <td data-label="Poster">
-                        <?php
-                        if (!empty($events['poster_extension']) &&
-                            file_exists("../image_events/".$events['idevent'].".".$events['poster_extension'])) {
-                            echo '<img src="../image_events/'.$events['idevent'].'.'.$events['poster_extension'].'" alt="Poster Event">';
-                        } else {
-                            echo "No poster";
-                        }
-                        ?>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </table>
+    <?php else: ?>
+        <?php foreach ($group_events as $events) : ?>
+            <tr>
+                <td data-label="Judul"><?= htmlspecialchars($events['judul']) ?></td>
+                <td data-label="Tanggal"><?= htmlspecialchars($events['tanggal']) ?></td>
+                <td data-label="Keterangan"><?= htmlspecialchars($events['keterangan']) ?></td>
+                <td data-label="Jenis"><?= htmlspecialchars($events['jenis']) ?></td>
+                <td data-label="Poster">
+                    <?php
+                    if (!empty($events['poster_extension']) &&
+                        file_exists("../image_events/".$events['idevent'].".".$events['poster_extension'])) {
+                        echo '<img src="../image_events/'.$events['idevent'].'.'.$events['poster_extension'].'" alt="Poster Event">';
+                    } else {
+                        echo "No poster";
+                    }
+                    ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</table>
 </div>
 
 </body>

@@ -22,164 +22,266 @@ $res = $group->getAllPublicGroups(
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Grup Publik Tersedia</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>Grup Publik Tersedia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- THEME -->
-    <link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/theme.css">
 
-    <style>
-        body{
-            font-family: 'Times New Roman', Times, serif;
-            margin: 0;
-        }
+<style>
+body{
+    font-family:'Times New Roman', Times, serif;
+    margin:0;
+    padding:20px;
+}
 
-        h2{
-            text-align: center;
-            margin: 30px 0 10px;
-            font-size: 34px;
-        }
+/* ======================
+   TITLE
+====================== */
+h2{
+    text-align:center;
+    margin:30px 0 15px;
+    font-size:34px;
+}
 
-        .container-kembali{
-            width: 90%;
-            margin: auto;
-        }
+/* ======================
+   BACK BUTTON
+====================== */
+.container-kembali{
+    width:90%;
+    margin:auto;
+}
 
-        /* ===== TOMBOL KEMBALI (MIRIP HOME - btn-publik) ===== */
-        .kembali{
-            display: inline-block;
-            padding: 8px 14px;
-            font-weight: bold;
-            text-decoration: none;
-            background-color: steelblue;
-            color: white;
-        }
+.kembali{
+    display:inline-block;
+    padding:8px 14px;
+    font-weight:bold;
+    text-decoration:none;
+    border-radius:6px;
+    border:1px solid;
+}
 
-        .kembali:hover{
-            opacity: 0.9;
-        }
+/* ======================
+   TABLE
+====================== */
+table{
+    width:90%;
+    margin:20px auto;
+    border-collapse:collapse;
+    border:2px solid;
+}
 
-        table{
-            width: 90%;
-            margin: 15px auto;
-            border: 4px solid;
-            border-collapse: collapse;
-        }
+th, td{
+    border:1px solid;
+    padding:10px;
+    text-align:center;
+}
 
-        th, td{
-            border: 1px solid;
-            padding: 10px;
-            text-align: center;
-        }
+th{
+    font-weight:bold;
+}
 
-        th{
-            font-weight: bold;
-        }
+.kosong{
+    text-align:center;
+    padding:20px;
+}
 
-        .kosong{
-            text-align: center;
-            padding: 20px;
-        }
+/* ======================
+   PAGINATION
+====================== */
+.paging{
+    text-align:center;
+    margin:25px;
+}
 
-        /* ===== PAGINATION (MIRIP HOME) ===== */
-        .paging{
-            text-align: center;
-            margin: 25px;
-        }
+.paging a,
+.paging b{
+    display:inline-block;
+    margin:4px;
+    padding:6px 12px;
+    font-weight:bold;
+    text-decoration:none;
+    border-radius:6px;
+    border:1px solid;
+}
 
-        .paging a{
-            margin: 0 6px;
-            font-weight: bold;
-            text-decoration: none;
-            background-color: midnightblue;
-            color: white;
-            padding: 6px 10px;
-        }
+/* ======================
+   JOIN GROUP
+====================== */
+.insert-kode{
+    text-align:center;
+    padding:20px;
+    border:2px solid;
+    width:90%;
+    max-width:420px;
+    margin:30px auto;
+    border-radius:8px;
+}
 
-        .paging a:hover{
-            opacity: 0.9;
-        }
+.insert-kode p{
+    margin-bottom:15px;
+    font-weight:bold;
+}
 
-        .paging b{
-            background-color: darkcyan;
-            color: white;
-            padding: 6px 10px;
-        }
+.insert-kode input{
+    width:100%;
+    padding:10px;
+    margin-bottom:12px;
+    border:1px solid;
+    border-radius:6px;
+}
 
-        /* ===== JOIN GROUP BOX ===== */
-        .insert-kode{
-            text-align: center;
-            padding: 20px;
-            border: 4px solid;
-            width: 90%;
-            max-width: 420px;
-            margin: 30px auto;
-        }
+.insert-kode button{
+    width:100%;
+    padding:10px;
+    font-weight:bold;
+    border-radius:6px;
+    border:1px solid;
+    cursor:pointer;
+}
 
-        .insert-kode p{
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
+/* ======================
+   LIGHT THEME
+====================== */
+body.light{
+    background:#f4f6f8;
+    color:#000;
+}
 
-        .insert-kode input{
-            width: 90%;
-            padding: 10px;
-            margin-bottom: 12px;
-        }
+body.light h2{
+    color:#2c3e50;
+}
 
-        /* ===== TOMBOL JOIN (MIRIP btn-kelola) ===== */
-        .insert-kode button{
-            width: 100%;
-            padding: 10px;
-            font-weight: bold;
-            border: none;
-            background-color: darkslategray;
-            color: white;
-            cursor: pointer;
-        }
+body.light .kembali{
+    background:#e5e7eb;
+    color:#000;
+    border-color:#d1d5db;
+}
 
-        .insert-kode button:hover{
-            opacity: 0.9;
-        }
+body.light table{
+    background:#ffffff;
+    border-color:#d1d5db;
+}
 
-        @media (max-width: 450px){
-            h2{
-                font-size: 26px;
-            }
+body.light th{
+    background:#e9ecef;
+}
 
-            table, thead, tbody, th, tr{
-                display: block;
-            }
+body.light .paging a{
+    background:#e5e7eb;
+    color:#000;
+}
 
-            table{
-                border: none;
-            }
+body.light .paging b{
+    background:#2c3e50;
+    color:#fff;
+}
 
-            tr{
-                margin-bottom: 15px;
-                border: 3px solid;
-                padding: 10px;
-            }
+body.light .insert-kode{
+    background:#ffffff;
+    border-color:#d1d5db;
+}
 
-            td{
-                border: none;
-                text-align: left;
-                padding: 6px 0;
-            }
+body.light .insert-kode input{
+    background:#ffffff;
+    color:#000;
+    border-color:#d1d5db;
+}
 
-            td::before{
-                font-weight: bold;
-                display: block;
-                margin-bottom: 3px;
-            }
+body.light .insert-kode button{
+    background:#2c3e50;
+    color:#fff;
+    border-color:#2c3e50;
+}
 
-            .paging a, .paging b{
-                display: inline-block;
-                margin: 6px 4px;
-            }
-        }
-    </style>
+/* ======================
+   DARK THEME
+====================== */
+body.dark{
+    background:#1e1e1e;
+    color:#eee;
+}
+
+body.dark h2{
+    color:#ffffff;
+}
+
+body.dark .kembali{
+    background:#3a3a3a;
+    color:#fff;
+    border-color:#555;
+}
+
+body.dark table{
+    background:#2a2a2a;
+    border-color:#444;
+}
+
+body.dark th{
+    background:#333;
+}
+
+body.dark .paging a{
+    background:#3a3a3a;
+    color:#fff;
+}
+
+body.dark .paging b{
+    background:#ffffff;
+    color:#000;
+}
+
+body.dark .insert-kode{
+    background:#2a2a2a;
+    border-color:#444;
+}
+
+body.dark .insert-kode input{
+    background:#1e1e1e;
+    color:#eee;
+    border-color:#555;
+}
+
+body.dark .insert-kode button{
+    background:#3a3a3a;
+    color:#fff;
+    border-color:#555;
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media (max-width:450px){
+    h2{ font-size:26px; }
+
+    table, thead, tbody, th, tr{
+        display:block;
+    }
+
+    table{
+        border:none;
+    }
+
+    tr{
+        margin-bottom:15px;
+        border:2px solid;
+        padding:10px;
+        border-radius:8px;
+    }
+
+    td{
+        border:none;
+        text-align:left;
+        padding:6px 0;
+    }
+
+    td::before{
+        font-weight:bold;
+        display:block;
+        margin-bottom:3px;
+    }
+}
+</style>
 </head>
 
 <body class="<?= $themeClass ?>">
@@ -191,37 +293,32 @@ $res = $group->getAllPublicGroups(
 </div>
 
 <table>
-    <thead>
-        <tr>
-            <th>Nama Grup</th>
-            <th>Deskripsi</th>
-            <th>Pembuat</th>
-            <th>Tanggal Dibentuk</th>
-            <th>Jenis</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        if ($res->num_rows == 0) {
-            echo "
-            <tr>
-                <td colspan='5' class='kosong'>
-                    Tidak ada grup publik yang tersedia
-                </td>
-            </tr>";
-        } else {
-            while ($row = $res->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>".htmlspecialchars($row['nama'])."</td>";
-                echo "<td>".htmlspecialchars($row['deskripsi'])."</td>";
-                echo "<td>".htmlspecialchars($row['username_pembuat'])."</td>";
-                echo "<td>".htmlspecialchars($row['tanggal_pembentukan'])."</td>";
-                echo "<td>".htmlspecialchars($row['jenis'])."</td>";
-                echo "</tr>";
-            }
-        }
-        ?>
-    </tbody>
+<thead>
+<tr>
+    <th>Nama Grup</th>
+    <th>Deskripsi</th>
+    <th>Pembuat</th>
+    <th>Tanggal Dibentuk</th>
+    <th>Jenis</th>
+</tr>
+</thead>
+<tbody>
+<?php
+if ($res->num_rows == 0) {
+    echo "<tr><td colspan='5' class='kosong'>Tidak ada grup publik yang tersedia</td></tr>";
+} else {
+    while ($row = $res->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>".htmlspecialchars($row['nama'])."</td>";
+        echo "<td>".htmlspecialchars($row['deskripsi'])."</td>";
+        echo "<td>".htmlspecialchars($row['username_pembuat'])."</td>";
+        echo "<td>".htmlspecialchars($row['tanggal_pembentukan'])."</td>";
+        echo "<td>".htmlspecialchars($row['jenis'])."</td>";
+        echo "</tr>";
+    }
+}
+?>
+</tbody>
 </table>
 
 <div class="paging">
@@ -233,32 +330,28 @@ $max_page = ceil($total_data / $PER_PAGE);
 $current_page = floor($offset / $PER_PAGE) + 1;
 
 if ($current_page > 1) {
-    $prev = $offset - $PER_PAGE;
-    echo "<a href='?start=$prev'>Sebelumnya</a>";
+    echo "<a href='?start=".($offset - $PER_PAGE)."'>Sebelumnya</a>";
 }
 
 for ($page = 1; $page <= $max_page; $page++) {
     $offs = ($page - 1) * $PER_PAGE;
-    if ($page == $current_page) {
-        echo "<b>$page</b>";
-    } else {
-        echo "<a href='?start=$offs'>$page</a>";
-    }
+    echo ($page == $current_page)
+        ? "<b>$page</b>"
+        : "<a href='?start=$offs'>$page</a>";
 }
 
 if ($current_page < $max_page) {
-    $next = $offset + $PER_PAGE;
-    echo "<a href='?start=$next'>Selanjutnya</a>";
+    echo "<a href='?start=".($offset + $PER_PAGE)."'>Selanjutnya</a>";
 }
 ?>
 </div>
 
 <div class="insert-kode">
-    <form action="dosen_join_group_proses.php" method="post">
-        <p>Masukkan Kode grup publik untuk Pendaftaran:</p>
-        <input type="text" name="kode" required>
-        <button type="submit">Join Group</button>
-    </form>
+<form action="dosen_join_group_proses.php" method="post">
+    <p>Masukkan Kode Grup Publik:</p>
+    <input type="text" name="kode" required>
+    <button type="submit">Join Group</button>
+</form>
 </div>
 
 </body>

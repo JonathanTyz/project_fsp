@@ -7,6 +7,9 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+/* ambil theme dari session */
+$themeClass = $_SESSION['theme'] ?? 'light';
+
 $group = new group();
 
 $PER_PAGE = 3;
@@ -22,8 +25,11 @@ $res = $group->getAllGroupByMember(
 <html>
 <head>
     <title>Group Yang Diikuti</title>
-    <style>
 
+    <!-- THEME -->
+    <link rel="stylesheet" href="../css/theme.css">
+
+    <style>
         body{
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
@@ -75,6 +81,7 @@ $res = $group->getAllGroupByMember(
             background-color: #2c3e50;
             color: white;
             width: 100%;
+            cursor: pointer;
         }
 
         .paging{
@@ -95,6 +102,59 @@ $res = $group->getAllGroupByMember(
             color: #555;
         }
 
+        /* =====================
+           DARK MODE
+        ===================== */
+        body.dark{
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+
+        body.dark h2{
+            color: #ffffff;
+        }
+
+        body.dark table{
+            background-color: #1e1e1e;
+            border-color: #555;
+        }
+
+        body.dark th{
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+
+        body.dark td{
+            border-color: #444;
+            color: #eeeeee;
+        }
+
+        body.dark tr{
+            background-color: #1e1e1e;
+        }
+
+        body.dark .kembali{
+            background-color: #444;
+            color: #ffffff;
+        }
+
+        body.dark button{
+            background-color: #3a3a3a;
+            color: #ffffff;
+        }
+
+        body.dark button:hover{
+            background-color: #555;
+        }
+
+        body.dark .paging a{
+            color: #dddddd;
+        }
+
+        body.dark .kosong{
+            color: #bbbbbb;
+        }
+
         @media (max-width: 768px){
             table, thead, tbody, tr, th, td{
                 display: block;
@@ -112,17 +172,15 @@ $res = $group->getAllGroupByMember(
                 padding: 10px;
             }
 
+            body.dark tr{
+                background-color: #1e1e1e;
+                border-color: #555;
+            }
+
             td{
                 border: none;
                 text-align: left;
                 padding: 6px 0;
-            }
-
-            td::before{
-                font-weight: bold;
-                color: #2c3e50;
-                display: block;
-                margin-bottom: 3px;
             }
 
             button{
@@ -131,7 +189,8 @@ $res = $group->getAllGroupByMember(
         }
     </style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <h2>Group Yang Anda Ikuti</h2>
 
@@ -149,68 +208,69 @@ $res = $group->getAllGroupByMember(
             <th>Jenis</th>
             <th>Event</th>
             <th>Thread</th>
-            <th colspan = '3'>Member</th>
+            <th colspan="3">Member</th>
             <th>Keluar</th>
         </tr>
     </thead>
     <tbody>
-        <?php
-        if ($res->num_rows == 0) {
-            echo "<tr><td colspan='11' class='kosong'>Anda belum bergabung ke grup manapun</td></tr>";
-        } else {
-            while ($row = $res->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>{$row['nama']}</td>";
-                echo "<td>{$row['deskripsi']}</td>";
-                echo "<td>{$row['username_pembuat']}</td>";
-                echo "<td>{$row['tanggal_pembentukan']}</td>";
-                echo "<td>{$row['jenis']}</td>";
+    <?php
+    if ($res->num_rows == 0) {
+        echo "<tr><td colspan='11' class='kosong'>Anda belum bergabung ke grup manapun</td></tr>";
+    } else {
+        while ($row = $res->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>{$row['nama']}</td>";
+            echo "<td>{$row['deskripsi']}</td>";
+            echo "<td>{$row['username_pembuat']}</td>";
+            echo "<td>{$row['tanggal_pembentukan']}</td>";
+            echo "<td>{$row['jenis']}</td>";
 
-                echo "<td>
-                    <form action='mahasiswa_view_event.php' method='post'>
-                        <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
-                        <button type='submit'>Lihat Event</button>
-                    </form>
-                </td>";
+            echo "<td>
+                <form action='mahasiswa_view_event.php' method='post'>
+                    <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                    <button type='submit'>Lihat Event</button>
+                </form>
+            </td>";
 
-                echo "<td>
-                    <form action = 'mahasiswa_thread.php' method = 'post'>
-                        <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
-                        <button type='submit'>Lihat Thread</button>
-                    </form>";
+            echo "<td>
+                <form action='mahasiswa_thread.php' method='post'>
+                    <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                    <button type='submit'>Lihat Thread</button>
+                </form>
+            </td>";
 
-                echo "<td>
-                    <form action='mahasiswa_view_member.php' method='post'>
-                        <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
-                        <button type='submit'>Lihat Semua Member</button>
-                    </form>
-                </td>";
+            echo "<td>
+                <form action='mahasiswa_view_member.php' method='post'>
+                    <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                    <button type='submit'>Semua Member</button>
+                </form>
+            </td>";
 
-                echo "<td>
-                    <form action='mahasiswa_view_member_mahasiswa.php' method='post'>
-                        <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
-                        <button type='submit'>Lihat Member Mahasiswa</button>
-                    </form>
-                </td>";
+            echo "<td>
+                <form action='mahasiswa_view_member_mahasiswa.php' method='post'>
+                    <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                    <button type='submit'>Member Mahasiswa</button>
+                </form>
+            </td>";
 
-                echo "<td>
-                    <form action='mahasiswa_view_member_dosen.php' method='post'>
-                        <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
-                        <button type='submit'>Lihat Member Dosen</button>
-                    </form>
-                </td>";
+            echo "<td>
+                <form action='mahasiswa_view_member_dosen.php' method='post'>
+                    <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                    <button type='submit'>Member Dosen</button>
+                </form>
+            </td>";
 
-                echo "<td>
-                    <form action='mahasiswa_keluar_group.php' method='post'>
-                        <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
-                        <button type='submit'>Keluar</button>
-                    </form>
-                </td>";
+            echo "<td>
+                <form action='mahasiswa_keluar_group.php' method='post'>
+                    <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                    <button type='submit'>Keluar</button>
+                </form>
+            </td>";
 
-                echo "</tr>";
-            }
+            echo "</tr>";
         }
-        ?>
+    }
+    ?>
     </tbody>
 </table>
 
@@ -221,22 +281,18 @@ $max_page = ceil($total_data / $PER_PAGE);
 $current_page = floor($offset / $PER_PAGE) + 1;
 
 if ($current_page > 1) {
-    $prev = $offset - $PER_PAGE;
-    echo "<a href='?start=$prev'>Sebelumnya</a>";
+    echo "<a href='?start=" . ($offset - $PER_PAGE) . "'>Sebelumnya</a>";
 }
 
 for ($page = 1; $page <= $max_page; $page++) {
     $offs = ($page - 1) * $PER_PAGE;
-    if ($page == $current_page) {
-        echo "<b>$page</b>";
-    } else {
-        echo "<a href='?start=$offs'>$page</a>";
-    }
+    echo ($page == $current_page)
+        ? "<b>$page</b>"
+        : "<a href='?start=$offs'>$page</a>";
 }
 
 if ($current_page < $max_page) {
-    $next = $offset + $PER_PAGE;
-    echo "<a href='?start=$next'>Selanjutnya</a>";
+    echo "<a href='?start=" . ($offset + $PER_PAGE) . "'>Selanjutnya</a>";
 }
 ?>
 </div>

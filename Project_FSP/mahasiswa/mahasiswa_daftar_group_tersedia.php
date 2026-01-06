@@ -12,6 +12,9 @@ $group = new group();
 $PER_PAGE = 3;
 $offset = isset($_GET['start']) ? (int)$_GET['start'] : 0;
 
+/* ambil theme dari session */
+$themeClass = $_SESSION['theme'] ?? 'light';
+
 $res = $group->getAllPublicGroups(
     $_SESSION['user']['username'],
     $offset,
@@ -23,18 +26,25 @@ $res = $group->getAllPublicGroups(
 <head>
     <title>Grup Publik Tersedia</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- THEME -->
+    <link rel="stylesheet" href="../css/theme.css">
+
     <style>
         body{
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
-            background-color: #f4f6f8;
         }
 
         h2{
             text-align: center;
             margin: 30px 0 10px;
-            color: #2c3e50;
             font-size: 34px;
+            color: #2c3e50;
+        }
+
+        body.dark h2{
+            color: #ffffff;
         }
 
         .container-kembali{
@@ -54,8 +64,13 @@ $res = $group->getAllPublicGroups(
         table{
             width: 90%;
             margin: 15px auto;
-            background: white;
+            background: #ffffff;
             border: 4px solid #2c3e50;
+        }
+
+        body.dark table{
+            background: #2a2a2a;
+            border-color: #555;
         }
 
         th, td{
@@ -64,14 +79,28 @@ $res = $group->getAllPublicGroups(
             text-align: center;
         }
 
+        body.dark th,
+        body.dark td{
+            border-color: #555;
+            color: #eee;
+        }
+
         th{
             background-color: #e9ecef;
+        }
+
+        body.dark th{
+            background-color: #333;
         }
 
         .kosong{
             text-align: center;
             padding: 20px;
             color: #555;
+        }
+
+        body.dark .kosong{
+            color: #ccc;
         }
 
         .paging{
@@ -86,15 +115,24 @@ $res = $group->getAllPublicGroups(
             text-decoration: none;
         }
 
+        body.dark .paging a{
+            color: #ddd;
+        }
+
         .insert-kode{
             text-align: center;
             padding: 20px;
-            color: #262626;
             border: 4px solid #2c3e50;
             width: 90%;
             max-width: 420px;
             margin: 30px auto;
-            background: white;
+            background: #ffffff;
+        }
+
+        body.dark .insert-kode{
+            background: #2a2a2a;
+            border-color: #555;
+            color: #eee;
         }
 
         .insert-kode p{
@@ -106,7 +144,6 @@ $res = $group->getAllPublicGroups(
             width: 90%;
             padding: 10px;
             margin-bottom: 12px;
-            margin-right: 10px;
         }
 
         .insert-kode button{
@@ -116,6 +153,7 @@ $res = $group->getAllPublicGroups(
             border: none;
             background-color: #2c3e50;
             color: white;
+            cursor: pointer;
         }
 
         @media (max-width: 450px){
@@ -128,7 +166,6 @@ $res = $group->getAllPublicGroups(
                 display: block;
             }
 
-
             table{
                 border: none;
             }
@@ -137,7 +174,12 @@ $res = $group->getAllPublicGroups(
                 margin-bottom: 15px;
                 border: 3px solid #2c3e50;
                 padding: 10px;
-                background: white;
+                background: #ffffff;
+            }
+
+            body.dark tr{
+                background: #2a2a2a;
+                border-color: #555;
             }
 
             td{
@@ -153,6 +195,10 @@ $res = $group->getAllPublicGroups(
                 color: #2c3e50;
             }
 
+            body.dark td::before{
+                color: #bbb;
+            }
+
             .paging a{
                 display: inline-block;
                 margin: 6px 4px;
@@ -160,7 +206,8 @@ $res = $group->getAllPublicGroups(
         }
     </style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <h2>Grup Publik Tersedia</h2>
 
@@ -182,7 +229,7 @@ $res = $group->getAllPublicGroups(
         <?php
         if ($res->num_rows == 0) {
             echo "<tr>
-                    <td colspan = '5' class='kosong'>Tidak ada grup publik yang tersedia</td>
+                    <td colspan='5' class='kosong'>Tidak ada grup publik yang tersedia</td>
                 </tr>";
         } else {
             while ($row = $res->fetch_assoc()) {

@@ -5,16 +5,22 @@ if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
     exit();
 }
+
+/* ambil theme dari session */
+$themeClass = $_SESSION['theme'] ?? 'light';
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Mahasiswa Home</title>
+
+    <!-- THEME -->
+    <link rel="stylesheet" href="../css/theme.css">
+
     <style>
         body{
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
-            background-color: #f4f6f8;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -36,15 +42,28 @@ if (!isset($_SESSION['user'])) {
             text-align: center;
         }
 
+        /* DARK CARD */
+        body.dark .isi{
+            background-color: #2a2a2a;
+        }
+
         .judul{
             font-size: 28px;
             color: #2c3e50;
+        }
+
+        body.dark .judul{
+            color: #ffffff;
         }
 
         .user{
             margin: 5px 0 20px;
             font-weight: normal;
             color: #333;
+        }
+
+        body.dark .user{
+            color: #eee;
         }
 
         .menu-button{
@@ -54,6 +73,8 @@ if (!isset($_SESSION['user'])) {
             margin: 10px 0;
             font-size: 15px;
             font-weight: bold;
+            border: none;
+            cursor: pointer;
         }
 
         .menu-button-daftar-group-join{
@@ -68,6 +89,11 @@ if (!isset($_SESSION['user'])) {
 
         .menu-button-change-password{
             background-color: #6c757d;
+            color: #ffffff;
+        }
+
+        .menu-button-theme{
+            background-color: #888;
             color: #ffffff;
         }
 
@@ -91,15 +117,16 @@ if (!isset($_SESSION['user'])) {
                 padding: 25px 20px;
             }
         }
-
     </style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
+
 <div class="container">
     <div class="isi">
         <h2 class="judul">Welcome</h2>
-        <h3 class="user"><?php echo $_SESSION['user']['username']; ?></h3>
-        <h3 class = "user">Role: Mahasiswa</h3>
+        <h3 class="user"><?= $_SESSION['user']['username']; ?></h3>
+        <h3 class="user">Role: Mahasiswa</h3>
 
         <a href="mahasiswa_daftar_group_join.php">
             <button class="menu-button menu-button-daftar-group-join">
@@ -119,6 +146,12 @@ if (!isset($_SESSION['user'])) {
             </button>
         </a>
 
+        <a href="../css/toggle_theme.php">
+            <button class="menu-button menu-button-theme">
+                Change Theme
+            </button>
+        </a>
+
         <a href="../logout.php">
             <button class="menu-button menu-button-logout">
                 Logout
@@ -126,15 +159,6 @@ if (!isset($_SESSION['user'])) {
         </a>
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script>
-    $(document).ready(function(){
-        $('#toggleTheme').click(function(){
-            $('body').toggleClass('dark');
-        });
-    });
-</script>
 
 </body>
 </html>

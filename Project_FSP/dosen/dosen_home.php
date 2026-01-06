@@ -6,31 +6,26 @@ if (!isset($_SESSION['user'])) {
 }
 
 /* ambil theme dari session */
-$themeClass = '';
-if (isset($_SESSION['theme']) && $_SESSION['theme'] === 'dark') {
-    $themeClass = 'dark';
-}
+$themeClass = $_SESSION['theme'] ?? 'light';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dosen Home</title>
 
-    <!-- PANGGIL THEME -->
+    <!-- THEME -->
     <link rel="stylesheet" href="../css/theme.css">
 
     <style>
         body{
             font-family: 'Times New Roman', Times, serif;
             margin: 0;
-            background-color: var(--bg-body);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            transition: background-color 0.3s ease;
         }
 
         .container{
@@ -38,55 +33,100 @@ if (isset($_SESSION['theme']) && $_SESSION['theme'] === 'dark') {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
         }
 
+        /* === CARD SAMA PERSIS MAHASISWA === */
         .isi{
-            background-color: var(--bg-card);
-            width: 400px;
-            max-width: 100%;
-            padding: 35px 30px;
+            background-color: #ffffff;
+            width: 90%;
+            max-width: 420px;
+            padding: 35px 40px;
             text-align: center;
-            transition: background-color 0.3s ease;
+        }
+
+        body.dark .isi{
+            background-color: #2a2a2a;
         }
 
         .judul{
-            margin-top: 0;
             font-size: 28px;
-            color: var(--text-title);
+            color: #2c3e50;
+        }
+
+        body.dark .judul{
+            color: #ffffff;
         }
 
         .user{
             margin: 5px 0 20px;
             font-weight: normal;
-            color: var(--text-normal);
+            color: #333;
         }
 
+        body.dark .user{
+            color: #eee;
+        }
+
+        /* === TOMBOL (STRUKTUR DOSEN, WARNA MAHASISWA) === */
         .menu-button{
             display: block;
             width: 100%;
             padding: 12px;
             margin: 10px 0;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             border: none;
             cursor: pointer;
         }
 
-        .menu-button:hover{
-            opacity: 0.9;
+        .btn-kelola{
+            background-color: #2c3e50;
+            color: #fff;
         }
 
-        .btn-kelola{ background-color: darkslategray; color: white; }
-        .btn-diikuti{ background-color: midnightblue; color: white; }
-        .btn-publik{ background-color: steelblue; color: white; }
-        .btn-change-password{ background-color: darkcyan; color: white; }
-        .btn-theme{ background-color: gray; color: white; }
-        .btn-logout{ background-color: darkred; color: white; }
+        .btn-diikuti{
+            background-color: #1f2f3d;
+            color: #fff;
+        }
+
+        .btn-publik{
+            background-color: #1f2f3d;
+            color: #fff;
+        }
+
+        .btn-change-password{
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .btn-theme{
+            background-color: #888;
+            color: #fff;
+        }
+
+        .btn-logout{
+            background-color: #a94442;
+            color: #fff;
+        }
+
+        @media (max-width: 600px){
+            .judul{
+                font-size: 22px;
+            }
+            .user{
+                font-size: 16px;
+            }
+            .menu-button{
+                font-size: 14px;
+                padding: 10px;
+            }
+            .isi{
+                padding: 25px 20px;
+            }
+        }
     </style>
 </head>
 
-<!-- TERAPKAN THEME -->
 <body class="<?= $themeClass ?>">
 
 <div class="container">
@@ -112,9 +152,7 @@ if (isset($_SESSION['theme']) && $_SESSION['theme'] === 'dark') {
         </a>
 
         <a href="../css/toggle_theme.php">
-            <button class="menu-button btn-theme">
-                Change Theme
-            </button>
+            <button class="menu-button btn-theme">Change Theme</button>
         </a>
 
         <a href="../logout.php">

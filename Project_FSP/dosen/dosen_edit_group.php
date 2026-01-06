@@ -20,48 +20,136 @@ $deskripsi = $_POST['deskripsi'] ?? '';
 <title>Edit Group</title>
 <link rel="stylesheet" href="../css/theme.css">
 <style>
+/* ======================
+   BASE
+====================== */
 body{
     font-family:'Times New Roman', Times, serif;
     margin:0;
     padding:20px;
 }
+
 h2{
     text-align:center;
-    margin-top:20px;
+    margin:20px 0 15px;
     font-size:32px;
 }
+
+/* ======================
+   CONTAINER
+====================== */
 .isiInput{
-    border:5px solid;
+    border:2px solid;
     padding:25px 20px;
     width:600px;
     max-width:95%;
-    margin:20px auto;
-    text-align:center;
+    margin:30px auto;
+    border-radius:8px;
 }
+
+/* ======================
+   FORM
+====================== */
 label{
     display:block;
-    text-align:left;
     margin-top:10px;
     font-weight:bold;
 }
-input[type="text"], select{
+
+input[type="text"],
+select{
     width:100%;
-    padding:8px;
-    margin-top:5px;
+    padding:10px;
+    margin-top:6px;
     margin-bottom:15px;
+    border-radius:6px;
     border:1px solid;
     font-size:16px;
 }
+
+/* ======================
+   BUTTON
+====================== */
 button{
-    padding:12px 20px;
+    width:100%;
+    padding:12px;
     font-weight:bold;
     font-size:16px;
-    border:none;
-    margin-top:10px;
-    background-color:#2c3e50; /* warna button */
-    color:white;
+    border-radius:6px;
+    border:1px solid;
+    cursor:pointer;
+}
+
+/* ======================
+   LIGHT THEME
+====================== */
+body.light{
+    background:#f4f6f8;
+    color:#000;
+}
+
+body.light .isiInput{
+    background:#ffffff;
+    border-color:#d1d5db;
+}
+
+body.light input,
+body.light select{
+    background:#ffffff;
+    color:#000;
+    border-color:#d1d5db;
+}
+
+body.light button{
+    background:#2c3e50;
+    color:#fff;
+    border-color:#2c3e50;
+}
+
+/* ======================
+   DARK THEME
+====================== */
+body.dark{
+    background:#1e1e1e;
+    color:#eee;
+}
+
+body.dark .isiInput{
+    background:#2a2a2a;
+    border-color:#444;
+}
+
+body.dark input,
+body.dark select{
+    background:#1e1e1e;
+    color:#eee;
+    border-color:#555;
+}
+
+body.dark button{
+    background:#3a3a3a;
+    color:#fff;
+    border-color:#555;
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media (max-width:500px){
+    body{
+        padding:10px;
+    }
+
+    h2{
+        font-size:26px;
+    }
+
+    .isiInput{
+        padding:20px 15px;
+    }
 }
 </style>
+
 </head>
 <body class="<?= $themeClass ?>">
 

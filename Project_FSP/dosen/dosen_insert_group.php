@@ -26,82 +26,155 @@ if ($mysqli->connect_error) {
 
 <style>
 body{
-    font-family: 'Times New Roman', Times, serif;
-    margin: 0;
-    padding: 20px;
+    font-family:'Times New Roman', Times, serif;
+    margin:0;
+    padding:20px;
 }
 
+/* ======================
+   TITLE
+====================== */
 h2{
-    text-align: center;
-    margin-top: 20px;
-    font-size: 32px;
-    color: #1E3A8A;
+    text-align:center;
+    margin-top:20px;
+    font-size:32px;
 }
 
 #pembukaanteks{
-    font-size: 22px;
-    text-decoration: underline;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #1E40AF;
+    font-size:22px;
+    text-decoration:underline;
+    font-weight:bold;
+    text-align:center;
+    margin-bottom:20px;
 }
 
+/* ======================
+   CONTAINER
+====================== */
 .center{
-    text-align: center;
-    margin-bottom: 20px;
+    text-align:center;
+    margin-bottom:20px;
 }
 
 .isiInput{
-    border: 2px solid #1E40AF;
-    border-radius: 10px;
-    padding: 25px 20px;
-    width: 600px;
-    max-width: 95%;
-    margin: 0 auto 30px auto;
-    text-align: center;
-    background-color: #f8fafc;
+    border:1px solid;
+    border-radius:10px;
+    padding:25px 20px;
+    width:600px;
+    max-width:95%;
+    margin:0 auto 30px auto;
+    text-align:center;
 }
 
+/* ======================
+   FORM
+====================== */
 label{
-    display: block;
-    text-align: left;
-    margin-top: 10px;
-    font-weight: bold;
+    display:block;
+    text-align:left;
+    margin-top:10px;
+    font-weight:bold;
 }
 
-input[type="text"], select{
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    border: 1px solid #1E40AF;
-    border-radius: 6px;
-    font-size: 16px;
+input[type="text"],
+select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    margin-bottom:15px;
+    border:1px solid;
+    border-radius:6px;
+    font-size:16px;
 }
 
 button{
-    padding: 12px 20px;
-    font-weight: bold;
-    font-size: 16px;
-    border: none;
-    border-radius: 6px;
-    background-color: #1E40AF;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.2s;
+    padding:12px 20px;
+    font-weight:bold;
+    font-size:16px;
+    border-radius:6px;
+    border:1px solid;
+    cursor:pointer;
 }
 
-button:hover{
-    background-color: #1E3A8A;
+/* ======================
+   LIGHT THEME
+====================== */
+body.light{
+    background:#f4f6f8;
+    color:#000;
 }
 
-@media (max-width: 650px){
-    h2{ font-size: 24px; }
-    #pembukaanteks{ font-size: 18px; }
+body.light h2,
+body.light #pembukaanteks{
+    color:#2c3e50;
+}
+
+body.light .isiInput{
+    background:#ffffff;
+    border-color:#d1d5db;
+}
+
+body.light input,
+body.light select{
+    background:#ffffff;
+    color:#000;
+    border-color:#d1d5db;
+}
+
+body.light button{
+    background:#2c3e50;
+    color:white;
+    border-color:#2c3e50;
+}
+
+body.light button:hover{
+    background:#1f2d3a;
+}
+
+/* ======================
+   DARK THEME
+====================== */
+body.dark{
+    background:#1e1e1e;
+    color:#eee;
+}
+
+body.dark h2,
+body.dark #pembukaanteks{
+    color:#ffffff;
+}
+
+body.dark .isiInput{
+    background:#2a2a2a;
+    border-color:#444;
+}
+
+body.dark input,
+body.dark select{
+    background:#1e1e1e;
+    color:#eee;
+    border-color:#555;
+}
+
+body.dark button{
+    background:#3a3a3a;
+    color:white;
+    border-color:#555;
+}
+
+body.dark button:hover{
+    background:#555;
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media(max-width:650px){
+    h2{ font-size:24px; }
+    #pembukaanteks{ font-size:18px; }
     input, select, button{
-        font-size: 14px;
-        padding: 8px;
+        font-size:14px;
+        padding:8px;
     }
 }
 </style>

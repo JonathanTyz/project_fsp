@@ -8,6 +8,9 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+/* ambil theme dari session */
+$themeClass = $_SESSION['theme'] ?? 'light';
+
 if (isset($_POST['idgrup'])) {
     $idgrup = (int)$_POST['idgrup'];
 } elseif (isset($_GET['idgrup'])) {
@@ -19,11 +22,14 @@ $username = $_SESSION['user']['username'];
 $threadObj = new Thread();
 $threads = $threadObj->getThreads($idgrup);
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Thread Grup</title>
+
+    <!-- THEME -->
+    <link rel="stylesheet" href="../css/theme.css">
+
     <style>
         body {
             font-family: 'Times New Roman', serif;
@@ -61,6 +67,7 @@ $threads = $threadObj->getThreads($idgrup);
             color: white;
             border: none;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .button-disabled {
@@ -88,6 +95,49 @@ $threads = $threadObj->getThreads($idgrup);
             text-decoration: none;
         }
 
+        /* =====================
+           DARK MODE
+        ===================== */
+        body.dark {
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+
+        body.dark h2 {
+            color: #ffffff;
+        }
+
+        body.dark table {
+            background-color: #1e1e1e;
+        }
+
+        body.dark th {
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+
+        body.dark td {
+            border-color: #444;
+            color: #eeeeee;
+        }
+
+        body.dark .button {
+            background-color: #3a3a3a;
+        }
+
+        body.dark .button:hover {
+            background-color: #555;
+        }
+
+        body.dark .button-disabled {
+            background-color: #555;
+            color: #999;
+        }
+
+        body.dark .kembali {
+            background-color: #444;
+        }
+
         @media (max-width: 500px) {
 
             table, thead, tbody, tr, th, td {
@@ -110,6 +160,11 @@ $threads = $threadObj->getThreads($idgrup);
                 padding: 10px;
             }
 
+            body.dark tr {
+                background-color: #1e1e1e;
+                border-color: #555;
+            }
+
             td {
                 border: none;
                 text-align: left;
@@ -123,6 +178,10 @@ $threads = $threadObj->getThreads($idgrup);
                 margin-bottom: 3px;
             }
 
+            body.dark td::before {
+                color: #cccccc;
+            }
+
             .button,
             .button-disabled {
                 width: 100%;
@@ -131,7 +190,8 @@ $threads = $threadObj->getThreads($idgrup);
         }
     </style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <div class="container-kembali">
     <a href="mahasiswa_daftar_group_join.php" class="kembali">← Kembali</a>
@@ -151,50 +211,50 @@ $threads = $threadObj->getThreads($idgrup);
         <th>Pembuat</th>
         <th>Tanggal</th>
         <th>Status</th>
-        <th colspan = '3'>Aksi</th>
+        <th colspan="3">Aksi</th>
     </tr>
 
-    <?php while ($row = $threads->fetch_assoc()) { $isOwner = ($row['username_pembuat'] == $username); ?>
+    <?php while ($row = $threads->fetch_assoc()) { 
+        $isOwner = ($row['username_pembuat'] == $username); ?>
         <tr>
             <td><?= $row['username_pembuat']; ?></td>
             <td><?= $row['tanggal_pembuatan']; ?></td>
             <td><?= $row['status']; ?></td>
-            <td>
 
-                <form action="mahasiswa_view_chat.php" method="post" style="display:inline-block;">
+            <td>
+                <form action="mahasiswa_view_chat.php" method="post">
                     <input type="hidden" name="idthread" value="<?= $row['idthread']; ?>">
-                    <input type = "hidden" name = "idgrup" value = "<?= $idgrup ?>">
+                    <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
                     <button class="button" type="submit">View Chat</button>
                 </form>
             </td>
 
             <td>
             <?php if ($isOwner) { ?>
-                <form action="mahasiswa_delete_thread.php" method="post" style="display:inline-block;">
+                <form action="mahasiswa_delete_thread.php" method="post">
                     <input type="hidden" name="idthread" value="<?= $row['idthread']; ?>">
                     <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
                     <button class="button" type="submit">Delete</button>
                 </form>
             <?php } else { ?>
-                <button class="button-disabled" disabled title="Hanya pembuat thread">Delete</button>
+                <button class="button-disabled" disabled>Delete</button>
             <?php } ?>
             </td>
 
             <td>
             <?php if ($isOwner) { ?>
-            <form action="mahasiswa_edit_thread.php" method="post" style="display:inline-block;">
-                <input type="hidden" name="idthread" value="<?= $row['idthread']; ?>">
-                <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
-                <input type="hidden" name="status" value="<?= $row['status'] ?>">
-                <button class="button" type="submit">Edit</button>
-            </form>
-             <?php } else { ?>
-                <button class="button-disabled" disabled title="Hanya pembuat thread">Edit</button>
+                <form action="mahasiswa_edit_thread.php" method="post">
+                    <input type="hidden" name="idthread" value="<?= $row['idthread']; ?>">
+                    <input type="hidden" name="idgrup" value="<?= $idgrup ?>">
+                    <input type="hidden" name="status" value="<?= $row['status'] ?>">
+                    <button class="button" type="submit">Edit</button>
+                </form>
+            <?php } else { ?>
+                <button class="button-disabled" disabled>Edit</button>
             <?php } ?>
             </td>
         </tr>
     <?php } ?>
-
 </table>
 
 </body>

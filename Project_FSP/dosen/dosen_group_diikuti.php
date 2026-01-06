@@ -28,139 +28,224 @@ $result_grup = $group->getAllGroupByMember(
 
     <!-- THEME -->
     <link rel="stylesheet" href="../css/theme.css">
+<style>
+/* ======================
+   BASE
+====================== */
+body{
+    font-family:'Times New Roman', Times, serif;
+    margin:0;
+    padding:20px;
+}
 
-    <style>
-        body{
-            font-family: 'Times New Roman', Times, serif;
-            margin: 0;
-        }
+h2{
+    text-align:center;
+    margin:30px 0 15px;
+    font-size:34px;
+}
 
-        h2{
-            text-align: center;
-            margin: 25px 0 10px;
-            font-size: 32px;
-        }
+/* ======================
+   BACK BUTTON
+====================== */
+.container-kembali{
+    width:90%;
+    margin:auto;
+}
 
-        .container-kembali{
-            width: 90%;
-            margin: auto;
-        }
+.kembali{
+    display:inline-block;
+    padding:8px 14px;
+    font-weight:bold;
+    text-decoration:none;
+    border-radius:6px;
+    border:1px solid;
+}
 
-        /* ===== KEMBALI (btn-publik) ===== */
-        .kembali{
-            display: inline-block;
-            padding: 8px 14px;
-            font-weight: bold;
-            text-decoration: none;
-            background-color: steelblue;
-            color: white;
-        }
+/* ======================
+   TABLE
+====================== */
+table{
+    width:90%;
+    margin:20px auto;
+    border-collapse:collapse;
+    border:2px solid;
+}
 
-        .kembali:hover{
-            opacity: 0.9;
-        }
+th, td{
+    border:1px solid;
+    padding:10px;
+    text-align:center;
+}
 
-        table{
-            width: 90%;
-            margin: 15px auto;
-            border: 5px solid;
-            border-collapse: collapse;
-        }
+th{
+    font-weight:bold;
+}
 
-        th, td{
-            border: 1px solid;
-            padding: 10px;
-            text-align: center;
-        }
+.kosong{
+    text-align:center;
+    padding:20px;
+}
 
-        /* ===== BUTTON GLOBAL ===== */
-        button{
-            padding: 6px 10px;
-            font-weight: bold;
-            border: none;
-            width: 100%;
-            color: white;
-            cursor: pointer;
-        }
+/* ======================
+   BUTTON
+====================== */
+button{
+    width:100%;
+    padding:8px;
+    font-weight:bold;
+    border-radius:6px;
+    border:1px solid;
+    cursor:pointer;
+}
 
-        button:hover{
-            opacity: 0.9;
-        }
+/* ======================
+   PAGINATION
+====================== */
+.paging{
+    text-align:center;
+    margin:25px;
+}
 
-        /* ===== WARNA BUTTON SESUAI HOME ===== */
-        .btn-event{ background-color: darkslategray; }   /* Kelola */
-        .btn-thread{ background-color: midnightblue; }  /* Diikuti */
-        .btn-member{ background-color: steelblue; }     /* Publik */
-        .btn-keluar{ background-color: darkred; }       /* Logout */
+.paging a,
+.paging b{
+    display:inline-block;
+    margin:4px;
+    padding:6px 12px;
+    font-weight:bold;
+    text-decoration:none;
+    border-radius:6px;
+    border:1px solid;
+}
 
-        /* ===== PAGINATION ===== */
-        .paging{
-            text-align: center;
-            margin: 25px;
-        }
+/* ======================
+   LIGHT THEME
+====================== */
+body.light{
+    background:#f4f6f8;
+    color:#000;
+}
 
-        .paging a{
-            margin: 0 6px;
-            font-weight: bold;
-            text-decoration: none;
-            background-color: midnightblue;
-            color: white;
-            padding: 6px 10px;
-        }
+body.light h2{
+    color:#2c3e50;
+}
 
-        .paging a:hover{
-            opacity: 0.9;
-        }
+body.light .kembali{
+    background:#e5e7eb;
+    color:#000;
+    border-color:#d1d5db;
+}
 
-        .paging b{
-            background-color: darkcyan;
-            color: white;
-            padding: 6px 10px;
-        }
+body.light table{
+    background:#ffffff;
+    border-color:#d1d5db;
+}
 
-        .kosong{
-            text-align: center;
-            padding: 20px;
-        }
+body.light th{
+    background:#e9ecef;
+}
 
-        @media (max-width: 768px){
-            table, thead, tbody, tr, th, td{
-                display: block;
-                width: 100%;
-            }
+body.light button{
+    background:#2c3e50;
+    color:#fff;
+    border-color:#2c3e50;
+}
 
-            table{
-                border: none;
-            }
+body.light .btn-keluar{
+    background:#8b0000;
+    border-color:#8b0000;
+}
 
-            tr{
-                border: 3px solid;
-                margin-bottom: 15px;
-                padding: 10px;
-            }
+body.light .paging a{
+    background:#e5e7eb;
+    color:#000;
+}
 
-            td{
-                border: none;
-                text-align: left;
-                padding: 6px 0;
-            }
+body.light .paging b{
+    background:#2c3e50;
+    color:#fff;
+}
 
-            td::before{
-                font-weight: bold;
-                display: block;
-                margin-bottom: 3px;
-            }
+/* ======================
+   DARK THEME
+====================== */
+body.dark{
+    background:#1e1e1e;
+    color:#eee;
+}
 
-            button{
-                margin-top: 5px;
-            }
+body.dark h2{
+    color:#ffffff;
+}
 
-            .paging a, .paging b{
-                display: inline-block;
-                margin: 6px 4px;
-            }
-        }
-    </style>
+body.dark .kembali{
+    background:#3a3a3a;
+    color:#fff;
+    border-color:#555;
+}
+
+body.dark table{
+    background:#2a2a2a;
+    border-color:#444;
+}
+
+body.dark th{
+    background:#333;
+}
+
+body.dark button{
+    background:#3a3a3a;
+    color:#fff;
+    border-color:#555;
+}
+
+body.dark .btn-keluar{
+    background:#aa2e2e;
+}
+
+body.dark .paging a{
+    background:#3a3a3a;
+    color:#fff;
+}
+
+body.dark .paging b{
+    background:#ffffff;
+    color:#000;
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media (max-width:450px){
+    h2{ font-size:26px; }
+
+    table, thead, tbody, th, tr{
+        display:block;
+    }
+
+    table{
+        border:none;
+    }
+
+    tr{
+        margin-bottom:15px;
+        border:2px solid;
+        padding:10px;
+        border-radius:8px;
+    }
+
+    td{
+        border:none;
+        text-align:left;
+        padding:6px 0;
+    }
+
+    td::before{
+        font-weight:bold;
+        display:block;
+        margin-bottom:3px;
+    }
+}
+</style>
 </head>
 
 <body class="<?= $themeClass ?>">

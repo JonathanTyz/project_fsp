@@ -7,6 +7,9 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+/* ambil theme dari session */
+$themeClass = $_SESSION['theme'] ?? 'light';
+
 if (!isset($_POST['idgrup'])) {
     header("Location: mahasiswa_home.php");
     exit();
@@ -23,6 +26,10 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
 <html>
 <head>
     <title>Member Group</title>
+
+    <!-- theme global -->
+    <link rel="stylesheet" href="../css/theme.css">
+
     <style>
         body {
             font-family: 'Times New Roman', serif;
@@ -87,6 +94,51 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             border-radius: 6px;
         }
 
+        .empty {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* =====================
+           DARK MODE
+        ===================== */
+        body.dark {
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+
+        body.dark h2,
+        body.dark h3 {
+            color: #ffffff;
+        }
+
+        body.dark .informasiGrup,
+        body.dark table {
+            background-color: #1e1e1e;
+        }
+
+        body.dark th {
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+
+        body.dark td {
+            border-color: #444;
+            color: #eeeeee;
+        }
+
+        body.dark .button {
+            background-color: #3a3a3a;
+        }
+
+        body.dark .button:hover {
+            background-color: #555;
+        }
+
+        body.dark .empty {
+            color: #bbbbbb;
+        }
+
         @media (max-width: 768px) {
             table, thead, tbody, tr, th, td {
                 display: block;
@@ -94,7 +146,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             }
 
             thead {
-                display: none; 
+                display: none;
             }
 
             tr {
@@ -103,7 +155,11 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
                 margin-bottom: 15px;
                 padding: 15px;
                 border-radius: 10px;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            }
+
+            body.dark tr {
+                background-color: #1e1e1e;
+                border-color: #555;
             }
 
             td {
@@ -122,6 +178,10 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
                 flex-basis: 40%;
             }
 
+            body.dark td::before {
+                color: #cccccc;
+            }
+
             img {
                 max-width: 80px;
                 height: auto;
@@ -132,7 +192,6 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
                 width: 90%;
                 margin: 10px auto;
                 display: block;
-                text-align: center;
             }
 
             .informasiGrup {
@@ -143,12 +202,13 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
         @media (max-width: 480px) {
             h2 { font-size: 24px; }
             h3 { font-size: 20px; }
-            td { font-size: 14px; flex-direction: column; text-align: left; }
+            td { font-size: 14px; flex-direction: column; align-items: flex-start; }
             td::before { width: 100%; margin-bottom: 4px; }
         }
     </style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <h2>Member Group</h2>
 
@@ -173,6 +233,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
 </div>
 
 <h3>Daftar Dosen</h3>
+
 <table>
     <thead>
         <tr>
@@ -192,7 +253,9 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             echo "<td data-label='Username'>{$row['username']}</td>";
             echo "<td data-label='Nama'>{$row['nama']}</td>";
             echo "<td data-label='NPK'>{$row['npk']}</td>";
-            echo "<td data-label='Foto'><img src='../image_dosen/{$row['npk']}.{$row['foto_extension']}'></td>";
+            echo "<td data-label='Foto'>
+                    <img src='../image_dosen/{$row['npk']}.{$row['foto_extension']}'>
+                  </td>";
             echo "</tr>";
         }
     }

@@ -9,13 +9,14 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+/* ambil theme dari session */
+$themeClass = $_SESSION['theme'] ?? 'light';
+
 if (isset($_POST['idgrup'])) {
     $group_id = $_POST['idgrup'];
-} 
-elseif (isset($_GET['idgrup'])) {
+} elseif (isset($_GET['idgrup'])) {
     $group_id = $_GET['idgrup'];
-} else 
-{
+} else {
     header("Location: mahasiswa_daftar_group_join.php");
     exit();
 }
@@ -28,17 +29,19 @@ if (!$group_detail) {
     exit();
 }
 
-
 $event = new event();
 $group_events = $event->getEventsGroup($group_id);
-
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Detail Group Mahasiswa</title>
+
+    <!-- THEME -->
+    <link rel="stylesheet" href="../css/theme.css">
+
     <style>
-         body {
+        body {
             font-family: 'Times New Roman', serif;
             margin: 0;
             background-color: #f4f6f8;
@@ -66,6 +69,7 @@ $group_events = $event->getEventsGroup($group_id);
             border: none;
             color: white;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .informasiGrup {
@@ -109,6 +113,45 @@ $group_events = $event->getEventsGroup($group_id);
             height: auto;
         }
 
+        /* =====================
+           DARK MODE
+        ===================== */
+        body.dark {
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+
+        body.dark h2,
+        body.dark h3 {
+            color: #ffffff;
+        }
+
+        body.dark .informasiGrup {
+            background-color: #1e1e1e;
+        }
+
+        body.dark table {
+            background-color: #1e1e1e;
+        }
+
+        body.dark th {
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+
+        body.dark td {
+            border-color: #444;
+            color: #eeeeee;
+        }
+
+        body.dark .button {
+            background-color: #3a3a3a;
+        }
+
+        body.dark .button:hover {
+            background-color: #555;
+        }
+
         @media (max-width: 768px) {
 
             table, thead, tbody, tr, th, td {
@@ -131,6 +174,11 @@ $group_events = $event->getEventsGroup($group_id);
                 padding: 10px;
             }
 
+            body.dark tr {
+                background-color: #1e1e1e;
+                border-color: #555;
+            }
+
             td {
                 border: none;
                 text-align: left;
@@ -144,14 +192,19 @@ $group_events = $event->getEventsGroup($group_id);
                 margin-bottom: 3px;
             }
 
+            body.dark td::before {
+                color: #cccccc;
+            }
+
             .informasiGrup {
                 padding: 20px;
             }
         }
     </style>
-
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
+
 <h2>Detail Event</h2>
 
 <div class="center">
@@ -209,3 +262,6 @@ $group_events = $event->getEventsGroup($group_id);
         <?php } ?>
     </table>
 </div>
+
+</body>
+</html>

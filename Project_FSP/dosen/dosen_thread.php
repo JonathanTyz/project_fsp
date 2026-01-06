@@ -28,113 +28,206 @@ $cekGrup = $grup->checkOwnGroup($username, $idgrup);
 <link rel="stylesheet" href="../css/theme.css">
 
 <style>
-body {
-    font-family: 'Times New Roman', serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f4f6f8;
+body{
+    font-family:'Times New Roman', serif;
+    margin:0;
+    padding:20px;
 }
 
-h2 {
-    text-align: center;
-    color: #2c3e50;
+/* ======================
+   TITLE
+====================== */
+h2{
+    text-align:center;
 }
 
-table {
-    width: 90%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    background-color: #ffffff;
+/* ======================
+   TABLE LAYOUT
+====================== */
+table{
+    width:90%;
+    margin:20px auto;
+    border-collapse:collapse;
 }
 
-th, td {
-    border: 1px solid #d1d5db;
-    padding: 10px;
-    text-align: center;
+th, td{
+    padding:10px;
+    text-align:center;
+    border:1px solid;
 }
 
-th {
-    background-color: #e5e7eb;
-    font-weight: bold;
+/* ======================
+   BUTTON BASE
+====================== */
+.button,
+.button-disabled{
+    padding:8px 15px;
+    margin:4px;
+    font-weight:bold;
+    border-radius:6px;
+    border:1px solid;
 }
 
-.button {
-    padding: 8px 15px;
-    margin: 4px;
-    border: none;
-    font-weight: bold;
-    border-radius: 6px;
-    background-color: #1E40AF;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.2s;
+.button{
+    cursor:pointer;
 }
 
-.button:hover {
-    background-color: #1E3A8A;
+.button-disabled{
+    cursor:not-allowed;
 }
 
-.button-disabled {
-    padding: 8px 15px;
-    border: none;
-    font-weight: bold;
-    border-radius: 6px;
-    background-color: #9CA3AF;
-    color: #f3f4f6;
-    cursor: not-allowed;
+/* ======================
+   LINK BACK
+====================== */
+.kembali{
+    display:inline-block;
+    padding:8px 14px;
+    font-weight:bold;
+    text-decoration:none;
+    margin-bottom:10px;
 }
 
-.center {
-    text-align: center;
+/* ======================
+   CENTER
+====================== */
+.center{
+    text-align:center;
 }
 
-.kembali {
-    display: inline-block;
-    padding: 8px 14px;
-    font-weight: bold;
-    text-decoration: none;
-    margin-bottom: 10px;
-    color: #1E40AF;
+/* ======================
+   LIGHT THEME
+====================== */
+body.light{
+    background:#f4f6f8;
+    color:#000;
 }
 
-.kembali:hover {
-    text-decoration: underline;
+body.light h2{
+    color:#2c3e50;
 }
 
-@media (max-width: 500px) {
-    table, thead, tbody, tr, th, td {
-        display: block;
-        width: 100%;
+body.light table{
+    background:#ffffff;
+}
+
+body.light th{
+    background:#e5e7eb;
+}
+
+body.light td{
+    background:#ffffff;
+}
+
+body.light .button{
+    background:#2c3e50;
+    color:white;
+    border-color:#2c3e50;
+}
+
+body.light .button:hover{
+    background:#1f2d3a;
+}
+
+body.light .button-disabled{
+    background:#9ca3af;
+    color:#f3f4f6;
+    border-color:#9ca3af;
+}
+
+body.light .kembali{
+    color:#2c3e50;
+}
+
+/* ======================
+   DARK THEME
+====================== */
+body.dark{
+    background:#1e1e1e;
+    color:#eee;
+}
+
+body.dark h2{
+    color:white;
+}
+
+body.dark table{
+    background:#2a2a2a;
+}
+
+body.dark th{
+    background:#333;
+}
+
+body.dark td{
+    background:#2a2a2a;
+}
+
+body.dark .button{
+    background:#3a3a3a;
+    color:white;
+    border-color:#555;
+}
+
+body.dark .button:hover{
+    background:#555;
+}
+
+body.dark .button-disabled{
+    background:#555;
+    color:#aaa;
+    border-color:#555;
+}
+
+body.dark .kembali{
+    color:#ddd;
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media(max-width:500px){
+    table, thead, tbody, tr, th, td{
+        display:block;
+        width:100%;
     }
 
-    thead { display: none; }
+    thead{ display:none; }
 
-    tr {
-        border: 2px solid #d1d5db;
-        margin-bottom: 15px;
-        padding: 10px;
-        border-radius: 8px;
-        background: #ffffff;
+    tr{
+        margin-bottom:15px;
+        padding:10px;
+        border-radius:8px;
     }
 
-    td {
-        border: none;
-        text-align: left;
-        padding: 6px 0;
+    body.light tr{
+        background:#ffffff;
+        border:1px solid #d1d5db;
     }
 
-    td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        display: inline-block;
-        width: 40%;
+    body.dark tr{
+        background:#2a2a2a;
+        border:1px solid #444;
     }
 
-    .button, .button-disabled {
-        width: 100%;
-        margin-top: 5px;
+    td{
+        border:none;
+        text-align:left;
+    }
+
+    td::before{
+        content:attr(data-label);
+        font-weight:bold;
+        display:block;
+        margin-bottom:4px;
+    }
+
+    .button,
+    .button-disabled{
+        width:100%;
+        margin-top:6px;
     }
 }
+
 </style>
 </head>
 

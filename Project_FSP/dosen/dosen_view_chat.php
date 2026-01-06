@@ -9,6 +9,9 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+/* ambil theme dari session */
+$themeClass = $_SESSION['theme'] ?? 'light';
+
 $idthread = (int)$_POST['idthread'];
 $idgrup   = (int)$_POST['idgrup'];
 
@@ -22,11 +25,9 @@ $cekGrup = $grup->checkOwnGroup($username, $idgrup);
 if (!$thread) die("Thread tidak ditemukan");
 ?>
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-<meta charset="UTF-8">
 <title>Chat Thread</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="../css/theme.css">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -34,47 +35,39 @@ if (!$thread) die("Thread tidak ditemukan");
 <style>
 body{
     font-family: Arial, sans-serif;
+    background:#eef1f5;
     margin:0;
     padding:20px;
-    background-color: #f4f6f8;
 }
 
 .container{
     max-width:700px;
     margin:auto;
-    padding:20px;
-    border-radius:8px;
     background:white;
-    border:1px solid #ccc;
+    padding:20px;
+    border-radius:6px;
 }
 
-.kembali{
-    display:inline-block;
-    margin-bottom:10px;
-    font-weight:bold;
+a{
     text-decoration:none;
-    color:#1E40AF;
+    color:#3498db;
+    font-weight:bold;
 }
 
-.kembali:hover{
-    text-decoration:underline;
-}
-
-h3{ margin-bottom:5px; color:#2c3e50; }
+h3{ margin-bottom:5px; }
 
 .status{ margin-bottom:15px; }
 
 .chat-box{ 
-    min-height: 60vh;
-    max-height: 70vh;  
+    min-height:60vh;
+    max-height:70vh;
     display:flex;
     flex-direction:column;
     overflow-y:auto;
-    border:1px solid #ccc;
+    background:#f9f9f9;
+    border:1px solid #ddd;
     padding:10px;
     margin-bottom:10px;
-    border-radius:6px;
-    background-color: #f9fafb;
 }
 
 .chat{
@@ -86,65 +79,79 @@ h3{ margin-bottom:5px; color:#2c3e50; }
 }
 
 .chat-mine{
+    background:#dcf8c6;
     align-self:flex-end;
-    background-color: #1E40AF;
-    color:white;
 }
 
 .chat-other{
+    background:#ffffff;
     align-self:flex-start;
-    background-color: #e5e7eb;
-    color:#111;
 }
 
 .name{
     font-weight:bold;
     font-size:13px;
     margin-bottom:2px;
+    color:#2c3e50;
 }
 
 .time{
     font-size:11px;
+    color:#888;
     text-align:right;
     margin-top:4px;
-    color:#555;
 }
 
 textarea{
     width:100%;
     height:70px;
     padding:8px;
-    margin-bottom:8px;
-    border-radius:6px;
     border:1px solid #ccc;
-    resize:none;
+    margin-bottom:8px;
 }
 
 button{
     padding:10px 16px;
+    background:#3498db;
+    color:white;
     border:none;
     width:100%;
-    font-weight:bold;
-    border-radius:6px;
-    color:white;
-    background-color:#1E40AF;
     cursor:pointer;
-    transition: background-color 0.2s;
 }
 
-button:hover{
-    background-color:#1E3A8A;
-}
+button:hover{ background:#2980b9; }
 
 .closed{
+    color:red;
     font-weight:bold;
     margin-bottom:10px;
-    color:red;
 }
 
-@media (max-width: 500px){
+/* ===== DARK MODE (SAMA DENGAN MAHASISWA) ===== */
+body.dark{
+    background:#121212;
+    color:#f1f1f1;
+}
+
+body.dark .container{ background:#1e1e1e; }
+body.dark a{ color:#7abaff; }
+body.dark .chat-box{ background:#181818; border-color:#444; }
+body.dark .chat-mine{ background:#2e7d32; color:#fff; }
+body.dark .chat-other{ background:#2a2a2a; color:#eee; }
+body.dark .name{ color:#ffffff; }
+body.dark .time{ color:#bbb; }
+body.dark textarea{
+    background:#2a2a2a;
+    color:#fff;
+    border:1px solid #555;
+}
+body.dark button{ background:#3a3a3a; }
+body.dark button:hover{ background:#555; }
+body.dark .closed{ color:#ff6b6b; }
+
+@media (max-width:768px){
     body{ padding:10px; }
-    .container{ padding:15px; }
+    .container{ padding:15px; width:95%; }
     .chat{ max-width:100%; font-size:13px; }
     textarea{ height:60px; }
 }
@@ -154,19 +161,17 @@ button:hover{
 <body class="<?= $themeClass ?>">
 
 <?php if ($cekGrup) { ?>
-    <a href="dosen_kelola_group.php" class="kembali">← Kembali</a>
+    <a href="dosen_kelola_group.php">← Kembali</a>
 <?php } else { ?>
-    <a href="dosen_group_diikuti.php" class="kembali">← Kembali</a>
+    <a href="dosen_group_diikuti.php">← Kembali</a>
 <?php } ?>
 
 <div class="container">
 
-    <a href="dosen_thread.php?idgrup=<?= $idgrup ?>" class="kembali">
-        ← Kembali ke Thread
-    </a>
+    <a href="dosen_thread.php?idgrup=<?= $idgrup ?>">← Kembali ke Thread</a>
 
     <h3>Thread oleh <?= htmlspecialchars($thread['username_pembuat']) ?></h3>
-    <p class="status">Status: <b><?= $thread['status'] ?></b></p>
+    <p class="status">Status: <b><?= htmlspecialchars($thread['status']) ?></b></p>
 
     <?php if ($thread['status'] === 'Close') { ?>
         <p class="closed">Thread sudah ditutup</p>

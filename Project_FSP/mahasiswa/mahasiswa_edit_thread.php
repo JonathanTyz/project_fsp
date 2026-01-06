@@ -12,11 +12,13 @@ $idgrup = isset($_POST['idgrup']) ? (int)$_POST['idgrup'] : 0;
 $statusSebelum = $_POST['status'];
 $idthread = $_POST['idthread'];
 
+/* ambil theme dari session */
+$themeClass = $_SESSION['theme'] ?? 'light';
+
 if (isset($_POST['btnSubmit'])) {
     $status = $_POST['status']; 
 
     $thread = new Thread();
-
     $result = $thread->editThread($idthread, $username, $status);
 
     if ($result) {
@@ -27,25 +29,31 @@ if (isset($_POST['btnSubmit'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ubah Thread </title>
+    <title>Ubah Thread</title>
+
+    <!-- THEME -->
+    <link rel="stylesheet" href="../css/theme.css">
+
     <style>
         body {
             font-family: 'Times New Roman', serif;
-            background-color: #f4f6f8;
             margin: 0;
             padding: 20px;
         }
 
         .container {
-            background: white;
+            background: #ffffff;
             padding: 30px;
             width: 420px;
             max-width: 95%;
             margin: 60px auto;
+        }
+
+        body.dark .container{
+            background: #2a2a2a;
         }
 
         h2 {
@@ -54,8 +62,17 @@ if (isset($_POST['btnSubmit'])) {
             margin-bottom: 20px;
         }
 
+        body.dark h2{
+            color: #ffffff;
+        }
+
         p {
             margin-bottom: 15px;
+            color: #333;
+        }
+
+        body.dark p{
+            color: #eee;
         }
 
         label {
@@ -75,6 +92,7 @@ if (isset($_POST['btnSubmit'])) {
             border: none;
             font-weight: bold;
             width: 100%;
+            cursor: pointer;
         }
 
         .button-secondary {
@@ -85,6 +103,7 @@ if (isset($_POST['btnSubmit'])) {
             font-weight: bold;
             width: 100%;
             margin-top: 10px;
+            cursor: pointer;
         }
 
         .center {
@@ -98,8 +117,13 @@ if (isset($_POST['btnSubmit'])) {
             margin-bottom: 20px;
         }
 
-        @media (max-width: 500px) {
+        body.dark .status-lama{
+            background: #333;
+            border-left-color: #888;
+            color: #eee;
+        }
 
+        @media (max-width: 500px) {
             body {
                 padding: 10px;
             }
@@ -115,31 +139,34 @@ if (isset($_POST['btnSubmit'])) {
         }
     </style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <div class="container">
     <h2>Edit Thread</h2>
     <p>Status lama: <?php echo $statusSebelum ?></p>
+
     <form method="post" action="">
         <input type="hidden" name="idgrup" value="<?= $idgrup; ?>">
         <input type="hidden" name="idthread" value="<?= $idthread; ?>">
+
         <p>
-            <label>Ubah Status Thread:</label><br>
-            <br>
+            <label>Ubah Status Thread:</label><br><br>
             <select name="status" required>
                 <option value="Open" selected>Open</option>
                 <option value="Close">Close</option>
             </select>
         </p>
+
         <p class="center">
-            <input type = "hidden" name = "idgrup" value = "<?php echo $idgrup;?>">
+            <input type="hidden" name="idgrup" value="<?= $idgrup; ?>">
             <button type="submit" name="btnSubmit" class="button">Edit Thread</button>
         </p>
     </form>
 
     <form class="center" action="mahasiswa_thread.php" method="post">
         <input type="hidden" name="idgrup" value="<?= $idgrup; ?>">
-        <button type="submit" class="button">Kembali</button>
+        <button type="submit" class="button-secondary">Kembali</button>
     </form>
 </div>
 

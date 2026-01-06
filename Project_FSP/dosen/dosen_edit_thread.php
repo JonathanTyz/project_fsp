@@ -35,90 +35,176 @@ if (isset($_POST['btnSubmit'])) {
 
     <!-- THEME -->
     <link rel="stylesheet" href="../css/theme.css">
+<style>
+/* ======================
+   BASE
+====================== */
+body{
+    font-family:'Times New Roman', serif;
+    margin:0;
+    padding:20px;
+}
 
-    <style>
-        body{
-            font-family: 'Times New Roman', serif;
-            margin: 0;
-            padding: 20px;
-        }
+/* ======================
+   CONTAINER
+====================== */
+.container{
+    padding:30px;
+    width:420px;
+    max-width:95%;
+    margin:60px auto;
+    border:2px solid;
+    border-radius:8px;
+}
 
-        .container{
-            padding: 30px;
-            width: 420px;
-            max-width: 95%;
-            margin: 60px auto;
-            border: 4px solid;
-        }
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
 
-        h2{
-            text-align: center;
-            margin-bottom: 20px;
-        }
+/* ======================
+   FORM
+====================== */
+label{
+    font-weight:bold;
+}
 
-        label{
-            font-weight: bold;
-        }
+select{
+    width:100%;
+    padding:10px;
+    margin-top:8px;
+    border-radius:6px;
+    border:1px solid;
+}
 
-        select{
-            width: 100%;
-            padding: 10px;
-            margin-top: 8px;
-        }
+/* ======================
+   STATUS LAMA
+====================== */
+.status-lama{
+    padding:10px;
+    margin-bottom:20px;
+    border-left:6px solid;
+    border-radius:6px;
+}
 
-        /* ===== STATUS LAMA ===== */
-        .status-lama{
-            padding: 10px;
-            margin-bottom: 20px;
-            border-left: 6px solid steelblue;
-            background-color: rgba(70,130,180,0.1);
-        }
+/* ======================
+   BUTTON
+====================== */
+button{
+    width:100%;
+    padding:10px;
+    font-weight:bold;
+    border-radius:6px;
+    border:1px solid;
+    cursor:pointer;
+    margin-top:10px;
+}
 
-        /* ===== BUTTON GLOBAL ===== */
-        button{
-            padding: 10px;
-            font-weight: bold;
-            width: 100%;
-            border: none;
-            cursor: pointer;
-            color: white;
-            margin-top: 10px;
-        }
+/* ======================
+   ERROR
+====================== */
+.error{
+    text-align:center;
+    font-weight:bold;
+    margin-bottom:10px;
+}
 
-        button:hover{
-            opacity: 0.9;
-        }
+/* ======================
+   LIGHT THEME
+====================== */
+body.light{
+    background:#f4f6f8;
+    color:#000;
+}
 
-        /* ===== WARNA SESUAI HOME ===== */
-        .btn-simpan{
-            background-color: darkslategray; /* Kelola Group */
-        }
+body.light .container{
+    background:#ffffff;
+    border-color:#d1d5db;
+}
 
-        .btn-kembali{
-            background-color: steelblue; /* Group Publik */
-        }
+body.light select{
+    background:#ffffff;
+    color:#000;
+    border-color:#d1d5db;
+}
 
-        .error{
-            color: red;
-            text-align: center;
-            font-weight: bold;
-        }
+body.light .status-lama{
+    background:#f1f5f9;
+    border-color:#2c3e50;
+}
 
-        @media (max-width: 500px){
-            body{
-                padding: 10px;
-            }
+body.light button{
+    background:#2c3e50;
+    color:#fff;
+    border-color:#2c3e50;
+}
 
-            .container{
-                margin: 30px auto;
-                padding: 20px;
-            }
+body.light .btn-kembali{
+    background:#e5e7eb;
+    color:#000;
+    border-color:#d1d5db;
+}
 
-            h2{
-                font-size: 24px;
-            }
-        }
-    </style>
+body.light .error{
+    color:#b91c1c;
+}
+
+/* ======================
+   DARK THEME
+====================== */
+body.dark{
+    background:#1e1e1e;
+    color:#eee;
+}
+
+body.dark .container{
+    background:#2a2a2a;
+    border-color:#444;
+}
+
+body.dark select{
+    background:#1e1e1e;
+    color:#eee;
+    border-color:#555;
+}
+
+body.dark .status-lama{
+    background:#333;
+    border-color:#ffffff;
+}
+
+body.dark button{
+    background:#3a3a3a;
+    color:#fff;
+    border-color:#555;
+}
+
+body.dark .btn-kembali{
+    background:#1e1e1e;
+}
+
+body.dark .error{
+    color:#f87171;
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media (max-width:500px){
+    body{
+        padding:10px;
+    }
+
+    .container{
+        margin:30px auto;
+        padding:20px;
+    }
+
+    h2{
+        font-size:24px;
+    }
+}
+</style>
 </head>
 
 <body class="<?= $themeClass ?>">

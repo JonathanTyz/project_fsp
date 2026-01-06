@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
 }
 
 if (!isset($_POST['idgrup'])) {
-    header("Location: mahasiswa_home.php");
+    header("Location: dosen_home.php");
     exit();
 }
 
@@ -23,8 +23,9 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
 <html>
 <head>
     <title>Member Group</title>
+
     <style>
-       body {
+        body {
             font-family: 'Times New Roman', serif;
             margin: 0;
             background-color: #f4f6f8;
@@ -43,20 +44,21 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             margin-top: 15px;
         }
 
-        /* Tombol konsisten dengan warna biru home */
+        /* BUTTON SAMA DENGAN MAHASISWA */
         .button {
             padding: 10px 18px;
-            background-color: #1E40AF; /* biru */
+            background-color: #1E40AF;
             border: none;
             color: white;
             font-weight: bold;
             border-radius: 6px;
             margin: 5px;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s ease;
         }
+
         .button:hover {
-            background-color: #1E3A8A; /* lebih gelap saat hover */
+            background-color: #1E3A8A;
         }
 
         .informasiGrup {
@@ -73,14 +75,13 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             width: 90%;
             margin: 20px auto;
             background: white;
-            text-align: left;
             border-collapse: collapse;
+            text-align: center;
         }
 
         th, td {
             border: 1px solid #ccc;
             padding: 10px;
-            text-align: center;
         }
 
         th {
@@ -89,7 +90,7 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
         }
 
         img {
-            max-width: 100%;
+            max-width: 100px;
             height: auto;
             border-radius: 6px;
         }
@@ -113,7 +114,6 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             td {
                 border: none;
                 padding: 6px 0;
-                text-align: left;
                 display: flex;
                 align-items: center;
             }
@@ -125,17 +125,10 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
                 flex-basis: 40%;
             }
 
-            img {
-                max-width: 80px;
-                height: auto;
-                margin-bottom: 10px;
-            }
-
             .button {
                 width: 90%;
                 margin: 10px auto;
                 display: block;
-                text-align: center;
             }
 
             .informasiGrup {
@@ -146,22 +139,31 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
         @media (max-width: 480px) {
             h2 { font-size: 24px; }
             h3 { font-size: 20px; }
-            td { font-size: 14px; flex-direction: column; text-align: left; }
-            td::before { width: 100%; margin-bottom: 4px; }
+
+            td {
+                font-size: 14px;
+                flex-direction: column;
+                text-align: left;
+            }
+
+            td::before {
+                width: 100%;
+                margin-bottom: 4px;
+            }
         }
     </style>
 </head>
-<body>
+<body class="<?= $themeClass ?>">
 
 <h2>Member Group</h2>
 
 <div class="center">
-    <form action="mahasiswa_home.php" method="post">
-        <button class="button" type="submit">Kembali ke Home</button>
+    <form action="dosen_home.php" method="post">
+        <button class="button">Kembali ke Home</button>
     </form>
-    <br>
-    <form action="mahasiswa_group_diikuti.php" method="post">
-        <button class="button" type="submit">Kembali ke Daftar Group</button>
+
+    <form action="dosen_kelola_group.php" method="post">
+        <button class="button">Kembali ke Daftar Group</button>
     </form>
 </div>
 
@@ -186,22 +188,25 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
         <th>Angkatan</th>
         <th>Foto</th>
     </tr>
-    <?php
-    if ($result_mahasiswa->num_rows == 0) {
-        echo "<tr><td colspan='6' class='empty'>Tidak ada mahasiswa</td></tr>";
-    } else {
-        while ($row = $result_mahasiswa->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td data-label='Username'>" . htmlspecialchars($row['username']) . "</td>";
-            echo "<td data-label='Nama'>" . htmlspecialchars($row['nama']) . "</td>";
-            echo "<td data-label='NRP'>" . htmlspecialchars($row['nrp']) . "</td>";
-            echo "<td data-label='Gender'>" . htmlspecialchars($row['gender']) . "</td>";
-            echo "<td data-label='Angkatan'>" . htmlspecialchars($row['angkatan']) . "</td>";
-            echo "<td data-label='Foto'><img src='../image_mahasiswa/" . $row['nrp'] . "." . $row['foto_extention'] . "' alt='Foto'></td>";
-            echo "</tr>";
-        }
+
+<?php
+if ($result_mahasiswa->num_rows == 0) {
+    echo "<tr><td colspan='6'>Tidak ada mahasiswa</td></tr>";
+} else {
+    while ($row = $result_mahasiswa->fetch_assoc()) {
+        echo "<tr>
+            <td data-label='Username'>{$row['username']}</td>
+            <td data-label='Nama'>{$row['nama']}</td>
+            <td data-label='NRP'>{$row['nrp']}</td>
+            <td data-label='Gender'>{$row['gender']}</td>
+            <td data-label='Angkatan'>{$row['angkatan']}</td>
+            <td data-label='Foto'>
+                <img src='../image_mahasiswa/{$row['nrp']}.{$row['foto_extention']}'>
+            </td>
+        </tr>";
     }
-    ?>
+}
+?>
 </table>
 
 </body>

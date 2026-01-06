@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../class/group.php';
+require_once '../css/theme_session.php';
 
 /* =====================
    CEK LOGIN
@@ -30,149 +31,129 @@ $detail = $group->getDetailGroup($idgrup);
 $result_dosen = $group->getGroupMembersDosen($idgrup);
 $dosen_search = $group->getDosenNotInGroup($idgrup, $_SESSION['user']['username']);
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Member Dosen Group</title>
+<meta charset="UTF-8">
+<title>Member Dosen Group</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- THEME SESSION -->
-    <?php require_once '../css/theme_session.php'; ?>
+<link rel="stylesheet" href="../css/theme.css">
 
-    <style>
-        /* ===== LAYOUT ===== */
-        body {
-            font-family: 'Times New Roman', serif;
-            margin: 0;
-        }
+<style>
+body{
+    font-family: 'Times New Roman', serif;
+    margin: 0;
+}
 
-        h2, h3 {
-            text-align: center;
-        }
+h2{
+    text-align: center;
+    margin-top: 30px;
+    font-size: 36px;
+}
 
-        h2 { margin-top: 30px; font-size: 36px; }
-        h3 { margin-top: 40px; font-size: 28px; }
+h3{
+    text-align: center;
+    margin-top: 40px;
+    font-size: 28px;
+}
 
-        .center {
-            text-align: center;
-            margin-top: 15px;
-        }
+.center{
+    text-align: center;
+    margin-top: 15px;
+}
 
-        .informasiGrup {
-            padding: 25px 30px;
-            width: 450px;
-            max-width: 95%;
-            margin: 30px auto;
-            background-color: #ffffff;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
+/* BUTTON KONSISTEN */
+.button{
+    padding: 10px 18px;
+    font-weight: bold;
+    border: none;
+    margin: 6px;
+    cursor: pointer;
+}
 
-        table {
-            width: 90%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            text-align: center;
-        }
+/* INFORMASI GROUP */
+.informasiGrup{
+    padding: 25px 30px;
+    width: 450px;
+    max-width: 95%;
+    margin: 30px auto;
+    border: 4px solid;
+}
 
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-        }
+/* TABLE */
+table{
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    border: 4px solid;
+}
 
-        th {
-            background-color: #f3f4f6;
-        }
+th, td{
+    border: 1px solid;
+    padding: 10px;
+    text-align: center;
+}
 
-        img {
-            max-width: 100px;
-            border-radius: 6px;
-        }
+.empty{
+    text-align: center;
+    font-style: italic;
+}
 
-        .search-box {
-            width: 300px;
-            padding: 6px;
-            margin: 10px auto 20px;
-            display: block;
-        }
+img{
+    max-width: 100px;
+    border-radius: 6px;
+}
 
-        .empty {
-            text-align: center;
-            font-style: italic;
-        }
+/* SEARCH */
+.search-box{
+    width: 300px;
+    padding: 8px;
+    margin: 10px auto 20px;
+    display: block;
+}
 
-        /* ===== BUTTONS SESUAI HOME ===== */
-        .button {
-            padding: 10px 18px;
-            background-color: #1E40AF; /* biru home */
-            border: none;
-            color: #ffffff;
-            font-weight: bold;
-            border-radius: 6px;
-            margin: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
+/* RESPONSIVE */
+@media (max-width: 768px){
+    table, thead, tbody, tr, th, td{
+        display: block;
+        width: 95%;
+    }
 
-        .button:hover {
-            background-color: #1E3A8A; /* lebih gelap saat hover */
-        }
+    thead{ display: none; }
 
-        .button-secondary {
-            padding: 10px 18px;
-            background-color: #374151; /* abu gelap */
-            color: #ffffff;
-            border: none;
-            font-weight: bold;
-            border-radius: 6px;
-            margin: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
+    table{ border: none; }
 
-        .button-secondary:hover {
-            background-color: #1F2937;
-        }
+    tr{
+        border: 3px solid;
+        margin-bottom: 15px;
+        padding: 15px;
+    }
 
-        @media (max-width: 768px) {
-            table, thead, tbody, tr, th, td {
-                display: block;
-                width: 95%;
-            }
+    td{
+        border: none;
+        display: flex;
+        padding: 6px 0;
+    }
 
-            thead { display: none; }
+    td::before{
+        content: attr(data-label);
+        font-weight: bold;
+        flex-basis: 40%;
+    }
 
-            tr {
-                background: white;
-                border: 2px solid #2c3e50;
-                margin-bottom: 15px;
-                padding: 15px;
-                border-radius: 10px;
-            }
+    .button{
+        width: 90%;
+        display: block;
+        margin: 10px auto;
+    }
+}
+</style>
 
-            td {
-                border: none;
-                padding: 6px 0;
-                display: flex;
-            }
-
-            td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                flex-basis: 40%;
-            }
-
-            .button, .button-secondary {
-                width: 90%;
-                display: block;
-                margin: 10px auto;
-            }
-        }
-    </style>
-
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <h2>Member Dosen Group</h2>
 
@@ -184,45 +165,43 @@ $dosen_search = $group->getDosenNotInGroup($idgrup, $_SESSION['user']['username'
     <form action="dosen_kelola_group.php" method="post">
         <button class="button">Kembali ke Daftar Group</button>
     </form>
-
-    <form action="../css/toggle_theme.php" method="post">
-        <button class="button-secondary">Ganti Theme</button>
-    </form>
 </div>
 
 <!-- INFO GROUP -->
 <div class="informasiGrup">
-    <table>
-        <tr><th colspan="2">Informasi Group</th></tr>
-        <tr><td>Nama</td><td><?= $detail['nama']; ?></td></tr>
-        <tr><td>Deskripsi</td><td><?= $detail['deskripsi']; ?></td></tr>
-        <tr><td>Pembuat</td><td><?= $detail['username_pembuat']; ?></td></tr>
-        <tr><td>Tanggal</td><td><?= $detail['tanggal_pembentukan']; ?></td></tr>
-        <tr><td>Jenis</td><td><?= $detail['jenis']; ?></td></tr>
-    </table>
+<table>
+<tr><th colspan="2">Informasi Group</th></tr>
+<tr><td>Nama</td><td><?= htmlspecialchars($detail['nama']) ?></td></tr>
+<tr><td>Deskripsi</td><td><?= htmlspecialchars($detail['deskripsi']) ?></td></tr>
+<tr><td>Pembuat</td><td><?= htmlspecialchars($detail['username_pembuat']) ?></td></tr>
+<tr><td>Tanggal</td><td><?= $detail['tanggal_pembentukan'] ?></td></tr>
+<tr><td>Jenis</td><td><?= $detail['jenis'] ?></td></tr>
+</table>
 </div>
 
-<!-- DAFTAR DOSEN -->
 <h3>Daftar Member Dosen</h3>
 <table>
-    <tr>
-        <th>Username</th>
-        <th>Nama</th>
-        <th>NPK</th>
-        <th>Foto</th>
-        <th>Aksi</th>
-    </tr>
+<tr>
+    <th>Username</th>
+    <th>Nama</th>
+    <th>NPK</th>
+    <th>Foto</th>
+    <th>Aksi</th>
+</tr>
 
 <?php
 if ($result_dosen->num_rows == 0) {
     echo "<tr><td colspan='5' class='empty'>Tidak ada dosen</td></tr>";
 } else {
     while ($row = $result_dosen->fetch_assoc()) {
-        echo "<tr>
+        echo "
+        <tr>
             <td data-label='Username'>{$row['username']}</td>
             <td data-label='Nama'>{$row['nama']}</td>
             <td data-label='NPK'>{$row['npk']}</td>
-            <td data-label='Foto'><img src='../image_dosen/{$row['npk']}.{$row['foto_extension']}'></td>
+            <td data-label='Foto'>
+                <img src='../image_dosen/{$row['npk']}.{$row['foto_extension']}'>
+            </td>
             <td data-label='Aksi'>
                 <form action='dosen_delete_member_proses.php' method='post'>
                     <input type='hidden' name='idgrup' value='{$idgrup}'>
@@ -237,9 +216,7 @@ if ($result_dosen->num_rows == 0) {
 ?>
 </table>
 
-<!-- TAMBAH DOSEN -->
 <h3>Tambah Dosen ke Group</h3>
-
 <input type="text" id="searchDosen" class="search-box"
        placeholder="Cari Username / Nama / NPK">
 
@@ -257,11 +234,14 @@ if ($dosen_search->num_rows == 0) {
     echo "<tr><td colspan='5' class='empty'>Tidak ada data</td></tr>";
 } else {
     while ($d = $dosen_search->fetch_assoc()) {
-        echo "<tr>
+        echo "
+        <tr>
             <td data-label='Username'>{$d['username']}</td>
             <td data-label='Nama'>{$d['nama']}</td>
             <td data-label='NPK'>{$d['npk']}</td>
-            <td data-label='Foto'><img src='../image_dosen/{$d['npk']}.{$d['foto_extension']}'></td>
+            <td data-label='Foto'>
+                <img src='../image_dosen/{$d['npk']}.{$d['foto_extension']}'>
+            </td>
             <td data-label='Aksi'>
                 <form action='dosen_insert_member_proses.php' method='post'>
                     <input type='hidden' name='idgrup' value='{$idgrup}'>

@@ -7,6 +7,9 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+/* ambil theme dari session */
+$themeClass = $_SESSION['theme'] ?? 'light';
+
 $idthread = (int)$_POST['idthread'];
 $idgrup   = (int)$_POST['idgrup'];
 
@@ -15,11 +18,13 @@ $thread = $threadObj->getThread($idthread);
 
 if (!$thread) die("Thread tidak ditemukan");
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
 <title>Chat Thread</title>
+
+<!-- THEME -->
+<link rel="stylesheet" href="../css/theme.css">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 <style>
@@ -108,6 +113,7 @@ button{
     color:white;
     border:none;
     width:100%;
+    cursor:pointer;
 }
 
 button:hover{
@@ -120,6 +126,62 @@ button:hover{
     margin-bottom:10px;
 }
 
+/* =====================
+   DARK MODE
+===================== */
+body.dark{
+    background:#121212;
+    color:#f1f1f1;
+}
+
+body.dark .container{
+    background:#1e1e1e;
+}
+
+body.dark a{
+    color:#7abaff;
+}
+
+body.dark .chat-box{
+    background:#181818;
+    border-color:#444;
+}
+
+body.dark .chat-mine{
+    background:#2e7d32;
+    color:#fff;
+}
+
+body.dark .chat-other{
+    background:#2a2a2a;
+    color:#eee;
+}
+
+body.dark .name{
+    color:#ffffff;
+}
+
+body.dark .time{
+    color:#bbb;
+}
+
+body.dark textarea{
+    background:#2a2a2a;
+    color:#fff;
+    border:1px solid #555;
+}
+
+body.dark button{
+    background:#3a3a3a;
+}
+
+body.dark button:hover{
+    background:#555;
+}
+
+body.dark .closed{
+    color:#ff6b6b;
+}
 
 @media (max-width: 768px){
 
@@ -130,16 +192,11 @@ button:hover{
     .container{
         padding:15px;
         margin:20px auto;
-        width: 95%;
-        height: auto;
+        width:95%;
     }
 
     h3{
         font-size:18px;
-    }
-
-    .chat-box{
-        height:55px; 
     }
 
     .chat{
@@ -149,18 +206,12 @@ button:hover{
 
     textarea{
         height:60px;
-        font-size:14px;
-    }
-
-    button{
-        font-size:14px;
     }
 }
 </style>
-
 </head>
 
-<body>
+<body class="<?= $themeClass ?>">
 
 <div class="container">
 
@@ -169,20 +220,19 @@ button:hover{
     <h3>Thread oleh <?= $thread['username_pembuat'] ?></h3>
     <p class="status">Status: <b><?= $thread['status'] ?></b></p>
 
-    <?php
-    if ($thread['status'] === 'Close') {
-        echo '<p class="closed">Thread sudah ditutup</p>';
-    }
-    ?>
+    <?php if ($thread['status'] === 'Close') { ?>
+        <p class="closed">Thread sudah ditutup</p>
+    <?php } ?>
 
     <div class="chat-box" id="chatBox"></div>
 
     <?php if ($thread['status'] === 'Open') { ?>
-    <textarea id="pesan" placeholder="Tulis pesan..."></textarea>
-    <button id="btnKirim">Kirim</button>
-<?php } ?>
+        <textarea id="pesan" placeholder="Tulis pesan..."></textarea>
+        <button id="btnKirim">Kirim</button>
+    <?php } ?>
 
 </div>
+
 <script>
 const myUsername = "<?= $_SESSION['user']['username'] ?>";
 
@@ -200,8 +250,6 @@ function loadChat(){
                 "</div>"
             );
         });
-
-        // scroll otomatis ke bawah
         $("#chatBox").scrollTop($("#chatBox")[0].scrollHeight);
     }, "json");
 }

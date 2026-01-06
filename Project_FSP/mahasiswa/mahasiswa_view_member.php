@@ -7,6 +7,9 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+/* theme */
+$themeClass = $_SESSION['theme'] ?? 'light';
+
 if (!isset($_POST['idgrup'])) {
     header("Location: mahasiswa_daftar_group_join.php");
     exit();
@@ -23,6 +26,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
 <html>
 <head>
     <title>Member Group</title>
+
     <style>
         body {
             font-family: 'Times New Roman', serif;
@@ -30,18 +34,13 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             background-color: #f4f6f8;
         }
 
-        h2 {
+        h2, h3 {
             text-align: center;
-            margin-top: 30px;
-            font-size: 36px;
             color: #2c3e50;
         }
 
-        h3 {
-            text-align: center;
-            color: #2c3e50;
-            margin-top: 40px;
-        }
+        h2 { margin-top: 30px; font-size: 36px; }
+        h3 { margin-top: 40px; }
 
         .center {
             text-align: center;
@@ -68,6 +67,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             width: 90%;
             margin: 20px auto;
             background: white;
+            border-collapse: collapse;
         }
 
         th, td {
@@ -81,18 +81,56 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             font-weight: bold;
         }
 
-        .informasiGrup table {
-            width: 100%;
-            margin: 0;
-        }
-
         img {
             max-width: 100%;
             height: auto;
         }
 
-        @media (max-width: 768px) {
+        .empty {
+            font-weight: bold;
+        }
 
+        /* =====================
+           DARK MODE
+        ===================== */
+        body.dark {
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+
+        body.dark h2,
+        body.dark h3 {
+            color: #ffffff;
+        }
+
+        body.dark .informasiGrup,
+        body.dark table {
+            background-color: #1e1e1e;
+        }
+
+        body.dark th {
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+
+        body.dark td {
+            border-color: #444;
+            color: #eeeeee;
+        }
+
+        body.dark .button {
+            background-color: #3a3a3a;
+        }
+
+        body.dark .button:hover {
+            background-color: #555;
+        }
+
+        body.dark .empty {
+            color: #bbbbbb;
+        }
+
+        @media (max-width: 768px) {
             table, thead, tbody, tr, th, td {
                 display: block;
                 width: 95%;
@@ -113,6 +151,11 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
                 padding: 10px;
             }
 
+            body.dark tr {
+                background-color: #1e1e1e;
+                border-color: #555;
+            }
+
             td {
                 border: none;
                 text-align: left;
@@ -126,10 +169,14 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
                 margin-bottom: 3px;
             }
 
+            body.dark td::before {
+                color: #cccccc;
+            }
         }
     </style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <h2>Member Group</h2>
 
@@ -142,7 +189,6 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
         <button class="button" type="submit">Kembali ke Daftar Group</button>
     </form>
 </div>
-
 
 <div class="informasiGrup">
     <table>
@@ -176,7 +222,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             echo "<td>{$row['nrp']}</td>";
             echo "<td>{$row['gender']}</td>";
             echo "<td>{$row['angkatan']}</td>";
-            echo "<td> <img src = '../image_mahasiswa/" . $row['nrp'] . "." . $row['foto_extention'] . "' width='100'></td>";
+            echo "<td><img src='../image_mahasiswa/{$row['nrp']}.{$row['foto_extention']}' width='100'></td>";
             echo "</tr>";
         }
     }
@@ -200,7 +246,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             echo "<td>{$row['username']}</td>";
             echo "<td>{$row['nama']}</td>";
             echo "<td>{$row['npk']}</td>";
-            echo "<td> <img src = '../image_dosen/" . $row['npk'] . "." . $row['foto_extension'] . "' width='100'></td>";
+            echo "<td><img src='../image_dosen/{$row['npk']}.{$row['foto_extension']}' width='100'></td>";
             echo "</tr>";
         }
     }

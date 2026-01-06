@@ -44,7 +44,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             margin-top: 15px;
         }
 
-        /* tombol biru konsisten */
+        /* BUTTON SAMA DENGAN MAHASISWA */
         .button {
             padding: 10px 18px;
             border: none;
@@ -96,25 +96,68 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
         }
 
         @media (max-width: 768px) {
-            table, thead, tbody, tr, th, td { display: block; width: 95%; }
+            table, thead, tbody, tr, th, td {
+                display: block;
+                width: 95%;
+            }
+
             thead { display: none; }
-            tr { background: white; border: 2px solid #2c3e50; margin-bottom: 15px; padding: 15px; border-radius: 10px; }
-            td { border: none; padding: 6px 0; text-align: left; display: flex; align-items: center; }
-            td::before { content: attr(data-label); font-weight: bold; color: #2c3e50; flex-basis: 40%; }
-            img { max-width: 80px; margin-bottom: 10px; }
-            .button { width: 90%; margin: 10px auto; display: block; text-align: center; }
-            .informasiGrup { padding: 20px; }
+
+            tr {
+                background: white;
+                border: 2px solid #2c3e50;
+                margin-bottom: 15px;
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            td {
+                border: none;
+                padding: 6px 0;
+                text-align: left;
+                display: flex;
+                align-items: center;
+            }
+
+            td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: #2c3e50;
+                flex-basis: 40%;
+            }
+
+            img {
+                max-width: 80px;
+                margin-bottom: 10px;
+            }
+
+            .button {
+                width: 90%;
+                margin: 10px auto;
+                display: block;
+            }
+
+            .informasiGrup {
+                padding: 20px;
+            }
         }
 
         @media (max-width: 480px) {
             h2 { font-size: 24px; }
             h3 { font-size: 20px; }
-            td { font-size: 14px; flex-direction: column; }
-            td::before { width: 100%; margin-bottom: 4px; }
+            td {
+                font-size: 14px;
+                flex-direction: column;
+            }
+            td::before {
+                width: 100%;
+                margin-bottom: 4px;
+            }
         }
     </style>
 </head>
-<body>
+
+<body class="<?= $themeClass ?>">
 
 <h2>Member Group</h2>
 
@@ -155,12 +198,14 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
         echo "<tr><td colspan='4'>Tidak ada dosen</td></tr>";
     } else {
         while ($row = $result_dosen->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td data-label='Username'>" . htmlspecialchars($row['username']) . "</td>";
-            echo "<td data-label='Nama'>" . htmlspecialchars($row['nama']) . "</td>";
-            echo "<td data-label='NPK'>" . htmlspecialchars($row['npk']) . "</td>";
-            echo "<td data-label='Foto'><img src='../image_dosen/" . $row['npk'] . "." . $row['foto_extension'] . "' alt='Foto'></td>";
-            echo "</tr>";
+            echo "<tr>
+                <td data-label='Username'>".htmlspecialchars($row['username'])."</td>
+                <td data-label='Nama'>".htmlspecialchars($row['nama'])."</td>
+                <td data-label='NPK'>".htmlspecialchars($row['npk'])."</td>
+                <td data-label='Foto'>
+                    <img src='../image_dosen/{$row['npk']}.{$row['foto_extension']}'>
+                </td>
+            </tr>";
         }
     }
     ?>
