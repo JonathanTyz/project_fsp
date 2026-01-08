@@ -185,7 +185,7 @@ $result_grup = $group->getAllMadeGroup(
             }
 
             td{
-                border: none;
+                border: 1px solid black;
                 text-align: left;
                 padding: 6px 0;
                 position: relative;
@@ -262,14 +262,14 @@ $result_grup = $group->getAllMadeGroup(
             echo "<td>
                 <form action='dosen_view_member_mahasiswa.php' method='post'>
                     <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
-                    <button type='submit'>Mahasiswa</button>
+                    <button type='submit'>Tambah Mahasiswa</button>
                 </form>
             </td>";
 
             echo "<td>
                     <form action='dosen_view_member_dosen.php' method='post'>
                         <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
-                        <button type='submit'>Dosen</button>
+                        <button type='submit'>Tambah Dosen</button>
                     </form>
             </td>";
             echo "<td>

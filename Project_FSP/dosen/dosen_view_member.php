@@ -57,7 +57,6 @@ h3{
     padding: 10px 18px;
     font-weight: bold;
     border: none;
-    cursor: pointer;
     margin: 6px;
 }
 
@@ -117,7 +116,6 @@ img{
             }
 
             td {
-                border: none;
                 padding: 6px 0;
                 display: flex;
                 align-items: center;

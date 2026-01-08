@@ -1,11 +1,7 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "fullstack");
-if ($mysqli->connect_error) {
-    die("Koneksi gagal: " . $mysqli->connect_error);
-}
-
 session_start();
 require_once '../css/theme_session.php';
+require_once '../class/mahasiswa.php';
 
 if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
@@ -18,19 +14,8 @@ if (!isset($_GET['nrp'])) {
     exit;
 }
 
-$id = $_GET['nrp'];
-
-$sql = "SELECT m.nrp, m.nama, m.gender, m.tanggal_lahir, m.angkatan, m.foto_extention,
-               a.username, a.password
-        FROM mahasiswa m
-        INNER JOIN akun a ON m.nrp = a.nrp_mahasiswa
-        WHERE m.nrp = ?";
-$stmt = $mysqli->prepare($sql);
-$stmt->bind_param("s", $id);
-$stmt->execute();
-$res = $stmt->get_result();
-$row = $res->fetch_assoc();
-$stmt->close();
+$mahasiswa = new mahasiswa();
+$row = $mahasiswa->getDetailMahasiswa($_GET['nrp']);
 
 if (!$row) {
     echo "<p>Data mahasiswa tidak ditemukan.</p>";
@@ -88,9 +73,7 @@ button{
     text-align:center;
 }
 
-/* ======================
-   LIGHT THEME
-====================== */
+/* Light Theme */
 body.light{
     background:#f4f6f8;
     color:#000;
@@ -110,6 +93,8 @@ body.light button{
 body.light button:hover{
     background:#1f2d3a;
 }
+
+/* Dark Theme */
 
 body.dark{
     background:#1e1e1e;
@@ -138,9 +123,23 @@ body.dark button:hover{
     background:#555;
 }
 
-@media(max-width:500px){
+/* rwd */
+@media (max-width:500px){
+    body{
+        padding:12px;
+    }
+
     .isiInput{
-        width:90%;
+        padding:20px;
+    }
+
+    h2{
+        font-size:20px;
+    }
+
+    button{
+        font-size:15px;
+        padding:11px;
     }
 }
 </style>

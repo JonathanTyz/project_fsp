@@ -78,9 +78,7 @@ if (!isset($_SESSION['user'])) {
         width:500px;
     }
 
-    /* ======================
-       LIGHT THEME
-    ====================== */
+    /* Light Theme */
     body.light{
         background:#f4f6f8;
         color:#000;
@@ -101,9 +99,7 @@ if (!isset($_SESSION['user'])) {
         background:#1f2d3a;
     }
 
-    /* ======================
-       DARK THEME
-    ====================== */
+    /* Dark Theme */
     body.dark{
         background:#1e1e1e;
         color:#eee;
@@ -130,18 +126,30 @@ if (!isset($_SESSION['user'])) {
         background:#555;
     }
 
-    /* ======================
-       RESPONSIVE
-    ====================== */
-    @media(max-width:500px){
-        .isiInput{
-            width:90%;
-        }
-
-        .kembaliForm{
-            width:100%;
-        }
+    /* rwd */
+    @media (max-width:480px){
+    body{
+        padding:12px;
     }
+
+    h2{
+        font-size:22px;
+    }
+
+    #pembukaanteks{
+        font-size:15px;
+    }
+
+    .isiInput{
+        padding:20px;
+    }
+
+    button{
+        font-size:15px;
+        padding:11px;
+    }
+}
+
     </style>
 </head>
 

@@ -159,7 +159,7 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             }
 
             td {
-                border: none;
+                border-color: 1px solid #ccc;
                 padding: 6px 0;
                 text-align: left;
                 display: flex;

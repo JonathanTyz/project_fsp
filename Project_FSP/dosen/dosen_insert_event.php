@@ -79,7 +79,7 @@ input[type="text"],
 input[type="date"],
 textarea,
 select{
-    width:100%;
+    width:95%;
     padding:10px;
     margin-top:5px;
     margin-bottom:15px;

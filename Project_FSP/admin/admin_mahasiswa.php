@@ -37,7 +37,6 @@ if ($mysqli->connect_error) {
         table{
             width:80%;
             margin:20px auto;
-            border-collapse:collapse;
         }
 
         th, td{

@@ -156,14 +156,10 @@ $res = $group->getAllPublicGroups(
             cursor: pointer;
         }
 
-        @media (max-width: 450px){
-
-            h2{
-                font-size: 26px;
-            }
-
-            table, thead, tbody, th, tr{
+        @media (max-width: 768px){
+            table, thead, tbody, tr, th, td{
                 display: block;
+                width: 100%;
             }
 
             table{
@@ -171,37 +167,24 @@ $res = $group->getAllPublicGroups(
             }
 
             tr{
-                margin-bottom: 15px;
+                background: white;
                 border: 3px solid #2c3e50;
+                margin-bottom: 15px;
                 padding: 10px;
-                background: #ffffff;
             }
 
             body.dark tr{
-                background: #2a2a2a;
+                background-color: #1e1e1e;
                 border-color: #555;
             }
 
             td{
-                border: none;
-                text-align: left;
+                text-align: center;
                 padding: 6px 0;
             }
 
-            td::before{
-                font-weight: bold;
-                display: block;
-                margin-bottom: 3px;
-                color: #2c3e50;
-            }
-
-            body.dark td::before{
-                color: #bbb;
-            }
-
-            .paging a{
-                display: inline-block;
-                margin: 6px 4px;
+            button{
+                margin-top: 5px;
             }
         }
     </style>

@@ -157,7 +157,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             }
 
             td {
-                border: none;
+                border-color: 1px solid #ccc;
                 text-align: left;
                 padding: 6px 0;
             }

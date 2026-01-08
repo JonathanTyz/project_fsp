@@ -239,7 +239,7 @@ body.dark .insert-kode button{
 @media (max-width: 768px){
             table, thead, tbody, tr, th, td{
                 display: block;
-                width: 100%;
+                width: 95%;
             }
 
             table{

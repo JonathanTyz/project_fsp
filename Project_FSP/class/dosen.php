@@ -211,5 +211,17 @@
             return "SUCCESS";
         }
 
+        public function getDetailDosen($npk)
+        {
+            $sql = "SELECT d.npk, d.nama, d.foto_extension, a.username
+                    FROM dosen d
+                    LEFT JOIN akun a ON d.npk = a.npk_dosen
+                    WHERE d.npk = ?";
+
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("s", $npk);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        }
     }
 ?>

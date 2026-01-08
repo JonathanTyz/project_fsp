@@ -48,9 +48,7 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             padding: 10px 18px;
             border: none;
             font-weight: bold;
-            border-radius: 6px;
             margin: 5px;
-            transition: background-color 0.2s ease;
         }
 
         .button:hover {
@@ -63,7 +61,6 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             width: 450px;
             max-width: 95%;
             margin: 30px auto;
-            border-radius: 8px;
             border: 1px solid #ccc;
         }
 
@@ -148,7 +145,6 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             }
 
             td {
-                border: none;
                 padding: 6px 0;
                 display: flex;
                 align-items: center;

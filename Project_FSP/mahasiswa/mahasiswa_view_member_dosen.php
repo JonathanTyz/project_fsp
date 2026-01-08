@@ -163,7 +163,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             }
 
             td {
-                border: none;
+                border-color: 1px solid #ccc;
                 padding: 6px 0;
                 text-align: left;
                 display: flex;

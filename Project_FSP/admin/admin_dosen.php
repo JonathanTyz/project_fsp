@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <?php //Admin Kelola Data Dosen 
+    <?php 
     require_once '../class/dosen.php';
     require_once '../css/theme_session.php';
     $mysqli = new mysqli("localhost", "root", "", "fullstack");
@@ -143,7 +143,6 @@
             td{
                 display: flex;
                 align-items: center;
-                border: none;
                 padding: 6px 10px;
                 margin: 0 auto;
                 text-align: left;
@@ -168,10 +167,51 @@
             }
         }
 
-        @media (max-width: 480px){
-            h2{ font-size: 24px; }
-            td{ flex-direction: column; text-align: center; }
+        @media (max-width: 600px) {
+
+        .isiInput {
+            padding: 20px;
+            border-width: 5px;
+            max-width: 90%;
         }
+
+        h2 {
+            font-size: 26px;
+        }
+
+        h4 {
+            font-size: 15px;
+        }
+
+        label {
+            font-size: 15px;
+        }
+
+        input {
+            font-size: 14px;
+            padding: 8px;
+        }
+
+        button {
+            width: 100%;
+            font-size: 18px;
+            padding: 10px;
+        }
+
+        td{
+                display: flex;
+                align-items: center;
+                padding: 6px 10px;
+                margin: 0 auto;
+                text-align: left;
+                max-width: 300px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+    }
+
     </style>
 </head>
 <body class="<?= $_SESSION['theme'] ?? 'light' ?>">

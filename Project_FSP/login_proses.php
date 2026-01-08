@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once 'class/users.php'; 
-$mysqli = new mysqli("localhost", "root", "", "fullstack");
 $user = new users();
 
 $username = $_POST['txtUsername'];

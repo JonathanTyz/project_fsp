@@ -75,14 +75,8 @@ h3 {
     font-size: 15px;
     color: #fff;
     background-color: #2563eb;
-    cursor: pointer;
-    transition: 0.2s;
 }
 
-.button:hover {
-    background-color: #1e40af;
-    transform: translateY(-1px);
-}
 
 /* ===== CARD ===== */
 .card {
@@ -91,7 +85,6 @@ h3 {
     width: 500px;
     max-width: 95%;
     margin: 30px auto;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 /* ===== TABLE ===== */
@@ -102,11 +95,9 @@ h3 {
 }
 
 table {
-    width: 100%;
+    width: 90%;
     background: #ffffff;
     border-radius: 10px;
-    border-collapse: collapse;
-    overflow: hidden;
     box-shadow: 0 6px 18px rgba(0,0,0,0.05);
 }
 
@@ -120,10 +111,6 @@ th {
     background-color: #f1f5f9;
     font-weight: 700;
     color: #1f2937;
-}
-
-tr:last-child td {
-    border-bottom: none;
 }
 
 
@@ -176,7 +163,8 @@ img {
 @media (max-width: 768px) {
     table, thead, tbody, tr, th, td {
         display: block;
-        width: 100%;
+        width: 95%;
+        margin: 0 auto;
     }
 
     thead { display: none; }
@@ -185,7 +173,6 @@ img {
         margin-bottom: 18px;
         padding: 15px;
         border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
     td {
@@ -193,7 +180,6 @@ img {
         flex-direction: column;
         align-items: flex-start;
         padding: 8px 0;
-        border: none;
         text-align: left;
     }
 
@@ -240,24 +226,24 @@ img {
             <th colspan="2">Informasi Group</th>
         </tr>
         <tr>
-            <td>Nama</td>
-            <td><?= htmlspecialchars($group_detail['nama']) ?></td>
+            <td>Nama: </td>
+            <td><?= ($group_detail['nama']) ?></td>
         </tr>
         <tr>
-            <td>Deskripsi</td>
-            <td><?= htmlspecialchars($group_detail['deskripsi']) ?></td>
+            <td>Deskripsi: </td>
+            <td><?= ($group_detail['deskripsi']) ?></td>
         </tr>
         <tr>
-            <td>Pembuat</td>
-            <td><?= htmlspecialchars($group_detail['username_pembuat']) ?></td>
+            <td>Pembuat: </td>
+            <td><?= ($group_detail['username_pembuat']) ?></td>
         </tr>
         <tr>
-            <td>Tanggal Dibentuk</td>
-            <td><?= htmlspecialchars($group_detail['tanggal_pembentukan']) ?></td>
+            <td>Tanggal Dibentuk: </td>
+            <td><?= ($group_detail['tanggal_pembentukan']) ?></td>
         </tr>
         <tr>
-            <td>Jenis</td>
-            <td><?= htmlspecialchars($group_detail['jenis']) ?></td>
+            <td>Jenis: </td>
+            <td><?= ($group_detail['jenis']) ?></td>
         </tr>
     </table>
 </div>
@@ -281,10 +267,10 @@ img {
     <?php else: ?>
         <?php foreach ($group_events as $events) : ?>
             <tr>
-                <td data-label="Judul"><?= htmlspecialchars($events['judul']) ?></td>
-                <td data-label="Tanggal"><?= htmlspecialchars($events['tanggal']) ?></td>
-                <td data-label="Keterangan"><?= htmlspecialchars($events['keterangan']) ?></td>
-                <td data-label="Jenis"><?= htmlspecialchars($events['jenis']) ?></td>
+                <td data-label="Judul: "><?= ($events['judul']) ?></td>
+                <td data-label="Tanggal: "><?= ($events['tanggal']) ?></td>
+                <td data-label="Keterangan: "><?= ($events['keterangan']) ?></td>
+                <td data-label="Jenis: "><?= ($events['jenis']) ?></td>
                 <td data-label="Poster">
                     <?php
                     if (!empty($events['poster_extension']) &&

@@ -59,7 +59,6 @@ h3{
     font-weight: bold;
     border: none;
     margin: 6px;
-    cursor: pointer;
 }
 
 /* INFORMASI GROUP */
@@ -75,7 +74,6 @@ h3{
 table{
     width: 90%;
     margin: 20px auto;
-    border-collapse: collapse;
     border: 4px solid;
 }
 
@@ -93,7 +91,6 @@ th, td{
 img{
     max-width: 100px;
     height: auto;
-    border-radius: 6px;
 }
 
 /* SEARCH */
@@ -121,7 +118,6 @@ img{
             }
 
             td {
-                border: none;
                 padding: 6px 0;
                 display: flex;
                 align-items: center;

@@ -1,11 +1,7 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "fullstack");
-if ($mysqli->connect_error) {
-    die("Koneksi gagal: " . $mysqli->connect_error);
-}
-
 session_start();
 require_once '../css/theme_session.php';
+require_once '../class/dosen.php';
 
 if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
@@ -13,28 +9,18 @@ if (!isset($_SESSION['user'])) {
 }
 
 if (!isset($_GET['npk'])) {
-    echo "<p>NPK tidak ditemukan di URL.</p>";
-    echo "<p style='text-align:center;'><a href='admin_dosen.php'>Kembali</a></p>";
-    exit;
+    header("Location: admin_dosen.php");
+    exit();
 }
 
-$id = $_GET['npk'];
-
-$sql = "SELECT d.npk, d.nama, d.foto_extension, a.username, a.password
-        FROM dosen d
-        LEFT JOIN akun a ON d.npk = a.npk_dosen
-        WHERE d.npk = ?";
-$stmt = $mysqli->prepare($sql);
-$stmt->bind_param("s", $id);
-$stmt->execute();
-$res = $stmt->get_result();
-$row = $res->fetch_assoc();
-$stmt->close();
+$dosen = new dosen();
+$row = $dosen->getDetailDosen($_GET['npk']);
 
 if (!$row) {
-    echo "<p>Data dosen tidak ditemukan.</p>";
-    exit;
+    echo "Data dosen tidak ditemukan";
+    exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -133,9 +119,22 @@ body.dark button:hover{
     background:#555;
 }
 
-@media(max-width:500px){
+@media (max-width:500px){
+    body{
+        padding:12px;
+    }
+
     .isiInput{
-        width:90%;
+        padding:20px;
+    }
+
+    h2{
+        font-size:20px;
+    }
+
+    button{
+        font-size:15px;
+        padding:11px;
     }
 }
 </style>

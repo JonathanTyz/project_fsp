@@ -178,8 +178,7 @@ $res = $group->getAllGroupByMember(
             }
 
             td{
-                border: none;
-                text-align: left;
+                text-align: center;
                 padding: 6px 0;
             }
 

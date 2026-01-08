@@ -218,5 +218,17 @@
             return "SUCCESS";
         }
 
+        public function getDetailMahasiswa($nrp)
+        {
+            $sql = "SELECT m.nrp, m.nama, m.gender, m.tanggal_lahir, m.angkatan, m.foto_extention,
+               a.username, a.password
+                FROM mahasiswa m
+                INNER JOIN akun a ON m.nrp = a.nrp_mahasiswa
+                WHERE m.nrp = ?";
+            $stmt = $this->mysqli->prepare(query: $sql);
+            $stmt->bind_param("s", $nrp);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        }
 }
 ?>

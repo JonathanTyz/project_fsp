@@ -218,7 +218,6 @@ body.dark button:hover{
     }
 
     td{
-        border:none;
         text-align:left;
     }
 

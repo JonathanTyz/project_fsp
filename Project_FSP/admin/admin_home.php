@@ -6,7 +6,6 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-/* ambil theme dari session */
 $themeClass = $_SESSION['theme'] ?? 'light';
 ?>
 

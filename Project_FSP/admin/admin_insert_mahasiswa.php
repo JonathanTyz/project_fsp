@@ -133,15 +133,29 @@ if ($mysqli->connect_error) {
     /* ======================
        RESPONSIVE
     ====================== */
-    @media(max-width:500px){
-        .isiInput{
-            width:90%;
-        }
-
-        .kembaliForm{
-            width:100%;
-        }
+    @media (max-width:500px){
+    body{
+        padding:12px;
     }
+
+    h2{
+        font-size:22px;
+    }
+
+    #pembukaanteks{
+        font-size:15px;
+    }
+
+    .isiInput{
+        padding:20px;
+    }
+
+    button{
+        font-size:15px;
+        padding:11px;
+    }
+}
+
     </style>
 </head>
 
