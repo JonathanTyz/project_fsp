@@ -1,182 +1,209 @@
-    <?php
-    $mysqli = new mysqli("localhost", "root", "", "fullstack");
-    session_start();
-    if (!isset($_SESSION['user'])) 
-    {
-        header("Location: ../login.php");
-        exit();
+<?php
+$mysqli = new mysqli("localhost", "root", "", "fullstack");
+if ($mysqli->connect_error) {
+    die("Koneksi gagal: " . $mysqli->connect_error);
+}
+
+session_start();
+require_once '../css/theme_session.php';
+
+if (!isset($_SESSION['user'])) {
+    header("Location: ../login.php");
+    exit();
+}
+
+if (!isset($_GET['nrp'])) {
+    echo "<p>NRP tidak ditemukan di URL.</p>";
+    echo "<p style='text-align:center;'><a href='admin_mahasiswa.php'>Kembali</a></p>";
+    exit;
+}
+
+$id = $_GET['nrp'];
+
+$sql = "SELECT m.nrp, m.nama, m.gender, m.tanggal_lahir, m.angkatan, m.foto_extention,
+               a.username, a.password
+        FROM mahasiswa m
+        INNER JOIN akun a ON m.nrp = a.nrp_mahasiswa
+        WHERE m.nrp = ?";
+$stmt = $mysqli->prepare($sql);
+$stmt->bind_param("s", $id);
+$stmt->execute();
+$res = $stmt->get_result();
+$row = $res->fetch_assoc();
+$stmt->close();
+
+if (!$row) {
+    echo "<p>Data mahasiswa tidak ditemukan.</p>";
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edit Data Mahasiswa</title>
+
+<link rel="stylesheet" href="../css/theme.css">
+
+<style>
+body{
+    font-family:'Times New Roman', serif;
+    margin:0;
+    padding:20px;
+}
+
+.isiInput{
+    padding:30px 40px;
+    width:400px;
+    margin:30px auto;
+    border-radius:8px;
+    border:2px solid;
+}
+
+h2{
+    text-align:center;
+}
+
+label{
+    font-weight:bold;
+}
+
+input, select{
+    width:100%;
+    padding:8px;
+    margin-top:5px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    font-size:18px;
+    font-weight:bold;
+    border-radius:6px;
+    border:1px solid;
+}
+
+.center{
+    text-align:center;
+}
+
+/* ======================
+   LIGHT THEME
+====================== */
+body.light{
+    background:#f4f6f8;
+    color:#000;
+}
+
+body.light .isiInput{
+    background:lightcyan;
+    border-color:#333;
+}
+
+body.light button{
+    background:#2c3e50;
+    color:white;
+    border-color:#2c3e50;
+}
+
+body.light button:hover{
+    background:#1f2d3a;
+}
+
+body.dark{
+    background:#1e1e1e;
+    color:#eee;
+}
+
+body.dark .isiInput{
+    background:#2a2a2a;
+    border-color:#555;
+}
+
+body.dark input,
+body.dark select{
+    background:#1e1e1e;
+    color:white;
+    border:1px solid #555;
+}
+
+body.dark button{
+    background:#3a3a3a;
+    color:white;
+    border-color:#555;
+}
+
+body.dark button:hover{
+    background:#555;
+}
+
+@media(max-width:500px){
+    .isiInput{
+        width:90%;
     }
+}
+</style>
+</head>
 
-    if (!isset($_GET['nrp'])) 
-    {
-        echo "<p>NRP tidak ditemukan di URL.</p>";
-        echo "<p style='text-align:center;'><a href='admin_mahasiswa.php'>Kembali</a></p>";
-        exit;
-    }
-    
+<body class="<?= $themeClass ?>">
 
-    $id = $_GET['nrp'];
-    //dapatkan mahasiswa yang akan diedit
-    $sql = "SELECT m.nrp, m.nama, m.gender, m.tanggal_lahir, m.angkatan, m.foto_extention,
-                a.username, a.password
-            FROM mahasiswa m
-            INNER JOIN akun a ON m.nrp = a.nrp_mahasiswa
-            WHERE m.nrp = ?";
-    $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("s", $id);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $row = $res->fetch_assoc();
-    $stmt->close();
+<div class="center">
+    <form action="admin_mahasiswa.php" method="post">
+        <button type="submit">← Kembali ke Home</button>
+    </form>
+</div>
 
-    if (!$row) {
-        echo "<p>Data mahasiswa dengan NRP <b>$id</b> tidak ditemukan.</p>";
-        echo "<p style='text-align:center;'><a href='admin_mahasiswa.php'>Kembali</a></p>";
-        exit;
-    }
-    ?>
+<div class="isiInput">
+<h2>Edit Data Mahasiswa</h2>
 
-    <html>
-        <head>
-            <meta charset="UTF-8">
-            <meta name = "viewport" content = "width=device-width, initial-scale=1">
-            <title>Edit Data Mahasiswa</title>
-            <style>
-                body {
-            font-family: 'Times New Roman', serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f6f8;
-        }
+<form method="post" action="admin_edit_proses_mahasiswa.php" enctype="multipart/form-data">
 
-        h2 {
-            text-align: center;
-            margin-top: 30px;
-            color: #333;
-            font-size: 36px;
-        }
+    <p>
+        <label>Username</label>
+        <input type="text" name="username" value="<?= $row['username']; ?>">
+    </p>
 
-        #pembukaanteks {
-            font-size: 22px;
-            text-decoration: underline;
-            font-weight: bold;
-            font-family: 'Times New Roman', Times, serif;
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    <p>
+        <label>NRP</label>
+        <input type="text" name="nrp" value="<?= $row['nrp']; ?>">
+    </p>
 
-        .isiInput {
-            background: lightcyan;
-            border: 3px solid #333;
-            padding: 30px 40px;
-            width: 400px;
-            margin: 30px auto;
-        }
+    <p>
+        <label>Nama</label>
+        <input type="text" name="nama" value="<?= $row['nama']; ?>">
+    </p>
 
-        .isiInput p {
-            margin-bottom: 15px;
-        }
+    <p>
+        <label>Gender</label>
+        <select name="gender">
+            <option value="Pria" <?= $row['gender']=='Pria'?'selected':''; ?>>Pria</option>
+            <option value="Wanita" <?= $row['gender']=='Wanita'?'selected':''; ?>>Wanita</option>
+        </select>
+    </p>
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+    <p>
+        <label>Tanggal Lahir</label>
+        <input type="date" name="tanggal_lahir" value="<?= $row['tanggal_lahir']; ?>">
+    </p>
 
-        button {
-            width: 100%;
-            padding: 12px 0;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            background-color: #3498db;
-            border: none;
-            margin-top: 10px;
-        }
+    <p>
+        <label>Angkatan</label>
+        <input type="number" name="angkatan" value="<?= $row['angkatan']; ?>">
+    </p>
 
-        button:hover {
-            background-color: #2980b9;
-        }
+    <p>
+        <label>Foto</label>
+        <input type="file" name="foto" accept="image/jpeg,image/png">
+    </p>
 
-        .center {
-            text-align: center;
-            margin-top: 15px;
-        }
+    <input type="hidden" name="nrp_lama" value="<?= $row['nrp']; ?>">
+    <input type="hidden" name="username_lama" value="<?= $row['username']; ?>">
+    <input type="hidden" name="ext_lama" value="<?= $row['foto_extention']; ?>">
 
-        .kembaliForm{
-            width: 500px;
-        }
+    <button type="submit" name="btnEdit">Simpan</button>
+</form>
+</div>
 
-
-        @media (max-width: 768px) {
-            .isiInput {
-                width: 90%;
-                padding: 20px;
-            }
-
-            h2 {
-                font-size: 28px;
-            }
-
-            #pembukaanteks {
-                font-size: 20px;
-            }
-
-            input, select, button {
-                font-size: 16px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h2 {
-                font-size: 24px;
-            }
-
-            #pembukaanteks {
-                font-size: 18px;
-            }
-
-            button {
-                font-size: 16px;
-                padding: 10px 0;
-            }
-        }
-            </style>
-        </head>
-        <body>
-            <div class="center">
-                <form action="admin_mahasiswa.php" method="post">
-                    <button class="kembaliForm" type="submit">Kembali ke Home</button>
-                </form>
-            </div>
-            <div class = "isiInput">
-            <h2><b>Edit Data Mahasiswa</b></h2>
-            <p id = 'pembukaanteks'>Masukkan data mahasiswa </p>
-            <form method = "post" action = "admin_edit_proses_mahasiswa.php" enctype="multipart/form-data">
-                <p><Label>Username: </Label><br><input type="text" name="username" value="<?php echo $row['username']; ?>"></p>
-                <p><label>NRP: </label> <br><input type = "text" name = "nrp" value = "<?php echo $row['nrp']; ?>"></p>
-                <p><label>Nama: </label> <br><input type = "text" name = "nama" value = "<?php echo $row['nama']; ?>"></p>
-                <p><label>Gender: </label> 
-                <select name="gender">
-                    <option value="Pria">Pria</option>
-                    <option value="Wanita">Wanita</option>
-                </select></p>
-                <p><label>Tanggal Lahir: </label> <br> <input type = "date" name = "tanggal_lahir"  value = "<?php echo $row['tanggal_lahir']; ?>"></p>
-                <p><label>Angkatan: </label> <br> <input type = "number" name = "angkatan" value = "<?php echo $row['angkatan']; ?>"></p>
-                <div id = 'fotomahasiswa'>
-                    <input type = "file" name = "foto" accept = "image/jpeg, image/png">
-                </div>
-                <br>
-                <button name="btnEdit" value="Edit" type="submit">Simpan</button></p>
-                <?php //buat agar ada nrp untuk update where (nrp_lama) serta penyimpanan atribut lama database 
-                // apabila user tidak update semua
-                // (menghindari kosong ketika diupdate waktu di post)
-                ?>
-                <input type="hidden" name="nrp_lama" value="<?php echo $row['nrp']; ?>">
-                <input type="hidden" name = "username_lama" value = "<?php echo $row['username'];?>">
-                <input type = "hidden" name = "ext_lama" value = "<?php echo $row['foto_extention']; ?>">     
-            </form>
-            </div>
-        </body>
-    </html>
+</body>
+</html>

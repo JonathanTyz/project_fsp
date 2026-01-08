@@ -2,6 +2,7 @@
 <html>
     <?php //Admin Kelola Data Dosen 
     require_once '../class/dosen.php';
+    require_once '../css/theme_session.php';
     $mysqli = new mysqli("localhost", "root", "", "fullstack");
     if ($mysqli->connect_error) {
         die("Failed to connect to MySQL: " . $mysqli->connect_error);
@@ -9,92 +10,137 @@
     ?>
 <head>
     <title>Kelola Dosen</title>
+    <link rel="stylesheet" href="../css/theme.css">
     <style>
-        body {
+        body{
             font-family: 'Times New Roman', serif;
             margin: 0;
             background-color: #f4f6f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        h2 {
+        body.dark{
+            background-color: #1e1e1e;
+        }
+
+        h2{
             text-align: center;
             margin-top: 30px;
-            color: #333;
+            color: #2c3e50;
             font-size: 36px;
             font-weight: bold;
         }
 
-        table {
+        body.dark h2{
+            color: #ffffff;
+        }
+
+        table{
             width: 80%;
             margin: 20px auto;
             background: white;
-
         }
 
-        th, td {
+        body.dark table{
+            background-color: #2a2a2a;
+        }
+
+        th, td{
             border: 1px solid black;
             padding: 8px;
             text-align: center;
         }
 
-        th {
+        body.dark th,
+        body.dark td{
+            border-color: #555;
+            color: #eeeeee;
+        }
+
+        th{
             background-color: #f2f2f2;
         }
 
-        #linkInsert, #balikHome {
+        body.dark th{
+            background-color: #333;
+        }
+
+        #linkInsert, #balikHome{
             display: inline-block;
             padding: 10px 20px;
             font-size: 20px;
             font-weight: bold;
             text-decoration: none;
             color: white;
-            background-color: #3498db;
+            background-color: #2c3e50;
             margin: 10px auto;
         }
 
-        .tabelKontainer {
+        #balikHome{
+            background-color: steelblue;
+        }
+
+        .tabelKontainer{
             width: 90%;
             margin: 20px auto;
-            background: lightblue;
+            background: #ffffff;
             padding: 20px;
             border: 10px solid #333;        
         }
 
-        .linkKontainer {
+        body.dark .tabelKontainer{
+            background-color: #2a2a2a;
+            border-color: #555;
+        }
+
+        .linkKontainer{
             width: 40%;
             margin: 20px auto;
             text-align: center;
         }
 
-        .paging {
+        .paging{
             font-size: 20px;
             font-weight: bold;
             text-align: center;
             display: inline-block;
             margin: 0 5px;
+            color: #2c3e50;
+            text-decoration: none;
         }
 
-        img {
+        body.dark .paging{
+            color: #ffffff;
+        }
+
+        img{
             border: 2px solid #ddd;
             border-radius: 6px;
         }
 
-        @media (max-width: 768px) {
-            table, thead, tbody, th, td, tr {
+        @media (max-width: 768px){
+            table, thead, tbody, th, td, tr{
                 display: block;
                 width: 90%;
                 margin: 0 auto;
             }
 
-
-            tr {
+            tr{
                 background: #fff;
                 border: 2px solid #2c3e50;
                 margin-bottom: 15px;
                 padding: 15px;
             }
 
-            td {
+            body.dark tr{
+                background-color: #2a2a2a;
+                border-color: #555;
+            }
+
+            td{
                 display: flex;
                 align-items: center;
                 border: none;
@@ -104,38 +150,35 @@
                 max-width: 400px;
             }
 
-
-            img {
+            img{
                 max-width: 80px;
                 height: auto;
                 border-radius: 8px;
                 margin-right: 10px;
             }
 
-            #linkInsert, #balikHome {
+            #linkInsert, #balikHome{
                 width: 90%;
                 font-size: 18px;
                 padding: 12px 0;
             }
 
-            .linkKontainer {
+            .linkKontainer{
                 width: 90%;
             }
         }
 
-        @media (max-width: 480px) {
-            h2 { font-size: 24px; }
-            td { flex-direction: column; text-align: center; }
+        @media (max-width: 480px){
+            h2{ font-size: 24px; }
+            td{ flex-direction: column; text-align: center; }
         }
-        
     </style>
 </head>
-<body>
+<body class="<?= $_SESSION['theme'] ?? 'light' ?>">
     <h2><b>Kelola Dosen</b></h2>
-    <div class = 'tabelKontainer'>
+    <div class='tabelKontainer'>
     <table>
         <thead>
-            <thead>
             <tr>
                 <th>Foto</th>
                 <th>Nama</th>
@@ -153,60 +196,53 @@
                 $res = $dosen->getDosen($cari_persen, $offset, $PER_PAGE);
                 while($row = $res->fetch_assoc()) {
                     echo "<tr>";
-                        echo "<td> <img src = '../image_dosen/" . $row['npk'] . "." . $row['foto_extension'] . "' width='100'></td>";
-                        echo "<td>" . $row['nama'] . "</td>";
-                        echo "<td>" . $row['npk'] . "</td>";
-                        echo "<td>";
-                            echo "<a href = 'admin_edit_dosen.php?npk=".$row['npk']."'>Edit</a>";
-                        echo "</td>";
-                        echo "<td>";    
-                            echo "<a href='admin_delete_dosen.php?npk=".$row['npk']."'>Delete</a>";  
-                        echo "</td>";
+                        echo "<td><img src='../image_dosen/".$row['npk'].".".$row['foto_extension']."' width='100'></td>";
+                        echo "<td>".$row['nama']."</td>";
+                        echo "<td>".$row['npk']."</td>";
+                        echo "<td><a href='admin_edit_dosen.php?npk=".$row['npk']."'>Edit</a></td>";
+                        echo "<td><a href='admin_delete_dosen.php?npk=".$row['npk']."'>Delete</a></td>";
                     echo "</tr>";
                 }
             ?>
         </tbody>
     </table>
     </div>
-    <div style = "text-align: center;">
-    <p>
+
+    <div style="text-align:center;">
+        <p>
         <?php
-        $res = $dosen->getDosen($cari_persen);
-        $total_data = $res->num_rows;
-        $max_page = ceil($total_data / $PER_PAGE);
-        $current_page = floor($offset / $PER_PAGE) + 1;
-        if ($current_page > 1)
-        {
-            $prev = $offset - $PER_PAGE;
-            echo "<a class = 'paging' href ='?start=$prev&cari=$cari'>Sebelumnya</a>";
-        }
-        
-        for($page=1; $page <= $max_page; $page++) 
-        {
-            $offs = ($page - 1) * $PER_PAGE;
-            if ($page == $current_page) 
-            {
-                echo "<b class = 'paging'>$page</b> ";
+            $res = $dosen->getDosen($cari_persen);
+            $total_data = $res->num_rows;
+            $max_page = ceil($total_data / $PER_PAGE);
+            $current_page = floor($offset / $PER_PAGE) + 1;
+
+            if ($current_page > 1){
+                $prev = $offset - $PER_PAGE;
+                echo "<a class='paging' href='?start=$prev&cari=$cari'>Sebelumnya</a>";
             }
-            else{
-                echo "<a class='paging' href='?start=$offs&cari=$cari'>$page</a> ";
+
+            for($page=1; $page <= $max_page; $page++){
+                $offs = ($page - 1) * $PER_PAGE;
+                if ($page == $current_page){
+                    echo "<b class='paging'>$page</b> ";
+                } else {
+                    echo "<a class='paging' href='?start=$offs&cari=$cari'>$page</a> ";
+                }
             }
-        }
-        if ($current_page < $max_page)
-        {
-            $next = $offset + $PER_PAGE;
-            echo "<a class='paging' href='?start=$next&cari=$cari'> Selanjutnya</a> ";
-        }
+
+            if ($current_page < $max_page){
+                $next = $offset + $PER_PAGE;
+                echo "<a class='paging' href='?start=$next&cari=$cari'>Selanjutnya</a>";
+            }
         ?>
-    
-    </p> 
+        </p>
     </div>
-    <br>
-    <div class = 'linkKontainer'>
-        <a id='linkInsert' href = "admin_insert_dosen.php">Tambah Dosen</a>
+
+    <div class='linkKontainer'>
+        <a id='linkInsert' href="admin_insert_dosen.php">Tambah Dosen</a>
     </div>
-    <div class = 'linkKontainer'>
-        <a id = 'balikHome' href = "admin_home.php">Kembali ke home</a>
+    <div class='linkKontainer'>
+        <a id='balikHome' href="admin_home.php">Kembali ke home</a>
     </div>
 </body>
 </html>
