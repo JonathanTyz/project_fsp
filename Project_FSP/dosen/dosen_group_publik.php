@@ -61,9 +61,6 @@ h2{
     border:1px solid;
 }
 
-/* ======================
-   TABLE
-====================== */
 table{
     width:90%;
     margin:20px auto;
@@ -86,9 +83,6 @@ th{
     padding:20px;
 }
 
-/* ======================
-   PAGINATION
-====================== */
 .paging{
     text-align:center;
     margin:25px;
@@ -105,9 +99,7 @@ th{
     border:1px solid;
 }
 
-/* ======================
-   JOIN GROUP
-====================== */
+
 .insert-kode{
     text-align:center;
     padding:20px;
@@ -124,7 +116,7 @@ th{
 }
 
 .insert-kode input{
-    width:100%;
+    width:95%;
     padding:10px;
     margin-bottom:12px;
     border:1px solid;
@@ -137,12 +129,9 @@ th{
     font-weight:bold;
     border-radius:6px;
     border:1px solid;
-    cursor:pointer;
 }
 
-/* ======================
-   LIGHT THEME
-====================== */
+/* Light theme */
 body.light{
     background:#f4f6f8;
     color:#000;
@@ -194,9 +183,7 @@ body.light .insert-kode button{
     border-color:#2c3e50;
 }
 
-/* ======================
-   DARK THEME
-====================== */
+/* Dark theme */
 body.dark{
     background:#1e1e1e;
     color:#eee;
@@ -248,40 +235,50 @@ body.dark .insert-kode button{
     border-color:#555;
 }
 
-/* ======================
-   RESPONSIVE
-====================== */
-@media (max-width:450px){
-    h2{ font-size:26px; }
+/* RWD */
+@media (max-width: 768px){
+            table, thead, tbody, tr, th, td{
+                display: block;
+                width: 100%;
+            }
 
-    table, thead, tbody, th, tr{
-        display:block;
-    }
+            table{
+                border: none;
+            }
 
-    table{
-        border:none;
-    }
+            tr{
+                background: white;
+                border: 3px solid #2c3e50;
+                margin-bottom: 15px;
+                padding: 10px;
+                border-radius: 6px;
+            }
 
-    tr{
-        margin-bottom:15px;
-        border:2px solid;
-        padding:10px;
-        border-radius:8px;
-    }
+            body.dark tr{
+                background-color: #1e1e1e;
+                border-color: #555;
+            }
 
-    td{
-        border:none;
-        text-align:left;
-        padding:6px 0;
-    }
+            td{
+                border: none;
+                text-align: left;
+                padding: 6px 0;
+                position: relative;
+            }
 
-    td::before{
-        font-weight:bold;
-        display:block;
-        margin-bottom:3px;
-    }
-}
-</style>
+            td::before{
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+                margin-bottom: 4px;
+            }
+
+            button{
+                margin-top: 5px;
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body class="<?= $themeClass ?>">
@@ -309,11 +306,11 @@ if ($res->num_rows == 0) {
 } else {
     while ($row = $res->fetch_assoc()) {
         echo "<tr>";
-        echo "<td>".htmlspecialchars($row['nama'])."</td>";
-        echo "<td>".htmlspecialchars($row['deskripsi'])."</td>";
-        echo "<td>".htmlspecialchars($row['username_pembuat'])."</td>";
-        echo "<td>".htmlspecialchars($row['tanggal_pembentukan'])."</td>";
-        echo "<td>".htmlspecialchars($row['jenis'])."</td>";
+        echo "<td data-label='Nama Grup'>".$row['nama']."</td>";
+        echo "<td data-label='Deskripsi'>".$row['deskripsi']."</td>";
+        echo "<td data-label='Pembuat'>".$row['username_pembuat']."</td>";
+        echo "<td data-label='Tanggal Dibentuk'>".$row['tanggal_pembentukan']."</td>";
+        echo "<td data-label='Jenis'>".$row['jenis']."</td>";
         echo "</tr>";
     }
 }

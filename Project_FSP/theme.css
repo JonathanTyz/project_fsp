@@ -15,6 +15,27 @@ body {
   align-items: center;
   min-height: 100vh;
 }
+  
+@media (prefers-color-scheme: dark) {
+		  :root {
+		    --main-bg-color: #000000;
+		    --card-shadow-color: #333333;
+		    --primary-text-color: #ffffff;
+		    --secondry-text-color: #cfcfcf;
+		  }
+		}
+
+		@media (prefers-color-scheme: light) {
+		  :root {
+		    --main-bg-color: #a9a9a9;
+		    --card-shadow-color: #878787;
+		    --primary-text-color: #111111;
+		    --secondry-text-color: #333333;
+		  }
+		}
+
+		body { background: var(--main-bg-color);  }
+
 
 .isi, .isiInput {
   background-color: #fff;

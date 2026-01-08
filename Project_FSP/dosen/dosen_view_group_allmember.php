@@ -31,7 +31,6 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
         body {
             font-family: "Segoe UI", Tahoma, sans-serif;
             margin: 0;
-            background-color: #f3f4f6;
         }
 
         h2, h3 {
@@ -77,7 +76,6 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
 
         /* ===== CARD ===== */
         .card {
-            background: #ffffff;
             border-radius: 12px;
             padding: 25px;
             width: 500px;
@@ -90,11 +88,7 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
         table {
             width: 90%;
             margin: 25px auto;
-            background: #ffffff;
             border-radius: 10px;
-            border-collapse: collapse;
-            overflow: hidden;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
         }
 
         th, td {
@@ -104,70 +98,72 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
         }
 
         th {
-            background-color: #f1f5f9;
             font-weight: 700;
-            color: #1f2937;
         }
 
         tr:last-child td {
             border-bottom: none;
         }
 
-        tr:hover {
-            background-color: #f9fafb;
-        }
-
         /* ===== IMAGE ===== */
         img {
             width: 90px;
             border-radius: 8px;
-            object-fit: cover;
         }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
+@media (max-width: 768px) {
             table, thead, tbody, tr, th, td {
                 display: block;
-                width: 100%;
+                width: 95%;
             }
 
-            thead {
-                display: none;
-            }
+            thead { display: none; }
 
             tr {
-                margin-bottom: 20px;
-                background: #ffffff;
+                border: 2px solid #2c3e50;
+                margin-bottom: 15px;
                 padding: 15px;
-                border-radius: 12px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                border-radius: 10px;
             }
 
             td {
-                display: flex;
-                justify-content: space-between;
-                padding: 8px 0;
                 border: none;
-                text-align: left;
+                padding: 6px 0;
+                display: flex;
+                align-items: center;
             }
 
             td::before {
                 content: attr(data-label);
-                font-weight: 600;
-                color: #374151;
-            }
-
-            img {
-                width: 70px;
-            }
-
-            .btn-group {
-                flex-direction: column;
-                align-items: center;
+                font-weight: bold;
+                flex-basis: 40%;
             }
 
             .button {
                 width: 90%;
+                margin: 10px auto;
+                display: block;
+            }
+
+            .informasiGrup {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 { font-size: 24px; }
+            h3 { font-size: 20px; }
+
+            td {
+                font-size: 14px;
+                flex-direction: column;
+                text-align: left;
+            }
+
+            td::before {
+                width: 100%;
+                margin-bottom: 4px;
             }
         }
     </style>
@@ -178,11 +174,11 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
 <h2>Member Group</h2>
 
 <div class="btn-group">
-    <form action="mahasiswa_home.php" method="post">
+    <form action="dosen_home.php" method="post">
         <button class="button" type="submit">Home</button>
     </form>
 
-    <form action="mahasiswa_group_diikuti.php" method="post">
+    <form action="dosen_group_diikuti.php" method="post">
         <button class="button" type="submit">Daftar Group</button>
     </form>
 </div>
@@ -194,23 +190,23 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
         </tr>
         <tr>
             <td>Nama</td>
-            <td><?= htmlspecialchars($detail['nama']) ?></td>
+            <td><?= ($detail['nama']) ?></td>
         </tr>
         <tr>
             <td>Deskripsi</td>
-            <td><?= htmlspecialchars($detail['deskripsi']) ?></td>
+            <td><?= ($detail['deskripsi']) ?></td>
         </tr>
         <tr>
             <td>Pembuat</td>
-            <td><?= htmlspecialchars($detail['username_pembuat']) ?></td>
+            <td><?= ($detail['username_pembuat']) ?></td>
         </tr>
         <tr>
             <td>Tanggal</td>
-            <td><?= htmlspecialchars($detail['tanggal_pembentukan']) ?></td>
+            <td><?= ($detail['tanggal_pembentukan']) ?></td>
         </tr>
         <tr>
             <td>Jenis</td>
-            <td><?= htmlspecialchars($detail['jenis']) ?></td>
+            <td><?= ($detail['jenis']) ?></td>
         </tr>
     </table>
 </div>
@@ -234,11 +230,11 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
     <?php else: ?>
         <?php while ($row = $result_mahasiswa->fetch_assoc()): ?>
             <tr>
-                <td data-label="Username"><?= htmlspecialchars($row['username']) ?></td>
-                <td data-label="Nama"><?= htmlspecialchars($row['nama']) ?></td>
-                <td data-label="NRP"><?= htmlspecialchars($row['nrp']) ?></td>
-                <td data-label="Gender"><?= htmlspecialchars($row['gender']) ?></td>
-                <td data-label="Angkatan"><?= htmlspecialchars($row['angkatan']) ?></td>
+                <td data-label="Username"><?= ($row['username']) ?></td>
+                <td data-label="Nama"><?= ($row['nama']) ?></td>
+                <td data-label="NRP"><?= ($row['nrp']) ?></td>
+                <td data-label="Gender"><?= ($row['gender']) ?></td>
+                <td data-label="Angkatan"><?= ($row['angkatan']) ?></td>
                 <td data-label="Foto">
                     <img src="../image_mahasiswa/<?= $row['nrp'] ?>.<?= $row['foto_extention'] ?>">
                 </td>
@@ -264,9 +260,9 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
     <?php else: ?>
         <?php while ($row = $result_dosen->fetch_assoc()): ?>
             <tr>
-                <td data-label="Username"><?= htmlspecialchars($row['username']) ?></td>
-                <td data-label="Nama"><?= htmlspecialchars($row['nama']) ?></td>
-                <td data-label="NPK"><?= htmlspecialchars($row['npk']) ?></td>
+                <td data-label="Username"><?= ($row['username']) ?></td>
+                <td data-label="Nama"><?= ($row['nama']) ?></td>
+                <td data-label="NPK"><?= ($row['npk']) ?></td>
                 <td data-label="Foto">
                     <img src="../image_dosen/<?= $row['npk'] ?>.<?= $row['foto_extension'] ?>">
                 </td>

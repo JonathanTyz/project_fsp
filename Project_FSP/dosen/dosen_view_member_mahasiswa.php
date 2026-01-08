@@ -105,40 +105,60 @@ img{
 }
 
 /* RESPONSIVE */
-@media (max-width: 768px){
-    table, thead, tbody, tr, th, td{
-        display: block;
-        width: 95%;
-    }
+ @media (max-width: 768px) {
+            table, thead, tbody, tr, th, td {
+                display: block;
+                width: 95%;
+            }
 
-    thead{ display: none; }
+            thead { display: none; }
 
-    table{ border: none; }
+            tr {
+                border: 2px solid #2c3e50;
+                margin-bottom: 15px;
+                padding: 15px;
+                border-radius: 10px;
+            }
 
-    tr{
-        border: 3px solid;
-        margin-bottom: 15px;
-        padding: 15px;
-    }
+            td {
+                border: none;
+                padding: 6px 0;
+                display: flex;
+                align-items: center;
+            }
 
-    td{
-        border: none;
-        display: flex;
-        padding: 6px 0;
-    }
+            td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                flex-basis: 40%;
+            }
 
-    td::before{
-        content: attr(data-label);
-        font-weight: bold;
-        flex-basis: 40%;
-    }
+            .button {
+                width: 90%;
+                margin: 10px auto;
+                display: block;
+            }
 
-    .button{
-        width: 90%;
-        display: block;
-        margin: 10px auto;
-    }
-}
+            .informasiGrup {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 { font-size: 24px; }
+            h3 { font-size: 20px; }
+
+            td {
+                font-size: 14px;
+                flex-direction: column;
+                text-align: left;
+            }
+
+            td::before {
+                width: 100%;
+                margin-bottom: 4px;
+            }
+        }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>

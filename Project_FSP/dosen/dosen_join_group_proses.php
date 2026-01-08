@@ -27,6 +27,13 @@ if ($row['jenis'] === 'Privat')
     echo "<br><a href='dosen_group_publik.php'>Kembali ke halaman daftar grup?</a>";
     exit();
 }
+if ($row['username_pembuat'] === $_SESSION['user']['username'])
+{
+    echo "Anda adalah pembuat grup ini!";
+    echo "<br><a href='dosen_home.php'>Kembali ke halaman utama?</a>";
+    echo "<br><a href='dosen_group_publik.php'>Kembali ke halaman daftar grup?</a>";
+    exit();
+}
 else
 {
     $idgrup = $row['idgrup'];

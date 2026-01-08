@@ -99,45 +99,62 @@ img{
     border-radius: 6px;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px){
-    table, thead, tbody, tr, th, td{
-        display: block;
-        width: 95%;
-    }
 
-    thead{
-        display: none;
-    }
 
-    table{
-        border: none;
-    }
+ @media (max-width: 768px) {
+            table, thead, tbody, tr, th, td {
+                display: block;
+                width: 95%;
+            }
 
-    tr{
-        border: 3px solid;
-        margin-bottom: 15px;
-        padding: 15px;
-    }
+            thead { display: none; }
 
-    td{
-        border: none;
-        display: flex;
-        padding: 6px 0;
-    }
+            tr {
+                border: 2px solid #2c3e50;
+                margin-bottom: 15px;
+                padding: 15px;
+                border-radius: 10px;
+            }
 
-    td::before{
-        content: attr(data-label);
-        font-weight: bold;
-        flex-basis: 40%;
-    }
+            td {
+                border: none;
+                padding: 6px 0;
+                display: flex;
+                align-items: center;
+            }
 
-    .button{
-        width: 90%;
-        display: block;
-        margin: 10px auto;
-    }
-}
+            td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                flex-basis: 40%;
+            }
+
+            .button {
+                width: 90%;
+                margin: 10px auto;
+                display: block;
+            }
+
+            .informasiGrup {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 { font-size: 24px; }
+            h3 { font-size: 20px; }
+
+            td {
+                font-size: 14px;
+                flex-direction: column;
+                text-align: left;
+            }
+
+            td::before {
+                width: 100%;
+                margin-bottom: 4px;
+            }
+        }
 </style>
 </head>
 

@@ -123,18 +123,32 @@ if (isset($_POST['btnSubmit'])) {
             color: #eee;
         }
 
-        @media (max-width: 500px) {
-            body {
-                padding: 10px;
+        /* ======================
+        RESPONSIVE
+        ====================== */
+        @media (max-width:600px)
+        {
+            body{
+                padding:10px;
             }
 
-            .container {
-                margin: 30px auto;
-                padding: 20px;
+            .container{
+                margin:20px auto;
+                padding:15px;
+                border-width:1px;
             }
 
-            h2 {
-                font-size: 24px;
+            h2{
+                font-size:20px;
+            }
+
+            label, .status-lama, .error{
+                font-size:14px;
+            }
+
+            select, button{
+                font-size:14px;
+                padding:8px;
             }
         }
     </style>

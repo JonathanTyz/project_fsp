@@ -93,9 +93,7 @@ $themeClass = $_SESSION['theme'] ?? 'light';
             text-decoration: none;
         }
 
-        /* =====================
-           DARK MODE
-        ===================== */
+
         body.dark{
             background-color: #121212;
             color: #f1f1f1;

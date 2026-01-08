@@ -96,9 +96,6 @@ if (isset($_POST['btnSubmit'])) {
             text-align: center;
         }
 
-        /* =====================
-           DARK MODE
-        ===================== */
         body.dark {
             background-color: #121212;
             color: #f1f1f1;
@@ -138,7 +135,7 @@ if (isset($_POST['btnSubmit'])) {
             background-color: #777;
         }
 
-        @media (max-width: 500px) {
+        @media (max-width: 600px) {
             body {
                 padding: 10px;
             }

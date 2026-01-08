@@ -22,6 +22,6 @@ if ($group->isMember($idgrup, $username)) {
     $group->deleteGroupMembers($idgrup, $username);
 }
 
-header("Location: dosen_home.php");
+header("Location: dosen_group_diikuti.php");
 exit();
 ?>

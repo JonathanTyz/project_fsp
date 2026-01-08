@@ -96,7 +96,6 @@ button{
     font-weight:bold;
     border-radius:6px;
     border:1px solid;
-    cursor:pointer;
     margin-top:10px;
 }
 
@@ -190,18 +189,29 @@ body.dark .error{
 /* ======================
    RESPONSIVE
 ====================== */
-@media (max-width:500px){
+@media (max-width:600px)
+{
     body{
         padding:10px;
     }
 
     .container{
-        margin:30px auto;
-        padding:20px;
+        margin:20px auto;
+        padding:15px;
+        border-width:1px;
     }
 
     h2{
-        font-size:24px;
+        font-size:20px;
+    }
+
+    label, .status-lama, .error{
+        font-size:14px;
+    }
+
+    select, button{
+        font-size:14px;
+        padding:8px;
     }
 }
 </style>

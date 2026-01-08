@@ -215,11 +215,10 @@ body.dark .paging b{
 /* ======================
    RESPONSIVE
 ====================== */
-@media (max-width:450px){
-    h2{ font-size:26px; }
-
-    table, thead, tbody, th, tr{
-        display:block;
+@media (max-width: 768px){
+    table, thead, tbody, tr, th, td{
+        display: block;
+        width: 100%;
     }
 
     table{
@@ -227,22 +226,35 @@ body.dark .paging b{
     }
 
     tr{
-        margin-bottom:15px;
-        border:2px solid;
-        padding:10px;
-        border-radius:8px;
+        background: white;
+        border: 2px solid #2c3e50;
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 6px;
+    }
+
+    body.dark tr{
+        background-color: #1e1e1e;
+        border-color: #555;
     }
 
     td{
-        border:none;
-        text-align:left;
-        padding:6px 0;
+        border: none;
+        text-align: left;
+        padding: 6px 0;
+        position: relative;
     }
 
     td::before{
-        font-weight:bold;
-        display:block;
-        margin-bottom:3px;
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    button{
+        margin-top: 5px;
+        width: 100%;
     }
 }
 </style>
@@ -282,12 +294,11 @@ body.dark .paging b{
     } else {
         while ($row = $result_grup->fetch_assoc()) {
             echo "<tr>
-                <td>".htmlspecialchars($row['nama'])."</td>
-                <td>".htmlspecialchars($row['deskripsi'])."</td>
-                <td>".htmlspecialchars($row['username_pembuat'])."</td>
-                <td>".htmlspecialchars($row['tanggal_pembentukan'])."</td>
-                <td>".htmlspecialchars($row['jenis'])."</td>
-
+                <td data-label='Nama Grup'>".($row['nama'])."</td>
+                <td data-label='Deskripsi'>".($row['deskripsi'])."</td>
+                <td data-label='Pembuat'>".($row['username_pembuat'])."</td>
+                <td data-label='Tanggal Dibentuk'>".($row['tanggal_pembentukan'])."</td>
+                <td data-label='Jenis'>".($row['jenis'])."</td>
                 <td>
                     <form action='dosen_view_event.php' method='post'>
                         <input type='hidden' name='idgrup' value='{$row['idgrup']}'>

@@ -86,7 +86,6 @@ h3 {
 
 /* ===== CARD ===== */
 .card {
-    background: #ffffff;
     border-radius: 12px;
     padding: 25px;
     width: 500px;
@@ -127,15 +126,51 @@ tr:last-child td {
     border-bottom: none;
 }
 
-tr:hover {
-    background-color: #f9fafb;
-}
 
 /* ===== IMAGE ===== */
 img {
     max-width: 180px;
     border-radius: 8px;
 }
+
+/* =====================
+           DARK MODE
+        ===================== */
+        body.dark {
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+
+        body.dark h2,
+        body.dark h3 {
+            color: #ffffff;
+        }
+
+        body.dark .informasiGrup {
+            background-color: #1e1e1e;
+        }
+
+        body.dark table {
+            background-color: #1e1e1e;
+        }
+
+        body.dark th {
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+
+        body.dark td {
+            border-color: #444;
+            color: #eeeeee;
+        }
+
+        body.dark .button {
+            background-color: #3a3a3a;
+        }
+
+        body.dark .button:hover {
+            background-color: #555;
+        }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
@@ -148,7 +183,6 @@ img {
 
     tr {
         margin-bottom: 18px;
-        background: #ffffff;
         padding: 15px;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.08);

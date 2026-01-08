@@ -33,7 +33,6 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
 
         h2, h3 {
             text-align: center;
-            color: #2c3e50;
         }
 
         h2 { margin-top: 30px; font-size: 36px; }
@@ -47,13 +46,10 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
         /* BUTTON SAMA DENGAN MAHASISWA */
         .button {
             padding: 10px 18px;
-            background-color: #1E40AF;
             border: none;
-            color: white;
             font-weight: bold;
             border-radius: 6px;
             margin: 5px;
-            cursor: pointer;
             transition: background-color 0.2s ease;
         }
 
@@ -95,6 +91,47 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             border-radius: 6px;
         }
 
+        body.dark {
+        background-color: #1e1e1e;
+        color: #eee;
+        }
+
+        body.dark .informasiGrup {
+            background-color: #2c2c2c;
+            border-color: #555;
+            color: #eee;
+        }
+
+        body.dark table {
+            background-color: #2c2c2c;
+            color: #eee;
+        }
+
+        body.dark th {
+            background-color: #3a3a3a;
+        }
+
+        body.dark td {
+            border-color: #444;
+        }
+
+        body.dark td::before {
+            color: #eee;
+        }
+
+        body.dark .button {
+            background-color: #555;
+            color: #eee;
+        }
+
+@media (max-width: 768px) {
+    body.dark tr {
+        background-color: #2a2a2a;
+        border-color: #444;
+    }
+}
+
+
         @media (max-width: 768px) {
             table, thead, tbody, tr, th, td {
                 display: block;
@@ -104,7 +141,6 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             thead { display: none; }
 
             tr {
-                background: white;
                 border: 2px solid #2c3e50;
                 margin-bottom: 15px;
                 padding: 15px;
@@ -121,7 +157,6 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             td::before {
                 content: attr(data-label);
                 font-weight: bold;
-                color: #2c3e50;
                 flex-basis: 40%;
             }
 
@@ -162,7 +197,7 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
         <button class="button">Kembali ke Home</button>
     </form>
 
-    <form action="dosen_kelola_group.php" method="post">
+    <form action="dosen_group_diikuti.php" method="post">
         <button class="button">Kembali ke Daftar Group</button>
     </form>
 </div>

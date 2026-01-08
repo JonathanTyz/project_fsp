@@ -138,7 +138,7 @@ $threads = $threadObj->getThreads($idgrup);
             background-color: #444;
         }
 
-        @media (max-width: 500px) {
+        @media (max-width: 600px) {
 
             table, thead, tbody, tr, th, td {
                 display: block;

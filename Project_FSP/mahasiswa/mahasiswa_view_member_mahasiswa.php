@@ -163,7 +163,6 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
                 padding: 6px 0;
                 text-align: left;
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
             }
 
@@ -172,6 +171,7 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
                 font-weight: bold;
                 color: #2c3e50;
                 flex-basis: 40%;
+                flex:block;
             }
 
             body.dark td::before {

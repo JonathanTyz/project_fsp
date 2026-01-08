@@ -177,12 +177,23 @@ body.dark button:hover{
 /* ======================
    RESPONSIVE
 ====================== */
-@media(max-width:550px){
-    h2{ font-size:24px; }
-    #pembukaanteks{ font-size:18px; }
-    input, textarea, select, button{
-        font-size:14px;
-        padding:8px;
+@media(max-width:600px){
+    body{
+        padding:12px;
+    }
+
+    .isiInput{
+        padding:20px;
+    }
+
+    label{
+        font-size:12px;
+    }
+
+    input,
+    textarea,
+    select{
+        font-size:12px;
     }
 }
 </style>

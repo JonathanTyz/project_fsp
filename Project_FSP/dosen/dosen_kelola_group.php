@@ -81,8 +81,6 @@ $result_grup = $group->getAllMadeGroup(
             border: none;
             background-color: #2c3e50;
             color: white;
-            width: 100%;
-            cursor: pointer;
         }
 
         button:hover{
@@ -178,6 +176,7 @@ $result_grup = $group->getAllMadeGroup(
                 border: 3px solid #2c3e50;
                 margin-bottom: 15px;
                 padding: 10px;
+                border-radius: 6px;
             }
 
             body.dark tr{
@@ -189,10 +188,19 @@ $result_grup = $group->getAllMadeGroup(
                 border: none;
                 text-align: left;
                 padding: 6px 0;
+                position: relative;
+            }
+
+            td::before{
+                content: attr(data-label);
+                font-weight: bold;
+                display: block;
+                margin-bottom: 4px;
             }
 
             button{
                 margin-top: 5px;
+                width: 100%;
             }
         }
     </style>
@@ -214,7 +222,7 @@ $result_grup = $group->getAllMadeGroup(
             <th>Jenis</th>
             <th>Event</th>
             <th>Thread</th>
-            <th>Member</th>
+            <th colspan = '3'>Member</th>
             <th>Edit</th>
             <th>Hapus</th>
         </tr>
@@ -251,6 +259,19 @@ $result_grup = $group->getAllMadeGroup(
                 </form>
             </td>";
 
+            echo "<td>
+                <form action='dosen_view_member_mahasiswa.php' method='post'>
+                    <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                    <button type='submit'>Mahasiswa</button>
+                </form>
+            </td>";
+
+            echo "<td>
+                    <form action='dosen_view_member_dosen.php' method='post'>
+                        <input type='hidden' name='idgrup' value='{$row['idgrup']}'>
+                        <button type='submit'>Dosen</button>
+                    </form>
+            </td>";
             echo "<td>
                 <form action='dosen_edit_group.php' method='post'>
                     <input type='hidden' name='idgrup' value='{$row['idgrup']}'>

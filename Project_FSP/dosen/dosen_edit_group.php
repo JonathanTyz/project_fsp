@@ -58,7 +58,7 @@ label{
 
 input[type="text"],
 select{
-    width:100%;
+    width:95%;
     padding:10px;
     margin-top:6px;
     margin-bottom:15px;
@@ -135,7 +135,7 @@ body.dark button{
 /* ======================
    RESPONSIVE
 ====================== */
-@media (max-width:500px){
+@media (max-width:600px){
     body{
         padding:10px;
     }
@@ -152,7 +152,9 @@ body.dark button{
 
 </head>
 <body class="<?= $themeClass ?>">
-
+<div class="container-kembali">
+    <a href="dosen_kelola_group.php" class="kembali">← Kembali</a>
+</div>
 <div class="isiInput">
     <h2>Edit Group</h2>
 
