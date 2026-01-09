@@ -9,7 +9,6 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-/* ambil theme dari session */
 $themeClass = $_SESSION['theme'] ?? 'light';
 
 $idthread = (int)$_POST['idthread'];
@@ -127,7 +126,7 @@ button:hover{ background:#2980b9; }
     margin-bottom:10px;
 }
 
-/* ===== DARK MODE (SAMA DENGAN MAHASISWA) ===== */
+/* Dark Theme */
 body.dark{
     background:#121212;
     color:#f1f1f1;
@@ -205,7 +204,6 @@ function loadChat(){
                 "</div>"
             );
         });
-        $("#chatBox").scrollTop($("#chatBox")[0].scrollHeight);
     }, "json");
 }
 

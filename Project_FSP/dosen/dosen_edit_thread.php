@@ -36,18 +36,13 @@ if (isset($_POST['btnSubmit'])) {
     <!-- THEME -->
     <link rel="stylesheet" href="../css/theme.css">
 <style>
-/* ======================
-   BASE
-====================== */
+
 body{
     font-family:'Times New Roman', serif;
     margin:0;
     padding:20px;
 }
 
-/* ======================
-   CONTAINER
-====================== */
 .container{
     padding:30px;
     width:420px;
@@ -62,9 +57,6 @@ h2{
     margin-bottom:20px;
 }
 
-/* ======================
-   FORM
-====================== */
 label{
     font-weight:bold;
 }
@@ -77,9 +69,6 @@ select{
     border:1px solid;
 }
 
-/* ======================
-   STATUS LAMA
-====================== */
 .status-lama{
     padding:10px;
     margin-bottom:20px;
@@ -87,9 +76,6 @@ select{
     border-radius:6px;
 }
 
-/* ======================
-   BUTTON
-====================== */
 button{
     width:100%;
     padding:10px;
@@ -99,18 +85,13 @@ button{
     margin-top:10px;
 }
 
-/* ======================
-   ERROR
-====================== */
 .error{
     text-align:center;
     font-weight:bold;
     margin-bottom:10px;
 }
 
-/* ======================
-   LIGHT THEME
-====================== */
+/* Light Theme */
 body.light{
     background:#f4f6f8;
     color:#000;
@@ -148,9 +129,7 @@ body.light .error{
     color:#b91c1c;
 }
 
-/* ======================
-   DARK THEME
-====================== */
+/* Dark Theme */
 body.dark{
     background:#1e1e1e;
     color:#eee;
@@ -186,9 +165,7 @@ body.dark .error{
     color:#f87171;
 }
 
-/* ======================
-   RESPONSIVE
-====================== */
+/* RWD */
 @media (max-width:600px)
 {
     body{

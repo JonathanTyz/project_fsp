@@ -26,12 +26,9 @@ $result_grup = $group->getAllGroupByMember(
     <title>Grup yang Saya Ikuti</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- THEME -->
     <link rel="stylesheet" href="../css/theme.css">
 <style>
-/* ======================
-   BASE
-====================== */
+
 body{
     font-family:'Times New Roman', Times, serif;
     margin:0;
@@ -44,9 +41,7 @@ h2{
     font-size:34px;
 }
 
-/* ======================
-   BACK BUTTON
-====================== */
+
 .container-kembali{
     width:90%;
     margin:auto;
@@ -61,9 +56,7 @@ h2{
     border:1px solid;
 }
 
-/* ======================
-   TABLE
-====================== */
+
 table{
     width:90%;
     margin:20px auto;
@@ -86,9 +79,6 @@ th{
     padding:20px;
 }
 
-/* ======================
-   BUTTON
-====================== */
 button{
     width:100%;
     padding:8px;
@@ -98,9 +88,6 @@ button{
     cursor:pointer;
 }
 
-/* ======================
-   PAGINATION
-====================== */
 .paging{
     text-align:center;
     margin:25px;
@@ -117,9 +104,7 @@ button{
     border:1px solid;
 }
 
-/* ======================
-   LIGHT THEME
-====================== */
+/* Light theme */
 body.light{
     background:#f4f6f8;
     color:#000;
@@ -165,9 +150,7 @@ body.light .paging b{
     color:#fff;
 }
 
-/* ======================
-   DARK THEME
-====================== */
+/* Dark theme */
 body.dark{
     background:#1e1e1e;
     color:#eee;
@@ -212,9 +195,7 @@ body.dark .paging b{
     color:#000;
 }
 
-/* ======================
-   RESPONSIVE
-====================== */
+/* RWD */
 @media (max-width: 768px){
     table, thead, tbody, tr, th, td{
         display: block;

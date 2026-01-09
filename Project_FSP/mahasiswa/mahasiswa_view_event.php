@@ -113,9 +113,7 @@ $group_events = $event->getEventsGroup($group_id);
             height: auto;
         }
 
-        /* =====================
-           DARK MODE
-        ===================== */
+        /* Dark Theme */
         body.dark {
             background-color: #121212;
             color: #f1f1f1;

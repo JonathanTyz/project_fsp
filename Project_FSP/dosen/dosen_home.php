@@ -15,7 +15,6 @@ $themeClass = $_SESSION['theme'] ?? 'light';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dosen Home</title>
 
-    <!-- THEME -->
     <link rel="stylesheet" href="../css/theme.css">
 
     <style>
@@ -34,8 +33,6 @@ $themeClass = $_SESSION['theme'] ?? 'light';
             justify-content: center;
             align-items: center;
         }
-
-        /* === CARD SAMA PERSIS MAHASISWA === */
         .isi{
             background-color: #ffffff;
             width: 90%;
@@ -67,7 +64,6 @@ $themeClass = $_SESSION['theme'] ?? 'light';
             color: #eee;
         }
 
-        /* === TOMBOL (STRUKTUR DOSEN, WARNA MAHASISWA) === */
         .menu-button{
             display: block;
             width: 100%;

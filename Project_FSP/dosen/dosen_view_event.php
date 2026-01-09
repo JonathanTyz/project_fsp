@@ -37,92 +37,83 @@ $group_events = $event->getEventsGroup($group_id);
 <link rel="stylesheet" href="../css/theme.css">
 
 <style>
-body {
-    font-family: "Segoe UI", Tahoma, sans-serif;
-    margin: 0;
-    background-color: #f3f4f6;
-}
+    body {
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        margin: 0;
+        background-color: #f3f4f6;
+    }
 
-h2, h3 {
-    text-align: center;
-    color: #1f2937;
-}
+    h2, h3 {
+        text-align: center;
+        color: #1f2937;
+    }
 
-h2 {
-    margin-top: 30px;
-    font-size: 34px;
-}
+    h2 {
+        margin-top: 30px;
+        font-size: 34px;
+    }
 
-h3 {
-    margin-top: 40px;
-    font-size: 26px;
-}
+    h3 {
+        margin-top: 40px;
+        font-size: 26px;
+    }
 
-/* ===== BUTTON ===== */
-.btn-group {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 25px 0;
-    flex-wrap: wrap;
-}
+    .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 25px 0;
+        flex-wrap: wrap;
+    }
 
-.button {
-    padding: 12px 22px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 15px;
-    color: #fff;
-    background-color: #2563eb;
-}
+    .button {
+        padding: 12px 22px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 15px;
+        color: #fff;
+        background-color: #2563eb;
+    }
+    .card {
+        border-radius: 12px;
+        padding: 25px;
+        width: 500px;
+        max-width: 95%;
+        margin: 30px auto;
+    }
+
+    .table-wrap {
+        width: 95%;
+        max-width: 1100px;
+        margin: 30px auto;
+    }
+
+    table {
+        width: 90%;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+        padding: 12px 14px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f1f5f9;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    img {
+        max-width: 180px;
+        border-radius: 8px;
+    }
 
 
-/* ===== CARD ===== */
-.card {
-    border-radius: 12px;
-    padding: 25px;
-    width: 500px;
-    max-width: 95%;
-    margin: 30px auto;
-}
-
-/* ===== TABLE ===== */
-.table-wrap {
-    width: 95%;
-    max-width: 1100px;
-    margin: 30px auto;
-}
-
-table {
-    width: 90%;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-}
-
-th, td {
-    padding: 12px 14px;
-    border-bottom: 1px solid #e5e7eb;
-    text-align: center;
-}
-
-th {
-    background-color: #f1f5f9;
-    font-weight: 700;
-    color: #1f2937;
-}
-
-
-/* ===== IMAGE ===== */
-img {
-    max-width: 180px;
-    border-radius: 8px;
-}
-
-/* =====================
-           DARK MODE
-        ===================== */
         body.dark {
             background-color: #121212;
             color: #f1f1f1;
@@ -159,7 +150,7 @@ img {
             background-color: #555;
         }
 
-/* ===== RESPONSIVE ===== */
+/* RWD */
 @media (max-width: 768px) {
     table, thead, tbody, tr, th, td {
         display: block;

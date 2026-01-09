@@ -21,7 +21,6 @@ if ($mysqli->connect_error) {
 <title>Buat Grup</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- THEME -->
 <link rel="stylesheet" href="../css/theme.css">
 
 <style>
@@ -31,9 +30,6 @@ body{
     padding:20px;
 }
 
-/* ======================
-   TITLE
-====================== */
 h2{
     text-align:center;
     margin-top:20px;
@@ -48,9 +44,6 @@ h2{
     margin-bottom:20px;
 }
 
-/* ======================
-   CONTAINER
-====================== */
 .center{
     text-align:center;
     margin-bottom:20px;
@@ -66,9 +59,7 @@ h2{
     text-align:center;
 }
 
-/* ======================
-   FORM
-====================== */
+
 label{
     display:block;
     text-align:left;
@@ -78,7 +69,7 @@ label{
 
 input[type="text"],
 select{
-    width:100%;
+    width:95%;
     padding:10px;
     margin-top:5px;
     margin-bottom:15px;
@@ -96,9 +87,6 @@ button{
     cursor:pointer;
 }
 
-/* ======================
-   LIGHT THEME
-====================== */
 body.light{
     background:#f4f6f8;
     color:#000;
@@ -131,9 +119,7 @@ body.light button:hover{
     background:#1f2d3a;
 }
 
-/* ======================
-   DARK THEME
-====================== */
+
 body.dark{
     background:#1e1e1e;
     color:#eee;
@@ -166,9 +152,6 @@ body.dark button:hover{
     background:#555;
 }
 
-/* ======================
-   RESPONSIVE
-====================== */
 @media(max-width:650px){
     h2{ font-size:24px; }
     #pembukaanteks{ font-size:18px; }

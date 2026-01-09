@@ -185,7 +185,6 @@
                 );
 
             }
-            //kalau ga ubah foto yaudah samain aja tanpa edit foto extension dan hapus di server
             else {
                 $sql = "UPDATE mahasiswa 
                         SET nrp=?, nama=?, gender=?, tanggal_lahir=?, angkatan=?

@@ -23,9 +23,6 @@ if (isset($_GET['id'])) {
     exit();
 }
 
-/* =====================
-   DATA
-===================== */
 $group = new group();
 $detail = $group->getDetailGroup($idgrup);
 $result_dosen = $group->getGroupMembersDosen($idgrup);
@@ -63,7 +60,6 @@ h3{
     margin-top: 15px;
 }
 
-/* BUTTON KONSISTEN */
 .button{
     padding: 10px 18px;
     font-weight: bold;
@@ -72,7 +68,6 @@ h3{
     cursor: pointer;
 }
 
-/* INFORMASI GROUP */
 .informasiGrup{
     padding: 25px 30px;
     width: 450px;
@@ -81,7 +76,6 @@ h3{
     border: 4px solid;
 }
 
-/* TABLE */
 table{
     width: 90%;
     margin: 20px auto;
@@ -105,7 +99,6 @@ img{
     border-radius: 6px;
 }
 
-/* SEARCH */
 .search-box{
     width: 300px;
     padding: 8px;

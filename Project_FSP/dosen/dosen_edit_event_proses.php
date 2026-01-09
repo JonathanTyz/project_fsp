@@ -20,13 +20,11 @@ if (!empty($_FILES['foto']['name']))
 {
     $ext_baru = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
 
-    // hapus file lama jika ada
     $file_lama = "../image_events/" . $idevent . "." . $poster_extension_lama;
     if (file_exists($file_lama)) {
         unlink($file_lama);
     }
-
-    // upload file baru
+    
     $file_baru = "../image_events/". $idevent . "." . $ext_baru;
     move_uploaded_file($_FILES['foto']['tmp_name'], $file_baru);
 

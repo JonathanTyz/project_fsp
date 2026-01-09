@@ -30,9 +30,6 @@ body{
     padding:20px;
 }
 
-/* ======================
-   TITLE
-====================== */
 h2{
     text-align:center;
     margin-top:20px;
@@ -47,9 +44,6 @@ h2{
     margin-bottom:20px;
 }
 
-/* ======================
-   CONTAINER
-====================== */
 .center{
     text-align:center;
     margin-bottom:20px;
@@ -65,9 +59,6 @@ h2{
     text-align:center;
 }
 
-/* ======================
-   FORM
-====================== */
 label{
     display:block;
     text-align:left;
@@ -102,9 +93,7 @@ button{
     cursor:pointer;
 }
 
-/* ======================
-   LIGHT THEME
-====================== */
+/* light theme */
 body.light{
     background:#f4f6f8;
     color:#000;
@@ -138,9 +127,7 @@ body.light button:hover{
     background:#1f2d3a;
 }
 
-/* ======================
-   DARK THEME
-====================== */
+/* dark theme */
 body.dark{
     background:#1e1e1e;
     color:#eee;
@@ -174,9 +161,7 @@ body.dark button:hover{
     background:#555;
 }
 
-/* ======================
-   RESPONSIVE
-====================== */
+/* RWD */
 @media(max-width:600px){
     body{
         padding:12px;

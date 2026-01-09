@@ -48,7 +48,6 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             font-size: 26px;
         }
 
-        /* ===== BUTTON ===== */
         .btn-group {
             display: flex;
             justify-content: center;
@@ -74,7 +73,6 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             transform: translateY(-1px);
         }
 
-        /* ===== CARD ===== */
         .card {
             border-radius: 12px;
             padding: 25px;
@@ -84,7 +82,6 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             box-shadow: 0 10px 25px rgba(0,0,0,0.08);
         }
 
-        /* ===== TABLE ===== */
         table {
             width: 90%;
             margin: 25px auto;
@@ -105,13 +102,12 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             border-bottom: none;
         }
 
-        /* ===== IMAGE ===== */
         img {
             width: 90px;
             border-radius: 8px;
         }
 
-        /* ===== RESPONSIVE ===== */
+        /* RWD */
 @media (max-width: 768px) {
             table, thead, tbody, tr, th, td {
                 display: block;

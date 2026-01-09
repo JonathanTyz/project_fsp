@@ -126,9 +126,7 @@ button:hover{
     margin-bottom:10px;
 }
 
-/* =====================
-   DARK MODE
-===================== */
+/* Dark Theme */
 body.dark{
     background:#121212;
     color:#f1f1f1;
@@ -250,7 +248,7 @@ function loadChat(){
                 "</div>"
             );
         });
-        $("#chatBox").scrollTop($("#chatBox")[0].scrollHeight);
+        // $("#chatBox").scrollTop($("#chatBox")[0].scrollHeight);
     }, "json");
 }
 

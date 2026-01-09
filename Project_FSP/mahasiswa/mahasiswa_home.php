@@ -42,7 +42,7 @@ $themeClass = $_SESSION['theme'] ?? 'light';
             text-align: center;
         }
 
-        /* DARK CARD */
+        /* Dark Theme */
         body.dark .isi{
             background-color: #2a2a2a;
         }

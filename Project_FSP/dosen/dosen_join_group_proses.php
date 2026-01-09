@@ -39,7 +39,6 @@ else
     $idgrup = $row['idgrup'];
     $username = $_SESSION['user']['username'];
 
-// cek sudah member atau belum
 if (!$group->isMember($idgrup, $username)) 
 {
     $group->insertMember($idgrup, $username);

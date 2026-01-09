@@ -32,7 +32,6 @@ if (isset($_POST['btnSubmit'])) {
 <head>
     <title>Buat Thread Baru</title>
 
-    <!-- THEME -->
     <link rel="stylesheet" href="../css/theme.css">
 
     <style>

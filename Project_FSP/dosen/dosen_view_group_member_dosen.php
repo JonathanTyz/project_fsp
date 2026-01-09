@@ -48,7 +48,6 @@ $result_dosen = $group->getGroupMembersDosen($idgrup);
             margin-top: 15px;
         }
 
-        /* BUTTON SAMA DENGAN MAHASISWA */
         .button {
             padding: 10px 18px;
             border: none;

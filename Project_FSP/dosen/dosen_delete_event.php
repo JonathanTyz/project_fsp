@@ -12,10 +12,8 @@ $idevent = (int)$_POST['idevent'];
 
 $event = new event();
 
-// Ambil extension foto
 $foto_extension = $event->getPosterExtension($idevent);
 
-// Hapus event di database
 $success = $event->deleteEvents($group_id, $idevent);
 
 if ($success) {

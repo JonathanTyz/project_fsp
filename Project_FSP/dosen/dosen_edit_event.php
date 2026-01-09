@@ -41,9 +41,8 @@ $poster_extension = $detail['poster_extension'];
 <link rel="stylesheet" href="../css/theme.css">
 
 <style>
-/* ======================
-   BASE
-====================== */
+
+
 body{
     font-family:'Times New Roman', Times, serif;
     margin:0;
@@ -56,9 +55,6 @@ h2{
     margin:10px 0;
 }
 
-/* ======================
-   TITLE
-====================== */
 .pembukaanteks{
     font-size:24px;
     font-weight:bold;
@@ -66,9 +62,6 @@ h2{
     margin-bottom:15px;
 }
 
-/* ======================
-   CONTAINER
-====================== */
 .isiInput{
     padding:25px 20px;
     width:420px;
@@ -78,9 +71,6 @@ h2{
     border-radius:8px;
 }
 
-/* ======================
-   FORM
-====================== */
 label{
     display:block;
     font-weight:bold;
@@ -105,9 +95,6 @@ textarea{
     resize:vertical;
 }
 
-/* ======================
-   BUTTON
-====================== */
 button{
     width:100%;
     padding:12px;
@@ -124,9 +111,7 @@ button{
     margin-bottom:15px;
 }
 
-/* ======================
-   LIGHT THEME
-====================== */
+/* Light Theme */
 body.light{
     background:#f4f6f8;
     color:#000;
@@ -157,9 +142,7 @@ body.light .button-secondary{
     border-color:#d1d5db;
 }
 
-/* ======================
-   DARK THEME
-====================== */
+/* Dark Theme */
 body.dark{
     background:#1e1e1e;
     color:#eee;
@@ -188,9 +171,7 @@ body.dark .button-secondary{
     background:#1e1e1e;
 }
 
-/* ======================
-   RESPONSIVE
-====================== */
+/* RWD */
 @media (max-width:500px){
     body{
         padding:10px;

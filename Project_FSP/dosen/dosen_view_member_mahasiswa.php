@@ -53,7 +53,6 @@ h3{
     margin-top: 15px;
 }
 
-/* BUTTON SAMA DENGAN MAHASISWA */
 .button{
     padding: 10px 18px;
     font-weight: bold;
@@ -61,7 +60,6 @@ h3{
     margin: 6px;
 }
 
-/* INFORMASI GROUP */
 .informasiGrup{
     padding: 25px 30px;
     width: 450px;
@@ -70,7 +68,6 @@ h3{
     border: 4px solid;
 }
 
-/* TABLE */
 table{
     width: 90%;
     margin: 20px auto;
@@ -93,7 +90,6 @@ img{
     height: auto;
 }
 
-/* SEARCH */
 .search-box{
     width: 300px;
     padding: 8px;
@@ -101,7 +97,7 @@ img{
     display: block;
 }
 
-/* RESPONSIVE */
+/* RWD */
  @media (max-width: 768px) {
             table, thead, tbody, tr, th, td {
                 display: block;

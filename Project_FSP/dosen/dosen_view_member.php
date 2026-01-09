@@ -52,7 +52,6 @@ h3{
     margin-top: 15px;
 }
 
-/* BUTTON KONSISTEN */
 .button{
     padding: 10px 18px;
     font-weight: bold;
@@ -60,7 +59,6 @@ h3{
     margin: 6px;
 }
 
-/* INFORMASI GROUP */
 .informasiGrup{
     padding: 25px 30px;
     width: 450px;
@@ -69,7 +67,6 @@ h3{
     border: 4px solid;
 }
 
-/* TABLE */
 table{
     width: 90%;
     margin: 20px auto;

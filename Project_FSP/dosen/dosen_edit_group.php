@@ -7,7 +7,6 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-// Ambil data dari POST, fallback ke string kosong jika tidak ada
 $idgrup    = $_POST['idgrup'] ?? '';
 $nama      = $_POST['nama'] ?? '';
 $jenis     = $_POST['jenis'] ?? '';
@@ -20,9 +19,7 @@ $deskripsi = $_POST['deskripsi'] ?? '';
 <title>Edit Group</title>
 <link rel="stylesheet" href="../css/theme.css">
 <style>
-/* ======================
-   BASE
-====================== */
+
 body{
     font-family:'Times New Roman', Times, serif;
     margin:0;
@@ -35,9 +32,6 @@ h2{
     font-size:32px;
 }
 
-/* ======================
-   CONTAINER
-====================== */
 .isiInput{
     border:2px solid;
     padding:25px 20px;
@@ -47,9 +41,6 @@ h2{
     border-radius:8px;
 }
 
-/* ======================
-   FORM
-====================== */
 label{
     display:block;
     margin-top:10px;
@@ -67,9 +58,6 @@ select{
     font-size:16px;
 }
 
-/* ======================
-   BUTTON
-====================== */
 button{
     width:100%;
     padding:12px;
@@ -80,9 +68,7 @@ button{
     cursor:pointer;
 }
 
-/* ======================
-   LIGHT THEME
-====================== */
+/* Light theme */
 body.light{
     background:#f4f6f8;
     color:#000;
@@ -106,9 +92,7 @@ body.light button{
     border-color:#2c3e50;
 }
 
-/* ======================
-   DARK THEME
-====================== */
+/* Dark theme */
 body.dark{
     background:#1e1e1e;
     color:#eee;
@@ -132,9 +116,7 @@ body.dark button{
     border-color:#555;
 }
 
-/* ======================
-   RESPONSIVE
-====================== */
+/* RWD */
 @media (max-width:600px){
     body{
         padding:10px;

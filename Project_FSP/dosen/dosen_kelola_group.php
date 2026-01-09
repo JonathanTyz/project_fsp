@@ -74,7 +74,6 @@ $result_grup = $group->getAllMadeGroup(
             background-color: #e9ecef;
         }
 
-        /* === TOMBOL SAMA PERSIS MAHASISWA === */
         button{
             padding: 6px 10px;
             font-weight: bold;
@@ -110,7 +109,7 @@ $result_grup = $group->getAllMadeGroup(
             margin: 30px 0 40px;
         }
 
-        /* ===== DARK MODE (SAMA MAHASISWA) ===== */
+        /* Dark Theme */
         body.dark{
             background-color: #121212;
             color: #f1f1f1;
@@ -186,7 +185,6 @@ $result_grup = $group->getAllMadeGroup(
 
             td{
                 border: 1px solid black;
-                text-align: left;
                 padding: 6px 0;
                 position: relative;
             }
@@ -198,9 +196,14 @@ $result_grup = $group->getAllMadeGroup(
                 margin-bottom: 4px;
             }
 
+            .center{
+                text-align: center;
+                align-items: center;
+                display: flex;
+            }
             button{
                 margin-top: 5px;
-                width: 100%;
+                
             }
         }
     </style>
@@ -229,8 +232,9 @@ $result_grup = $group->getAllMadeGroup(
     </thead>
     <tbody>
     <?php
+    echo "<div class = 'center'>";
     if ($result_grup->num_rows == 0) {
-        echo "<tr><td colspan='8' class='kosong'>Anda belum memiliki grup</td></tr>";
+        echo "<tr><td colspan='10' class='kosong'>Anda belum memiliki grup</td></tr>";
     } else {
         while ($row = $result_grup->fetch_assoc()) {
             echo "<tr>";
@@ -289,6 +293,7 @@ $result_grup = $group->getAllMadeGroup(
             echo "</tr>";
         }
     }
+    echo "</div>";
     ?>
     </tbody>
 </table>

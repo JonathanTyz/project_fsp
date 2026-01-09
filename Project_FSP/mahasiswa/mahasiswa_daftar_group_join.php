@@ -80,7 +80,6 @@ $res = $group->getAllGroupByMember(
             border: none;
             background-color: #2c3e50;
             color: white;
-            width: 100%;
             cursor: pointer;
         }
 
@@ -102,9 +101,7 @@ $res = $group->getAllGroupByMember(
             color: #555;
         }
 
-        /* =====================
-           DARK MODE
-        ===================== */
+        /* Dark Theme */
         body.dark{
             background-color: #121212;
             color: #f1f1f1;

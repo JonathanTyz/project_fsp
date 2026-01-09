@@ -55,9 +55,6 @@ h2, h3{
     margin-top:15px;
 }
 
-/* ======================
-   BUTTON (DEFAULT)
-====================== */
 button{
     padding:10px 20px;
     font-weight:600;
@@ -67,9 +64,6 @@ button{
     transition:.2s;
 }
 
-/* ======================
-   CARD INFORMASI
-====================== */
 .informasiGrup{
     width:420px;
     margin:30px auto;
@@ -77,9 +71,6 @@ button{
     border-radius:10px;
 }
 
-/* ======================
-   TABLE
-====================== */
 table{
     width:100%;
     border-collapse:collapse;
@@ -106,9 +97,7 @@ img{
     margin:25px 0;
 }
 
-/* ======================
-   LIGHT THEME
-====================== */
+/* Light Theme */
 body.light{
     background:#f4f6f8;
     color:#000;
@@ -136,7 +125,7 @@ body.light td{
     background:#ffffff;
 }
 
-/* BUTTON LIGHT → ABU GELAP */
+
 body.light button{
     background:#2c3e50;
     color:white;
@@ -147,9 +136,7 @@ body.light button:hover{
     background:#1f2d3a;
 }
 
-/* ======================
-   DARK THEME
-====================== */
+/* Dark Theme */
 body.dark{
     background:#1e1e1e;
     color:#eee;
@@ -178,7 +165,6 @@ body.dark td{
     background:#2a2a2a;
 }
 
-/* BUTTON DARK → ABU */
 body.dark button{
     background:#3a3a3a;
     color:white;
@@ -189,9 +175,7 @@ body.dark button:hover{
     background:#555;
 }
 
-/* ======================
-   RESPONSIVE
-====================== */
+
 @media (max-width:768px){
     table, thead, tbody, tr, th, td{
         display:block;

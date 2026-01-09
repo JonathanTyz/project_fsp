@@ -10,7 +10,6 @@ if (!isset($_SESSION['user'])) {
 
 $username = $_SESSION['user']['username'];
 
-/* AMAN SAAT DIBUKA LANGSUNG */
 $idgrup = $_POST['idgrup'] ?? $_GET['idgrup'] ?? 0;
 $idgrup = (int)$idgrup;
 
@@ -44,9 +43,7 @@ if (isset($_POST['btnSubmit'])) {
 <link rel="stylesheet" href="../css/theme.css">
 
 <style>
-/* =====================
-   BASE
-===================== */
+
 body{
     font-family:'Times New Roman', Times, serif;
     margin:0;
@@ -58,9 +55,6 @@ h2{
     margin-bottom:20px;
 }
 
-/* =====================
-   CONTAINER
-===================== */
 .container{
     padding:30px;
     width:420px;
@@ -70,9 +64,6 @@ h2{
     border-radius:8px;
 }
 
-/* =====================
-   FORM
-===================== */
 label{
     font-weight:bold;
     display:block;
@@ -88,9 +79,7 @@ select{
     font-size:16px;
 }
 
-/* =====================
-   BUTTON
-===================== */
+
 .button{
     width:100%;
     padding:12px;
@@ -110,9 +99,7 @@ select{
     margin-top:10px;
 }
 
-/* =====================
-   LIGHT THEME
-===================== */
+/* Light Theme  */
 body.light{
     background:#f4f6f8;
     color:#000;
@@ -141,9 +128,7 @@ body.light .button-secondary{
     border-color:#d1d5db;
 }
 
-/* =====================
-   DARK THEME
-===================== */
+/* Dark Theme */
 body.dark{
     background:#1e1e1e;
     color:#eee;
@@ -172,9 +157,7 @@ body.dark .button-secondary{
     border-color:#555;
 }
 
-/* =====================
-   RESPONSIVE
-===================== */
+/* RWD */
 @media (max-width:500px){
     body{
         padding:10px;

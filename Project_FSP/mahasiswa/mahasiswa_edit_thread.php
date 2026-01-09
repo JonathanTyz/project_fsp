@@ -123,9 +123,7 @@ if (isset($_POST['btnSubmit'])) {
             color: #eee;
         }
 
-        /* ======================
-        RESPONSIVE
-        ====================== */
+        /* RWD */
         @media (max-width:600px)
         {
             body{

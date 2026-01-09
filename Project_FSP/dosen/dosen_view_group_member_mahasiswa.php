@@ -43,7 +43,6 @@ $result_mahasiswa = $group->getGroupMembersMahasiswa($idgrup);
             margin-top: 15px;
         }
 
-        /* BUTTON SAMA DENGAN MAHASISWA */
         .button {
             padding: 10px 18px;
             border: none;

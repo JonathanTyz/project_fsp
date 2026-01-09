@@ -1,11 +1,10 @@
-/* =================== COMMON / LIGHT THEME =================== */
+/* Light theme */
 body {
   background-color: #f9f9f9;
   color: #333;
   font-family: 'Times New Roman', Times, serif;
   margin: 0;
   padding: 0;
-  transition: background-color 0.3s, color 0.3s;
 }
 
 /* Containers */
@@ -45,8 +44,6 @@ body {
   padding: 30px 40px;
   text-align: center;
   width: 350px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 /* Headers */
@@ -65,17 +62,12 @@ button, .menu-button {
   transition: background-color 0.3s, color 0.3s;
 }
 
-button:hover, .menu-button:hover {
-  opacity: 0.9;
-}
 
-/* Specific Menu Buttons */
 .menu-button-daftar-group-join { background-color: #2c3e50; color: #fff; }
 .menu-button-daftar-group-publik { background-color: #1f2f3d; color: #fff; }
 .menu-button-change-password { background-color: #6c757d; color: #fff; }
 .menu-button-logout { background-color: #a94442; color: #fff; }
 
-/* Input Fields */
 input, textarea, select {
   width: 100%;
   padding: 10px;
@@ -95,13 +87,11 @@ input, textarea, select {
   background-color: #eee;
   color: #333;
   border: 1px solid #ccc;
-  cursor: pointer;
   font-weight: bold;
-  z-index: 1000;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-/* =================== DARK THEME =================== */
+/* Dark theme */
 body.dark {
   background-color: #1e1e1e;
   color: #eee;

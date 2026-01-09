@@ -35,18 +35,12 @@ body{
     padding:20px;
 }
 
-/* ======================
-   TITLE
-====================== */
 h2{
     text-align:center;
     margin:30px 0 15px;
     font-size:34px;
 }
 
-/* ======================
-   BACK BUTTON
-====================== */
 .container-kembali{
     width:90%;
     margin:auto;

@@ -34,16 +34,10 @@ body{
     padding:20px;
 }
 
-/* ======================
-   TITLE
-====================== */
 h2{
     text-align:center;
 }
 
-/* ======================
-   TABLE LAYOUT
-====================== */
 table{
     width:90%;
     margin:20px auto;
@@ -56,9 +50,6 @@ th, td{
     border:1px solid;
 }
 
-/* ======================
-   BUTTON BASE
-====================== */
 .button,
 .button-disabled{
     padding:8px 15px;
@@ -76,9 +67,6 @@ th, td{
     cursor:not-allowed;
 }
 
-/* ======================
-   LINK BACK
-====================== */
 .kembali{
     display:inline-block;
     padding:8px 14px;
@@ -87,16 +75,12 @@ th, td{
     margin-bottom:10px;
 }
 
-/* ======================
-   CENTER
-====================== */
+
 .center{
     text-align:center;
 }
 
-/* ======================
-   LIGHT THEME
-====================== */
+/* Light theme */
 body.light{
     background:#f4f6f8;
     color:#000;
@@ -138,9 +122,7 @@ body.light .kembali{
     color:#2c3e50;
 }
 
-/* ======================
-   DARK THEME
-====================== */
+/* Dark theme */
 body.dark{
     background:#1e1e1e;
     color:#eee;
@@ -182,9 +164,7 @@ body.dark .kembali{
     color:#ddd;
 }
 
-/* ======================
-   RESPONSIVE
-====================== */
+/* RWD */
 @media(max-width:500px){
     table, thead, tbody, tr, th, td{
         display:block;
