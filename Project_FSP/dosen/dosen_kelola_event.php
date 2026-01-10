@@ -37,9 +37,6 @@ $group_events = $event->getEventsGroup($group_id);
 <link rel="stylesheet" href="../css/theme.css">
 
 <style>
-/* ======================
-   BASE
-====================== */
 body{
     font-family: "Segoe UI", Tahoma, sans-serif;
     margin:0;

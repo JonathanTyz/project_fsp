@@ -248,7 +248,6 @@ function loadChat(){
                 "</div>"
             );
         });
-        // $("#chatBox").scrollTop($("#chatBox")[0].scrollHeight);
     }, "json");
 }
 

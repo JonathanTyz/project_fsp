@@ -3,17 +3,13 @@ session_start();
 require_once '../class/group.php';
 require_once '../css/theme_session.php';
 
-/* =====================
-   CEK LOGIN
-===================== */
+/* CEK LOGIN */
 if (!isset($_SESSION['user'])) {
     header("Location: ../login.php");
     exit();
 }
 
-/* =====================
-   AMBIL ID GROUP
-===================== */
+/* AMBIL ID GROUP */
 if (isset($_GET['id'])) {
     $idgrup = (int)$_GET['id'];
 } elseif (isset($_POST['idgrup'])) {

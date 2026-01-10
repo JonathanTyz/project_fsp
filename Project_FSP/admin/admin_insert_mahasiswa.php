@@ -130,9 +130,7 @@ if ($mysqli->connect_error) {
         background:#555;
     }
 
-    /* ======================
-       RESPONSIVE
-    ====================== */
+    /* rwd */
     @media (max-width:500px){
     body{
         padding:12px;

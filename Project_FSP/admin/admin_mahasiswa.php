@@ -78,9 +78,7 @@ if ($mysqli->connect_error) {
             border-radius:6px;
         }
 
-        /* ======================
-           LIGHT THEME
-        ====================== */
+        /* LIGHT THEME */
         body.light{
             background:#f4f6f8;
             color:#000;
@@ -113,9 +111,7 @@ if ($mysqli->connect_error) {
             color:#2c3e50;
         }
 
-        /* ======================
-           DARK THEME
-        ====================== */
+        /* DARK THEME */
         body.dark{
             background:#1e1e1e;
             color:#eee;
